@@ -22,6 +22,10 @@ module DuckPuncher
       end
       buffer
     end
+
+    def to_rad
+      self / 180 * Math::PI
+    end
   end
 end
 

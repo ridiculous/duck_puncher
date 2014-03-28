@@ -23,4 +23,11 @@ class NumericTest < MiniTest::Unit::TestCase
     assert_equal '16 min 40 s', 1_000.to_duration(true)
     assert_equal '2 h 46 min', 10_000.to_duration(true)
   end
+
+  def test_to_rad
+    assert_equal 0.0, 0.to_rad
+    assert_equal 0.17715091907742445, 10.15.to_rad
+    assert_equal 0.36035409894869713, 20.646769.to_rad
+    assert_equal -2.730392366234936, -156.439959.to_rad
+  end
 end
