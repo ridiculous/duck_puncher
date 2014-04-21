@@ -1,6 +1,12 @@
 # DuckPuncher
 
-TODO: Write a gem description
+Currently have the following duck punches:
+
+* Array#m   - alias for `map(&:)`, usage: `[1].m(:succ)`
+* Hash#seek - usage: `{a: 1, b: {c: 2}}.seek(:b, :c) #=> 2`
+* Numeric#to_currency - usage: `25.245.to_currency #=> '25.25'`
+* Numeric#to_duration - usage `10_000.to_duration  #=> '2 h 46 min'` 
+* Numeric#to_rad      - usage `10.15.to_rad        #=> 0.17715091907742445`
 
 ## Installation
 
