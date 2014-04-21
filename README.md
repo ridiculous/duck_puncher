@@ -1,6 +1,6 @@
 # DuckPuncher
 
-Currently have the following duck punches:
+Currently have the following punches in our repertoire:
 
 * Array#m   - alias for `map(&:)`, usage: `[1].m(:succ)`
 * Hash#seek - usage: `{a: 1, b: {c: 2}}.seek(:b, :c) #=> 2`
