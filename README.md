@@ -6,7 +6,7 @@ Currently have the following punches in our repertoire:
 * Hash#seek - usage: `{a: 1, b: {c: 2}}.seek(:b, :c) #=> 2`
 * Numeric#to_currency - usage: `25.245.to_currency #=> '25.25'`
 * Numeric#to_duration - usage `10_000.to_duration  #=> '2 h 46 min'` 
-* Numeric#to_tim_ago  - usage `10_000.to_time_ago  #=> '2 hours ago'`
+* Numeric#to_time_ago  - usage `10_000.to_time_ago  #=> '2 hours ago'`
 * Numeric#to_rad      - usage `10.15.to_rad        #=> 0.17715091907742445`
 * String#pluralize    - usage `'hour'.pluralize(2) #=> 'hours'`
 
