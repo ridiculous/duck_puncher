@@ -7,6 +7,7 @@ class NumericTest < MiniTest::Unit::TestCase
     assert_equal '25.00', 25.to_currency
     assert_equal '25.20', 25.2.to_currency
     assert_equal '25.25', 25.245.to_currency
+    assert_equal '$25.25', 25.245.to_currency('$')
   end
 
   def test_to_duration

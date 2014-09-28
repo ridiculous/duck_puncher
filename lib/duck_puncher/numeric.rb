@@ -1,7 +1,7 @@
 module DuckPuncher
   module Numeric
-    def to_currency
-      '%.2f' % self.round(2)
+    def to_currency(prefix = '')
+      "#{prefix}%.2f" % self.round(2)
     end
 
     def to_duration(seconds = false)
