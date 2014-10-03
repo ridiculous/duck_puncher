@@ -23,6 +23,7 @@ module DuckPuncher
       buffer
     end
 
+    # similar to Rails' #time_ago_in_words
     def to_time_ago
       secs = to_i
       mins = secs / 60
