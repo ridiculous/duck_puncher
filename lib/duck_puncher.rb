@@ -6,3 +6,5 @@ require 'duck_puncher/string'
 
 module DuckPuncher
 end
+
+require 'duck_puncher/active_record_extensions' if defined?(Rails)
