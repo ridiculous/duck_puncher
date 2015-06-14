@@ -3,6 +3,7 @@
 Currently have the following punches in our repertoire:
 
 * Array#m   - alias for `map(&:)`, usage: `[1].m(:succ)`
+* Array#get - usage: `[].methods.get('ty?') #=> [:empty?]`
 * Hash#seek - usage: `{a: 1, b: {c: 2}}.seek(:b, :c) #=> 2`
 * Numeric#to_currency - usage: `25.245.to_currency #=> '25.25'`
 * Numeric#to_duration - usage `10_000.to_duration  #=> '2 h 46 min'` 
