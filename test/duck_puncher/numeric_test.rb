@@ -1,7 +1,7 @@
-require 'minitest/autorun'
-require 'duck_puncher'
+require_relative '../test_helper'
 
-class NumericTest < MiniTest::Unit::TestCase
+class NumericTest < MiniTest::Test
+
   def test_to_currency
     assert_equal '0.00', 0.to_currency
     assert_equal '25.00', 25.to_currency

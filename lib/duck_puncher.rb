@@ -1,10 +1,21 @@
 require 'duck_puncher/version'
-require 'duck_puncher/array'
-require 'duck_puncher/numeric'
-require 'duck_puncher/hash'
-require 'duck_puncher/string'
 
 module DuckPuncher
-end
+  autoload :Array, 'duck_puncher/array'
+  autoload :Numeric, 'duck_puncher/numeric'
+  autoload :Hash, 'duck_puncher/hash'
+  autoload :String, 'duck_puncher/string'
+  autoload :Object, 'duck_puncher/object'
 
-require 'duck_puncher/active_record_extensions' if defined? ActiveRecord
+  if defined? ActiveRecord
+    autoload :ActiveRecordExtensions, 'duck_puncher/active_record_extensions'
+  end
+
+  def self.load!(*names)
+    names.each &method(:const_get)
+  end
+
+  def self.load_all!
+    constants.each &method(:const_get)
+  end
+end

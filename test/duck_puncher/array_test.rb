@@ -1,7 +1,6 @@
-require 'minitest/autorun'
-require 'duck_puncher'
+require_relative '../test_helper'
 
-class ArrayTest < MiniTest::Unit::TestCase
+class ArrayTest < MiniTest::Test
   def test_m
     samples = ('a'..'m').to_a
     assert_equal samples.map(&:upcase), samples.m(:upcase)

@@ -1,7 +1,6 @@
-require 'minitest/autorun'
-require 'duck_puncher'
+require_relative '../test_helper'
 
-class HashTest < MiniTest::Unit::TestCase
+class HashTest < MiniTest::Test
   def test_seek
     my_hash = { a: 1, b: { c: 2 } }
     assert_equal my_hash.seek(:a), 1

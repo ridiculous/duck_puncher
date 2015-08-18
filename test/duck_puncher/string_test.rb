@@ -1,7 +1,6 @@
-require 'minitest/autorun'
-require 'duck_puncher'
+require_relative '../test_helper'
 
-class HashTest < MiniTest::Unit::TestCase
+class StringTest < MiniTest::Test
   def test_pluralize
     assert_equal 'hour'.pluralize(1), 'hour'
     assert_equal 'hour'.pluralize(0), 'hours'
