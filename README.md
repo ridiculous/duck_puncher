@@ -10,6 +10,7 @@ Currently have the following punches in our repertoire:
 * Numeric#to_time_ago  - usage `10_000.to_time_ago  #=> '2 hours ago'`
 * Numeric#to_rad      - usage `10.15.to_rad        #=> 0.17715091907742445`
 * String#pluralize    - usage `'hour'.pluralize(2) #=> 'hours'`
+* Object#clone!       - usage `Object.new.clone! #=> makes a deep clone (unlike #clone and #dup)
 
 ## Installation
 

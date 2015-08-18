@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["arebuckley@gmail.com"]
   spec.description   = %q{Duck punches Ruby with some of my favorite class extensions}
   spec.summary       = %q{Duck punches Ruby}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/ridiculous/duck_puncher"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
