@@ -3,8 +3,8 @@
 These are the ducks I can punch:
 
     Array#m             => `[].m(:to_s)` is the same as `[].map(&:to_s)` 
-    Array#get           => `[].methods.get('ty?') searches the array for a string matching the 'ty?' (e.g. [:empty?]`) 
-    Hash#seek           => `{a: 1, b: {c: 2}}.seek(:b, :c) returns the value of nested hash keys (e.g. 2)`
+    Array#get           => `[].methods.get('ty?')` searches the array for a string matching the 'ty?' (e.g. [:empty?]) 
+    Hash#seek           => `{a: 1, b: {c: 2}}.seek(:b, :c)` returns the value of nested hash keys (e.g. 2)
     Numeric#to_currency => `25.245.to_currency` formats a number in currency (e.g. '25.25' or '1.00') 
     Numeric#to_duration => `10_000.to_duration` turns a number into duration (e.g. '2 h 46 min')
     Numeric#to_time_ago => `10_000.to_time_ago` turns a number into time ago (e.g. '2 hours ago')
