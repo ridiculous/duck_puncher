@@ -11,11 +11,11 @@ module DuckPuncher
     autoload :ActiveRecordExtensions, 'duck_puncher/active_record_extensions'
   end
 
-  def self.load!(*names)
+  def self.punch!(*names)
     names.each &method(:const_get)
   end
 
-  def self.load_all!
+  def self.punch_all!
     constants.each &method(:const_get)
   end
 end

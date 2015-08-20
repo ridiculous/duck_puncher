@@ -1,4 +1,4 @@
 require 'minitest/autorun'
 require 'duck_puncher'
 
-DuckPuncher.load_all!
+DuckPuncher.punch_all!
