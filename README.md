@@ -20,5 +20,7 @@ These are the ducks I can punch:
 
 Ducks need to be _loaded_ before they can be punched! Maybe do this in an initializer?
 
-    DuckPuncher.punch! :Hash, :Object #=> only punches the specified ducks
-    DuckPuncher.punch_all!            #=> punches all the ducks
+```ruby
+DuckPuncher.punch! :Hash, :Object #=> only punches the specified ducks
+DuckPuncher.punch_all!            #=> punches all the ducks
+```
