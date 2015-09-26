@@ -3,7 +3,7 @@
 These are the ducks I can punch:
 
     Array#m             => `[].m(:to_s)` alias for `[].map(&:to_s)` 
-                        => `[].m(:sub, /[aeiou]/, '*')` alias for `[].map { |x| x.sub(/[aeiou]/, '*') }` 
+    Array#mm            => `[].mm(:sub, /[aeiou]/, '*')` alias for `[].map { |x| x.sub(/[aeiou]/, '*') }` 
     Array#get           => `[].methods.get('ty?')` searches the array for a string matching the 'ty?' (e.g. [:empty?]) 
     Hash#seek           => `{a: 1, b: {c: 2}}.seek(:b, :c)` returns the value of nested hash keys (e.g. 2)
     Numeric#to_currency => `25.245.to_currency` formats a number in currency (e.g. '25.25' or '1.00') 

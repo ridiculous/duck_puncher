@@ -11,12 +11,12 @@ class ArrayTest < MiniTest::Test
     assert_equal subject.map(&:upcase), subject.m(:upcase)
   end
 
-  def test_m_with_two_args
-    assert_equal subject.map { |x| x.prepend('btn-') }, subject.m(:prepend, 'btn-')
+  def test_mm_with_two_args
+    assert_equal subject.map { |x| x.prepend('btn-') }, subject.mm(:prepend, 'btn-')
   end
 
-  def test_m_with_many_args
-    assert_equal subject.map { |x| x.sub(/[aeiou]/, '*') }, subject.m(:sub, /[aeiou]/, '*')
+  def test_mm_with_three_args
+    assert_equal subject.map { |x| x.sub(/[aeiou]/, '*') }, subject.mm(:sub, /[aeiou]/, '*')
   end
 
   def test_get
