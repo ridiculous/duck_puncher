@@ -12,6 +12,20 @@ These are the ducks I can punch:
     Numeric#to_rad      => `10.15.to_rad` returns 0.17715091907742445
     String#pluralize    => `'hour'.pluralize(2)` turns "hour" into "hours"
     Object#clone!       => `Object.new.clone!` makes a deep clone of the object (using Marshal)
+    Object#require!     => >> require 'pry'
+                           LoadError: cannot load such file -- pry
+                           	from (irb):1:in `require'
+                           	from (irb):1
+                           	from bin/console:10:in `<main>'
+                           >> require! 'pry'
+                           Fetching: method_source-0.8.2.gem (100%)
+                           Fetching: slop-3.6.0.gem (100%)
+                           Fetching: coderay-1.1.0.gem (100%)
+                           Fetching: pry-0.10.3.gem (100%)
+                           => true
+                           >> Pry.start
+                           [1] pry(main)>
+
 
 ## Install
 
