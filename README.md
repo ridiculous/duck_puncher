@@ -12,7 +12,8 @@ These are the ducks I can punch:
     Numeric#to_rad      => `10.15.to_rad` returns 0.17715091907742445
     String#pluralize    => `'hour'.pluralize(2)` turns "hour" into "hours"
     Object#clone!       => `Object.new.clone!` makes a deep clone of the object (using Marshal)
-    Object#require!     => >> require 'pry'
+    Object#require!     =>  Downloads and activates a gem for the current and subsequent consoles. For example:
+                           >> `require 'pry'` 
                            LoadError: cannot load such file -- pry
                            	from (irb):1:in `require'
                            	from (irb):1
