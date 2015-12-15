@@ -8,7 +8,6 @@ module DuckPuncher
   autoload :Hash, 'duck_puncher/hash'
   autoload :String, 'duck_puncher/string'
   autoload :Object, 'duck_puncher/object'
-  autoload :GemInstaller, 'duck_puncher/gem_installer'
 
   if defined? ActiveRecord
     autoload :ActiveRecordExtensions, 'duck_puncher/active_record_extensions'

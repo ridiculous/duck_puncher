@@ -1,3 +1,6 @@
+require_relative 'json_storage'
+require_relative 'gem_installer'
+
 module DuckPuncher
   module Object
     include DuckPuncher::GemInstaller::LoadPathInitializer
