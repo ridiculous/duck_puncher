@@ -1,19 +1,17 @@
 require_relative 'json_storage'
 
 class DuckPuncher::GemInstaller
-  module LoadPathInitializer
-    def self.included(*)
-      spec_data = DuckPuncher::JSONStorage.read('load_paths.json').values
-      spec_data.each do |spec|
-        spec[:load_paths].each do |load_path|
-          next if $LOAD_PATH.include? load_path
-          $LOAD_PATH.unshift load_path
-        end
-        begin
-          require spec[:require_with]
-        rescue LoadError => e
-          puts "Failed to require #{spec[:require_with]}. #{e.inspect}"
-        end
+  def self.initialize!
+    spec_data = DuckPuncher::JSONStorage.read('load_paths.json').values
+    spec_data.each do |spec|
+      spec[:load_paths].each do |load_path|
+        next if $LOAD_PATH.include? load_path
+        $LOAD_PATH.unshift load_path
+      end
+      begin
+        require spec[:require_with]
+      rescue LoadError => e
+        puts "Failed to require #{spec[:require_with]}. #{e.inspect}"
       end
     end
   end

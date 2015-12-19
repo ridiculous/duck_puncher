@@ -3,8 +3,6 @@ require_relative 'gem_installer'
 
 module DuckPuncher
   module Object
-    include DuckPuncher::GemInstaller::LoadPathInitializer
-
     def clone!
       Marshal.load Marshal.dump self
     end unless defined? clone!
@@ -17,4 +15,5 @@ module DuckPuncher
   end
 end
 
+DuckPuncher::GemInstaller.initialize!
 Object.send(:include, DuckPuncher::Object)
