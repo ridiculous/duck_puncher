@@ -1,3 +1,5 @@
+require 'pathname'
+require 'fileutils'
 require 'duck_puncher/version'
 
 module DuckPuncher

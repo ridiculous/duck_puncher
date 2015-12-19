@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'pp'
+require 'duck_puncher'
+require 'irb'
+
+DuckPuncher.punch_all!
+
+IRB.start
