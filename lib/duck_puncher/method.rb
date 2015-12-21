@@ -1,7 +1,8 @@
 module DuckPuncher
   module Method
     def to_instruct
-      RubyVM::InstructionSequence.new(Definition.new(self).lines.join).disasm
+      definition = Definition.new(self)
+      RubyVM::InstructionSequence.new(definition.lines.join).disasm if definition.lines.any?
     end
 
     class Definition
@@ -14,7 +15,7 @@ module DuckPuncher
       # restricted when it comes to parsing crappy formatted ruby files
       def lines
         return @lines if defined? @lines
-        fail "Couldn't find the source location for that method" unless @file_path
+        return [] unless @file_path
         @lines = []
         File.open(@file_path) do |f|
           found = false
