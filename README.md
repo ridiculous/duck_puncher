@@ -26,6 +26,7 @@ These are the ducks I can punch:
                            => true
                            >> Pry.start
                            [1] pry(main)>
+    Method#to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
 
 
 ## Install
@@ -40,3 +41,10 @@ Ducks need to be _loaded_ before they can be punched! Maybe do this in an initia
 DuckPuncher.punch! :Hash, :Object #=> only punches the specified ducks
 DuckPuncher.punch_all!            #=> punches all the ducks
 ```
+
+## Contributing
+
+* Fork it
+* Run tests with `rake`
+* Start an IRB console that already has all your ducks in a row `bin/console`
+* Make changes and submit a PR to [https://github.com/ridiculous/duck_puncher](https://github.com/ridiculous/duck_puncher)
