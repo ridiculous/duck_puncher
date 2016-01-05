@@ -27,6 +27,7 @@ These are the ducks I can punch:
                            >> Pry.start
                            [1] pry(main)>
     Method#to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
+    Method#to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
 
 
 ## Install

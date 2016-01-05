@@ -9,13 +9,6 @@ class MethodTest < MiniTest::Test
     @subject = Wut.new
   end
 
-  # Called after every test method runs. Can be used to tear
-  # down fixture information.
-
-  def teardown
-    # Do nothing
-  end
-
   def test_to_instruct
     assert_match /RubyVM::InstructionSequence:to_a/, @subject.method(:to_a).to_instruct
     assert_match /newarray/, @subject.method(:to_a).to_instruct
@@ -26,5 +19,13 @@ class MethodTest < MiniTest::Test
   def test_to_instruct_single_line
     assert_match /RubyVM::InstructionSequence:to_f/, @subject.method(:to_f).to_instruct
     assert_match /getconstant\s*:INFINITY/, @subject.method(:to_f).to_instruct
+  end
+
+  def test_to_source
+    assert_equal "def to_a\n  ['w'] + ['u'] + ['t']\nend\n", @subject.method(:to_a).to_source
+  end
+
+  def test_to_source_with_no_source
+    assert_equal '', @subject.method(:object_id).to_source
   end
 end
