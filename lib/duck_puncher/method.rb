@@ -5,6 +5,10 @@ module DuckPuncher
       RubyVM::InstructionSequence.new(definition.lines.join).disasm if definition.lines.any?
     end
 
+    def to_source
+      Definition.new(self).to_s
+    end
+
     class Definition
       def initialize(method_handle)
         @file_path, @line_num = *method_handle.source_location
@@ -32,6 +36,14 @@ module DuckPuncher
           end
         end
         @lines
+      end
+
+      def to_s
+        if lines.any?
+          lines.join.gsub /^\s{#{find_indent_size(lines.first)}}/, ''
+        else
+          ''
+        end
       end
 
       def find_indent_size(line)

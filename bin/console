@@ -4,7 +4,7 @@ require 'bundler/setup'
 require 'pp'
 require 'duck_puncher'
 require 'irb'
-
+require_relative '../test/fixtures/wut'
 DuckPuncher.punch_all!
 
 IRB.start
