@@ -11,6 +11,7 @@ These are the ducks I can punch:
     Numeric#to_time_ago => `10_000.to_time_ago` turns a number into time ago (e.g. '2 hours ago')
     Numeric#to_rad      => `10.15.to_rad` returns 0.17715091907742445
     String#pluralize    => `'hour'.pluralize(2)` turns "hour" into "hours"
+    String#underscore   => `'DuckPuncher::Duck'.underscore` => 'duck_puncher/ducks'
     Object#clone!       => `Object.new.clone!` makes a deep clone of the object (using Marshal)
     Object#require!     =>  Downloads and activates a gem for the current and subsequent consoles. For example:
                            >> `require 'pry'` 

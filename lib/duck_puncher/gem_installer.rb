@@ -1,5 +1,3 @@
-require_relative 'json_storage'
-
 class DuckPuncher::GemInstaller
   def self.initialize!
     spec_data = DuckPuncher::JSONStorage.read('load_paths.json').values
@@ -19,7 +17,6 @@ class DuckPuncher::GemInstaller
   # @param [String] name of the gem
   # @param [String] version of the gem to install (e.g. '1.2.3')
   def perform(*args)
-    require 'rubygems/dependency_installer'
     installer = Gem::DependencyInstaller.new(install_dir: Bundler.bundle_path.to_s, bin_dir: RbConfig::CONFIG['bindir'])
     installer.install *args.reject(&:empty?)
     installer.installed_gems.each do |gem|

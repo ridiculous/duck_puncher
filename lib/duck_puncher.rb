@@ -1,24 +1,43 @@
 require 'pathname'
 require 'fileutils'
+require 'logger'
 require 'duck_puncher/version'
 
 module DuckPuncher
-  autoload :Array, 'duck_puncher/array'
-  autoload :Numeric, 'duck_puncher/numeric'
-  autoload :Hash, 'duck_puncher/hash'
-  autoload :String, 'duck_puncher/string'
-  autoload :Object, 'duck_puncher/object'
-  autoload :Method, 'duck_puncher/method'
-
-  if defined? ActiveRecord
-    autoload :ActiveRecordExtensions, 'duck_puncher/active_record_extensions'
-  end
+  autoload :JSONStorage, 'duck_puncher/json_storage'
+  autoload :GemInstaller, 'duck_puncher/gem_installer'
+  autoload :Duck, 'duck_puncher/duck'
+  autoload :Ducks, 'duck_puncher/ducks'
 
   def self.punch!(*names)
-    names.each &method(:const_get)
+    names.each do |name|
+      if duck = Ducks[name]
+        if duck.punched?
+          log.info %Q(Already punched #{name})
+        else
+          log.warn %Q(Punching the #{name} ducky)
+          unless duck.punch
+            log.error %Q(Failed to punch #{name}!)
+          end
+        end
+      else
+        log.info %Q(Couldn't find "#{name}" in my list of Ducks! I know about: #{Ducks.list.map(&:name).map(&:to_s)})
+      end
+    end
+    nil
   end
 
   def self.punch_all!
-    constants.each &method(:const_get)
+    log.warn 'Punching all ducks! Watch out!'
+    Ducks.list.each &:punch
+  end
+
+  class << self
+    attr_accessor :log
+  end
+
+  self.log = Logger.new(STDOUT).tap do |config|
+    config.level = Logger::INFO
+    config.formatter = proc { |*args| "#{args.first}: #{args.last.to_s}\n" }
   end
 end
