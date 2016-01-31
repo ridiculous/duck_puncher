@@ -8,7 +8,7 @@ These are the ducks I love the most:
     Array#m             => `[].m(:to_s)` => `[].map(&:to_s)` 
     Array#mm            => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
     Array#get           => `[].methods.get('ty?')` => [:empty?] 
-    Hash#dig            => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Now build into Ruby 2.3)
+    Hash#dig            => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Part of standard lib in Ruby >= 2.3)
     Numeric#to_currency => `25.245.to_currency` => 25.25 
     Numeric#to_duration => `10_000.to_duration` => '2 h 46 min'
     Numeric#to_time_ago => `10_000.to_time_ago` => '2 hours ago'
