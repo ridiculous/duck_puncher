@@ -1,5 +1,6 @@
 require 'pathname'
 require 'fileutils'
+require 'delegate'
 require 'logger'
 require 'duck_puncher/version'
 
@@ -9,48 +10,63 @@ module DuckPuncher
   autoload :Duck, 'duck_puncher/duck'
   autoload :Ducks, 'duck_puncher/ducks'
 
-  def self.punch(*names)
-    singular = names.size == 1
-    punched_ducks = names.map do |name|
-      duck = Ducks[name]
-      duck_class = Class.new(duck.klass)
-      if duck.punch duck_class
-        duck_class
-      else
-        log.error %Q(Failed to punch #{name}!)
-      end
-    end
-    punched_ducks.compact!
-    punched_ducks = punched_ducks.first if singular
-    punched_ducks
-  end
+  class << self
+    attr_accessor :log
 
-  def self.punch!(*names)
-    names.each do |name|
-      duck = Ducks[name]
-      if duck.punched?
-        log.info %Q(Already punched #{name})
-      else
-        log.warn %Q(Punching the #{name} ducky)
-        unless duck.punch
+    def delegate_class(name)
+      @delegations ||= {}
+      @delegations[name] ||= Ducks[name].delegated
+    end
+
+    # @description Extends functionality to a copy of the specified class
+    def punch(*names)
+      singular = names.size == 1
+      punched_ducks = names.map do |name|
+        duck = Ducks[name]
+        duck_class = Class.new(duck.klass)
+        if duck.punch duck_class
+          duck_class
+        else
           log.error %Q(Failed to punch #{name}!)
         end
       end
+      punched_ducks.compact!
+      punched_ducks = punched_ducks.first if singular
+      punched_ducks
     end
-    nil
+
+    def punch!(*names)
+      names.each do |name|
+        duck = Ducks[name]
+        if duck.punched?
+          log.info %Q(Already punched #{name})
+        else
+          log.warn %Q(Punching the #{name} ducky)
+          unless duck.punch
+            log.error %Q(Failed to punch #{name}!)
+          end
+        end
+      end
+      nil
+    end
+
+    def punch_all!
+      log.warn 'Punching all ducks! Watch out!'
+      Ducks.list.each &:punch
+    end
   end
 
-  def self.punch_all!
-    log.warn 'Punching all ducks! Watch out!'
-    Ducks.list.each &:punch
-  end
-
-  class << self
-    attr_accessor :log
-  end
-
+  # @description Default logger
+  # @example Silence logging
+  #
+  #   `DuckPuncher.log.level = Logger::ERROR`
+  #
   self.log = Logger.new(STDOUT).tap do |config|
     config.level = Logger::INFO
     config.formatter = proc { |*args| "#{args.first}: #{args.last.to_s}\n" }
   end
+end
+
+def punch(name, val)
+  DuckPuncher.delegate_class(name).new val
 end

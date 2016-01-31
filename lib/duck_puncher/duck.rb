@@ -16,6 +16,7 @@ module DuckPuncher
       return false if options[:if] && !options[:if].call
       options[:before].call if options[:before]
       (target || klass).send :include, DuckPuncher::Ducks.const_get(name)
+      options[:after].call if options[:after]
       @punched = true
     end
 
@@ -25,6 +26,10 @@ module DuckPuncher
 
     def punched?
       @punched
+    end
+
+    def delegated
+      DelegateClass(klass).tap { |k| punch k }
     end
   end
 end

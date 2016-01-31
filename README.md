@@ -58,6 +58,20 @@ DuckString = DuckPuncher.punch :String  #=> give the anonymous duck a name, so t
 DuckString.new.respond_to? :underscore  #=> true
 ```
 
+DuckPuncher defines a global `punch` method. This method creates and caches a delegation class pre-punched with only the
+ducks you want!
+
+Here's an example of how to use it:
+
+```ruby
+>> a = punch :Array, [punch(:String, 'foo'), punch(:String, 'bar')]
+=> ["foo", "bar"]
+>> a.m :upcase
+=> ["FOO", "BAR"]
+>> a.mm :pluralize, 2
+=> ["foos", "bars"]
+```
+
 ## Contributing
 
 * Fork it
