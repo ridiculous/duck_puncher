@@ -11,15 +11,18 @@ module DuckPuncher
     # @note Assumes the String duck is loaded first
     def load_path
       path_name = if name == :String
-        name.to_s.downcase
-      else
-        Object.send(:punch, :String, name.to_s).underscore
-      end
+                    name.to_s.downcase
+                  else
+                    Object.send(:punch, :String, name.to_s).underscore
+                  end
       "duck_puncher/ducks/#{path_name}"
     end
 
     def punch(target = nil)
-      return false if options[:if] && !options[:if].call
+      if options[:if] && !options[:if].call
+        DuckPuncher.log.warn %Q(Failed to punch #{name}!)
+        return nil
+      end
       options[:before].call if options[:before]
       (target || klass).send :include, DuckPuncher::Ducks.const_get(name)
       options[:after].call if options[:after]
@@ -35,7 +38,11 @@ module DuckPuncher
     end
 
     def delegated
-      DelegateClass(klass).tap { |k| punch k }
+      DelegateClass(klass).tap &method(:punch)
+    end
+
+    def classify
+      Class.new(klass).tap &method(:punch)
     end
   end
 end

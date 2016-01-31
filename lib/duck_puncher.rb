@@ -21,16 +21,7 @@ module DuckPuncher
     # @description Extends functionality to a copy of the specified class
     def punch(*names)
       singular = names.size == 1
-      punched_ducks = names.map do |name|
-        duck = Ducks[name]
-        duck_class = Class.new(duck.klass)
-        if duck.punch duck_class
-          duck_class
-        else
-          log.error %Q(Failed to punch #{name}!)
-        end
-      end
-      punched_ducks.compact!
+      punched_ducks = names.map { |name| Ducks[name].dup.classify }.compact
       punched_ducks = punched_ducks.first if singular
       punched_ducks
     end
