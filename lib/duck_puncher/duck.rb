@@ -8,8 +8,14 @@ module DuckPuncher
       @punched = false
     end
 
+    # @note Assumes the String duck is loaded first
     def load_path
-      "duck_puncher/ducks/#{name.to_s.downcase}"
+      path_name = if name == :String
+        name.to_s.downcase
+      else
+        Object.send(:punch, :String, name.to_s).underscore
+      end
+      "duck_puncher/ducks/#{path_name}"
     end
 
     def punch(target = nil)

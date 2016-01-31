@@ -15,7 +15,7 @@ module DuckPuncher
 
     def delegate_class(name)
       @delegations ||= {}
-      @delegations[name] ||= Ducks[name].delegated
+      @delegations[name] ||= Ducks[name].dup.delegated
     end
 
     # @description Extends functionality to a copy of the specified class
@@ -41,7 +41,7 @@ module DuckPuncher
         if duck.punched?
           log.info %Q(Already punched #{name})
         else
-          log.warn %Q(Punching the #{name} ducky)
+          log.warn %Q(Punching #{name} ducky)
           unless duck.punch
             log.error %Q(Failed to punch #{name}!)
           end

@@ -3,10 +3,10 @@ module DuckPuncher
     class << self
       def list
         @list ||= [
+          Duck.new(:String),
           Duck.new(:Array),
           Duck.new(:Numeric),
           Duck.new(:Hash),
-          Duck.new(:String),
           Duck.new(:Object),
           Duck.new(:Method, before: -> { DuckPuncher::GemInstaller.initialize! }),
           Duck.new(:ActiveRecord, class: 'ActiveRecord::Base', if: -> { defined? ::ActiveRecord })
