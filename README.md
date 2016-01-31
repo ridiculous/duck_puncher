@@ -1,7 +1,7 @@
 # DuckPuncher
 
 Ruby objects walk and talk like ducks, therefore they _are_ ducks. But ducks don't always behave, and some times they need
-some tough love. You know, some lil love punches! :heart:
+tough love. You know, lil love punches! :punch: :heart:
 
 These are the ducks I love the most:
 
