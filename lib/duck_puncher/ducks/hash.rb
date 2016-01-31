@@ -2,7 +2,7 @@ module DuckPuncher
   module Ducks
     module Hash
       # http://coryodaniel.com/index.php/2009/12/30/ruby-getting-deeply-nested-values-from-a-hash-in-one-line-of-code/
-      def seek(*_keys_)
+      def dig(*_keys_)
         last_level = self
         sought_value = nil
 
@@ -19,7 +19,7 @@ module DuckPuncher
         end
 
         sought_value
-      end
+      end unless method_defined?(:dig)
     end
   end
 end

@@ -8,7 +8,7 @@ These are the ducks I love the most:
     Array#m             => `[].m(:to_s)` => `[].map(&:to_s)` 
     Array#mm            => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
     Array#get           => `[].methods.get('ty?')` => [:empty?] 
-    Hash#seek           => `{a: 1, b: {c: 2}}.seek(:b, :c)` => 2
+    Hash#dig            => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Now build into Ruby 2.3)
     Numeric#to_currency => `25.245.to_currency` => 25.25 
     Numeric#to_duration => `10_000.to_duration` => '2 h 46 min'
     Numeric#to_time_ago => `10_000.to_time_ago` => '2 hours ago'
@@ -74,12 +74,12 @@ punch(:String, "yes").to_boolean
 The new method isn't persisted on the String class. Instead it creates (and caches) a String delegation 
 class. This class is pre-punched with the available string extensions! :punch:
 
-Using a combination of `Array#mm` and `Hash#seek`:
+Using a combination of `Array#mm` and `Hash#dig`:
 
 ```ruby
 params = { users: [{ id: 1, profile: { name: 'ryan' }}, { id: 2, profile: { name: 'kawika' }}, { id: 3 }] }
 list = punch :Array, params[:users].map { |u| punch(:Hash, u) }
-list.mm :seek, :profile, :name
+list.mm :dig, :profile, :name
 #=> ["ryan", "kawika", nil]
 ```
 

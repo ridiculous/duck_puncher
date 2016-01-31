@@ -11,14 +11,14 @@ class MethodTest < MiniTest::Test
   end
 
   def test_to_instruct
-    assert_match /RubyVM::InstructionSequence:to_a/, @subject.method(:to_a).to_instruct
+    assert_match /:to_a/, @subject.method(:to_a).to_instruct
     assert_match /newarray/, @subject.method(:to_a).to_instruct
     assert_match /opt_plus/, @subject.method(:to_a).to_instruct
     assert_equal nil, [].method(:to_s).to_instruct
   end
 
   def test_to_instruct_single_line
-    assert_match /RubyVM::InstructionSequence:to_f/, @subject.method(:to_f).to_instruct
+    assert_match /:to_f/, @subject.method(:to_f).to_instruct
     assert_match /getconstant\s*:INFINITY/, @subject.method(:to_f).to_instruct
   end
 
