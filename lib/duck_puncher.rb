@@ -45,10 +45,6 @@ module DuckPuncher
     Ducks.list.each &:punch
   end
 
-  def self.refinement(name)
-    Ducks.const_get(name).const_get :Refinement
-  end
-
   class << self
     attr_accessor :log
   end
