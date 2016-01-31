@@ -64,15 +64,14 @@ DuckString = DuckPuncher.punch :String  #=> give the anonymous duck a name, so t
 DuckString.new.respond_to? :underscore  #=> true
 ```
 
-That works, but it's pretty verbose and not real pactical to be managing potentially a bunch of custom standard lib classes. That's 
-why DuckPuncher defines a global `punch` method to make duck decorations quick and painless. Take this bit of code
-for example:
+That works, but it's pretty verbose and not real pactical to be managing potentially a bunch of custom classes. That's
++why DuckPuncher defines a global `punch` method. This makes it easy to decorate your ducks on demand:
 
 ```ruby
 punch(:String, "yes").to_boolean
 ```
 
-It's so simple! And the new method isn't persisted on the String class. Instead it creates (and caches) a String delegation 
+The new method isn't persisted on the String class. Instead it creates (and caches) a String delegation 
 class. This class is pre-punched with the available string extensions! :punch:
 
 Using a combination of `Array#mm` and `Hash#seek`:
