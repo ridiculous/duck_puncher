@@ -1,4 +1,5 @@
 require_relative '../test_helper'
+DuckPuncher.punch! :Hash
 
 class HashTest < MiniTest::Test
   def test_seek

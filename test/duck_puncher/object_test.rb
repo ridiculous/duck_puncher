@@ -1,4 +1,5 @@
 require_relative '../test_helper'
+DuckPuncher.punch! :Object
 
 class ObjectTest < MiniTest::Test
   def test_clone!

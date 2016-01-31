@@ -1,6 +1,9 @@
 # DuckPuncher
 
-These are the ducks I can punch:
+Ruby objects walk and talk like ducks, therefore they _are_ ducks. But ducks don't always behave, and some times they need
+some tough love. You know, some lil love punches! :heart:
+
+These are the ducks I love the most:
 
     Array#m             => `[].m(:to_s)` => `[].map(&:to_s)` 
     Array#mm            => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
@@ -48,8 +51,11 @@ Try it out if your feeling frisky! However, I noticed it doesn't work well with 
 Ducks need to be _loaded_ before they can be punched! Maybe do this in an initializer?
 
 ```ruby
-DuckPuncher.punch! :Hash, :Object #=> only punches the specified ducks
-DuckPuncher.punch_all!            #=> punches all the ducks
+DuckPuncher.punch_all!                  #=> punches all the ducks forever
+DuckPuncher.punch! :Hash, :Object       #=> only punches the Hash and Object ducks
+DuckPuncher.punch :String               #=> returns an anonymous punched duck that inherits from String
+DuckString = DuckPuncher.punch :String  #=> give the anonymous duck a name, so that you can use it!
+DuckString.new.respond_to? :underscore  #=> true
 ```
 
 ## Contributing

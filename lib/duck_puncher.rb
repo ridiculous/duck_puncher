@@ -9,6 +9,23 @@ module DuckPuncher
   autoload :Duck, 'duck_puncher/duck'
   autoload :Ducks, 'duck_puncher/ducks'
 
+  def self.punch(*names)
+    singular = names.size == 1
+    punched_ducks = names.map do |name|
+      if duck = Ducks[name]
+        duck_class = Class.new(duck.klass)
+        if duck.punch duck_class
+          duck_class
+        else
+          log.error %Q(Failed to punch #{name}!)
+        end
+      end
+    end
+    punched_ducks.compact!
+    punched_ducks = punched_ducks.first if singular
+    punched_ducks
+  end
+
   def self.punch!(*names)
     names.each do |name|
       if duck = Ducks[name]
@@ -20,8 +37,6 @@ module DuckPuncher
             log.error %Q(Failed to punch #{name}!)
           end
         end
-      else
-        log.info %Q(Couldn't find "#{name}" in my list of Ducks! I know about: #{Ducks.list.map(&:name).map(&:to_s)})
       end
     end
     nil

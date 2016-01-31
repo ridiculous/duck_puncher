@@ -6,6 +6,6 @@ require 'duck_puncher'
 require 'irb'
 require_relative '../test/fixtures/wut'
 
-DuckPuncher.punch_all!
+DuckPuncher.punch_all! if ENV['PUNCH'] != 'no'
 
 IRB.start

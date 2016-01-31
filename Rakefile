@@ -2,8 +2,12 @@ require 'bundler/gem_tasks'
 require 'rake'
 require 'rake/testtask'
 
-task default: :test
-
-Rake::TestTask.new do |t|
-  t.pattern = 'test/**/*_test.rb'
+Rake::TestTask.new(:soft_punch_test) do |t|
+  t.pattern = 'test/soft_punch/*_test.rb'
 end
+
+Rake::TestTask.new(:hard_punch_test) do |t|
+  t.pattern = 'test/duck_puncher/*_test.rb'
+end
+
+task default: [:soft_punch_test, :hard_punch_test]

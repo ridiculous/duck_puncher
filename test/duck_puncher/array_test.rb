@@ -1,4 +1,5 @@
 require_relative '../test_helper'
+DuckPuncher.punch! :Array
 
 class ArrayTest < MiniTest::Test
   attr_reader :subject

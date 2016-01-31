@@ -14,7 +14,8 @@ module DuckPuncher
       end
 
       def [](name)
-        list.find { |duck| duck.name == name.to_sym }
+        list.find { |duck| duck.name == name.to_sym } ||
+          DuckPuncher.log.info(%Q(Couldn't find "#{name}" in my list of Ducks! I know about: #{list.map(&:name).map(&:to_s)}))
       end
     end
 
