@@ -12,13 +12,12 @@ module DuckPuncher
   def self.punch(*names)
     singular = names.size == 1
     punched_ducks = names.map do |name|
-      if duck = Ducks[name]
-        duck_class = Class.new(duck.klass)
-        if duck.punch duck_class
-          duck_class
-        else
-          log.error %Q(Failed to punch #{name}!)
-        end
+      duck = Ducks[name]
+      duck_class = Class.new(duck.klass)
+      if duck.punch duck_class
+        duck_class
+      else
+        log.error %Q(Failed to punch #{name}!)
       end
     end
     punched_ducks.compact!
@@ -28,14 +27,13 @@ module DuckPuncher
 
   def self.punch!(*names)
     names.each do |name|
-      if duck = Ducks[name]
-        if duck.punched?
-          log.info %Q(Already punched #{name})
-        else
-          log.warn %Q(Punching the #{name} ducky)
-          unless duck.punch
-            log.error %Q(Failed to punch #{name}!)
-          end
+      duck = Ducks[name]
+      if duck.punched?
+        log.info %Q(Already punched #{name})
+      else
+        log.warn %Q(Punching the #{name} ducky)
+        unless duck.punch
+          log.error %Q(Failed to punch #{name}!)
         end
       end
     end
@@ -45,6 +43,10 @@ module DuckPuncher
   def self.punch_all!
     log.warn 'Punching all ducks! Watch out!'
     Ducks.list.each &:punch
+  end
+
+  def self.refinement(name)
+    Ducks.const_get(name).const_get :Refinement
   end
 
   class << self

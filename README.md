@@ -58,6 +58,21 @@ DuckString = DuckPuncher.punch :String  #=> give the anonymous duck a name, so t
 DuckString.new.respond_to? :underscore  #=> true
 ```
 
+But who wants to punch ducks or patch monkeys?! I mean, nowadays we have refinements! But DuckPuncher provides refinements
+for all it's ducks! :sweat_smile:
+
+```ruby
+class Go
+  using ::DuckPuncher.refinement(:Array)
+
+  def self.punch_ducks 
+    DuckPuncher::Ducks.list.m(:name).m(:to_s).m(:downcase)
+  end
+end
+
+Go.punch_ducks #=> ["array", "numeric", "hash", "string", "object", "method", "activerecord"]
+```
+
 ## Contributing
 
 * Fork it

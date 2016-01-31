@@ -13,6 +13,13 @@ module DuckPuncher
         regex = regex_or_str.is_a?(Regexp) ? regex_or_str : Regexp.new(Regexp.escape(regex_or_str))
         select { |x| x.to_s =~ regex }
       end
+
+      module Refinement
+        refine ::Array do
+          include ::DuckPuncher::Ducks::Array
+        end
+      end
     end
   end
 end
+
