@@ -40,7 +40,7 @@ Fetching: pry-0.10.3.gem (100%)
 [1] pry(main)>
 ```
 
-Try it out if your feeling frisky! However, I noticed it doesn't work well with bigger gems and those with native extensions.
+Pretty cool, right? Although, it doesn't work well with bigger gems or those with native extensions.
 
 ## Install
 
@@ -48,28 +48,40 @@ Try it out if your feeling frisky! However, I noticed it doesn't work well with 
 
 ## Usage
 
-Ducks need to be _loaded_ before they can be punched! Maybe do this in an initializer?
+Ducks need to be _loaded_ before they can be punched! Maybe put this in an initializer:
 
 ```ruby
+# config/initializers/duck_puncher.rb
 DuckPuncher.punch_all!                  #=> punches all the ducks forever
 DuckPuncher.punch! :Hash, :Object       #=> only punches the Hash and Object ducks
+```
+
+Create a new class of your favorite duck pre-punched:
+
+```ruby
 DuckPuncher.punch :String               #=> returns an anonymous punched duck that inherits from String
 DuckString = DuckPuncher.punch :String  #=> give the anonymous duck a name, so that you can use it!
 DuckString.new.respond_to? :underscore  #=> true
 ```
 
-DuckPuncher defines a global `punch` method. This method creates and caches a delegation class pre-punched with only the
-ducks you want!
-
-Here's an example of how to use it:
+That works, but it's pretty verbose and not real pactical to be managing potentially a bunch of custom standard lib classes. That's 
+why DuckPuncher defines a global `punch` method to make duck decorations quick and painless. Take this bit of code
+for example:
 
 ```ruby
->> a = punch :Array, [punch(:String, 'foo'), punch(:String, 'bar')]
-=> ["foo", "bar"]
->> a.m :upcase
-=> ["FOO", "BAR"]
->> a.mm :pluralize, 2
-=> ["foos", "bars"]
+punch(:String, "yes").to_boolean
+```
+
+It's so simple! And the new method is only added to the object for the duration of the call. It creates and caches a 
+delegation class pre-punched! :punch:
+
+Quickly extract data out of collections of hashes using `Hash#seek`:
+
+```ruby
+params = { users: [{ id: 1, profile: { name: 'ryan' }}, { id: 2, profile: { name: 'kawika' }}] }
+list = punch :Array, params[:users].map { |u| punch(:Hash, u) }
+list.mm :seek, :profile, :name
+#=> ["ryan", "kawika"]
 ```
 
 ## Contributing
