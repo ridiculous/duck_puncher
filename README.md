@@ -72,16 +72,16 @@ for example:
 punch(:String, "yes").to_boolean
 ```
 
-It's so simple! And the new method is only added to the object for the duration of the call. It creates and caches a 
-delegation class pre-punched! :punch:
+It's so simple! And the new method isn't persisted on the String class. Instead it creates (and caches) a String delegation 
+class. This class is pre-punched with the available string extensions! :punch:
 
-Quickly extract from hashes in a concise manner, using a combination of `Array#mm` and `Hash#seek`
+Using a combination of `Array#mm` and `Hash#seek`:
 
 ```ruby
-params = { users: [{ id: 1, profile: { name: 'ryan' }}, { id: 2, profile: { name: 'kawika' }}, { id: 3 }, {profile: {}}] }
+params = { users: [{ id: 1, profile: { name: 'ryan' }}, { id: 2, profile: { name: 'kawika' }}, { id: 3 }] }
 list = punch :Array, params[:users].map { |u| punch(:Hash, u) }
 list.mm :seek, :profile, :name
-#=> ["ryan", "kawika", nil, nil]
+#=> ["ryan", "kawika", nil]
 ```
 
 ## Contributing
