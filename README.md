@@ -75,13 +75,13 @@ punch(:String, "yes").to_boolean
 It's so simple! And the new method is only added to the object for the duration of the call. It creates and caches a 
 delegation class pre-punched! :punch:
 
-Quickly extract data out of collections of hashes using `Hash#seek`:
+Quickly extract from hashes in a concise manner, using a combination of `Array#mm` and `Hash#seek`
 
 ```ruby
-params = { users: [{ id: 1, profile: { name: 'ryan' }}, { id: 2, profile: { name: 'kawika' }}] }
+params = { users: [{ id: 1, profile: { name: 'ryan' }}, { id: 2, profile: { name: 'kawika' }}, { id: 3 }, {profile: {}}] }
 list = punch :Array, params[:users].map { |u| punch(:Hash, u) }
 list.mm :seek, :profile, :name
-#=> ["ryan", "kawika"]
+#=> ["ryan", "kawika", nil, nil]
 ```
 
 ## Contributing
