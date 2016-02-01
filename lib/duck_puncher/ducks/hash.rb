@@ -5,16 +5,13 @@ module DuckPuncher
       def dig(*_keys_)
         last_level = self
         sought_value = nil
-
         _keys_.each_with_index do |_key_, _idx_|
-          if last_level.is_a?(Hash) && last_level.has_key?(_key_)
-            if _idx_ + 1 == _keys_.length
-              sought_value = last_level[_key_]
-            else
-              last_level = last_level[_key_]
-            end
+          break unless last_level.respond_to?(:has_key?)
+          break unless last_level.has_key?(_key_)
+          if _idx_ + 1 == _keys_.length
+            sought_value = last_level[_key_]
           else
-            break
+            last_level = last_level[_key_]
           end
         end
 
