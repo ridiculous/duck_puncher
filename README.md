@@ -16,6 +16,7 @@ These are the ducks I love the most:
     String#pluralize    => `'hour'.pluralize(2)` => "hours"
     String#underscore   => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
     Object#clone!       => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
+    Object#punch        => `'duck'.punch` => a copy of 'duck' with the mixed String punches
     Method#to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
     Method#to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
     
@@ -64,12 +65,12 @@ DuckString = DuckPuncher.punch :String  #=> give the anonymous duck a name, so t
 DuckString.new.respond_to? :underscore  #=> true
 ```
 
-That works, but it's pretty verbose and not real pactical to be managing potentially a bunch of custom classes. That's
-+why DuckPuncher defines an `Object#punch` method that sets this stuff up for you!
+If you punch `Object` then you can use `punch` on any object to get a new decorated copy of the class with the desired
+functionality mixed in:
 
 ```ruby
 DuckPuncher.punch! :Object
-"yes".punch.to_boolean
+%w[yes no 1].punch.m(:punch).punch.m(:to_boolean) #=> [true, false, true]
 ```
 
 ## Contributing
