@@ -10,6 +10,10 @@ module DuckPuncher
           require file_or_gem.tr('-', '/')
         end
       end
+
+      def punch
+        DuckPuncher.delegate_class(self.class.name.to_sym).new(self)
+      end
     end
   end
 end

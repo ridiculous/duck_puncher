@@ -65,22 +65,11 @@ DuckString.new.respond_to? :underscore  #=> true
 ```
 
 That works, but it's pretty verbose and not real pactical to be managing potentially a bunch of custom classes. That's
-+why DuckPuncher defines a global `punch` method. This makes it easy to decorate your ducks on demand:
++why DuckPuncher defines an `Object#punch` method that sets this stuff up for you!
 
 ```ruby
-punch(:String, "yes").to_boolean
-```
-
-The new method isn't persisted on the String class. Instead it creates (and caches) a String delegation 
-class. This class is pre-punched with the available string extensions! :punch:
-
-Using a combination of `Array#mm` and `Hash#dig`:
-
-```ruby
-params = { users: [{ id: 1, profile: { name: 'ryan' }}, { id: 2, profile: { name: 'kawika' }}, { id: 3 }] }
-list = punch :Array, params[:users].map { |u| punch(:Hash, u) }
-list.mm :dig, :profile, :name
-#=> ["ryan", "kawika", nil]
+DuckPuncher.punch! :Object
+"yes".punch.to_boolean
 ```
 
 ## Contributing

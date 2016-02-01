@@ -12,9 +12,9 @@ module DuckPuncher
       def to_boolean(strict = false)
         @boolean_map ||= begin
           truths, falsities = %w(true 1 yes y on), ['false', '0', 'no', 'n', 'off', '']
-          Hash[truths.product([true]) + falsities.product([false])]
+          ::Hash[truths.product([true]) + falsities.product([false])]
         end
-        strict ? !downcase.in?(falsities) : @boolean_map[downcase]
+        strict ? !downcase.in?(falsities) : !!@boolean_map[downcase]
       end
     end
   end

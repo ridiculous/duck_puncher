@@ -1,11 +1,11 @@
 require_relative '../test_helper'
-DuckPuncher.punch! :Array
+DuckPuncher.punch! :Object
 
 class ArrayTest < MiniTest::Test
   attr_reader :subject
 
   def setup
-    @subject = ('a'..'m').to_a
+    @subject = ('a'..'m').to_a.punch
   end
 
   def test_m
@@ -21,7 +21,7 @@ class ArrayTest < MiniTest::Test
   end
 
   def test_get
-    assert_equal [].methods.get(/ty\?/), [:empty?]
-    assert_equal [].methods.get('ty?'), [:empty?]
+    assert_equal [].methods.punch.get(/ty\?/), [:empty?]
+    assert_equal [].methods.punch.get('ty?'), [:empty?]
   end
 end

@@ -57,7 +57,3 @@ module DuckPuncher
     config.formatter = proc { |*args| "#{args.first}: #{args.last.to_s}\n" }
   end
 end
-
-def punch(name, val)
-  DuckPuncher.delegate_class(name).new val
-end
