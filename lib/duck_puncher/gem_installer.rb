@@ -1,3 +1,5 @@
+require 'rubygems/dependency_installer'
+
 class DuckPuncher::GemInstaller
   def self.initialize!
     spec_data = DuckPuncher::JSONStorage.read('load_paths.json').values
