@@ -14,6 +14,12 @@ module DuckPuncher
       def punch
         DuckPuncher.delegate_class(self.class.name.to_sym).new(self)
       end
+
+      def track
+        require! 'object_tracker'
+        extend ::ObjectTracker
+        track_all!
+      end
     end
   end
 end

@@ -17,6 +17,7 @@ These are the ducks I love the most:
     String#underscore   => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
     Object#clone!       => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
     Object#punch        => `'duck'.punch` => a copy of 'duck' with the mixed String punches
+    Object#track        => `'duck'.punch.track` => downloads the [ObjectTracker](https://github.com/ridiculous/object_tracker) gem if it's not available and starts tracking this object
     Method#to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
     Method#to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
     
