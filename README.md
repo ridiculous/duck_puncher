@@ -36,7 +36,7 @@ INFO: Already punched Numeric
 >> 100.to_duration
 => "1 min"
 >> 100.to_time_ago
-NoMethodError: undefined method `to_duration' for 100:Fixnum
+NoMethodError: undefined method `to_time_ago' for 100:Fixnum
 ```
 
 There is also an experimental punch that tries to download the required gem if it doesn't exist on your computer. The
