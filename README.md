@@ -89,7 +89,7 @@ If you punch `Object` then you can use `punch` on any object to get a new decora
 functionality mixed in:
 
 ```ruby
-# Assuming you've already done `DuckPuncher.punch! :Object, only: :punch`
+DuckPuncher.punch! :Object, only: :punch
 %w[yes no 1].punch.m(:punch).punch.m(:to_boolean) #=> [true, false, true]
 ```
 
