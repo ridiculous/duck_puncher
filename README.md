@@ -23,7 +23,23 @@ Method#to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby
 Method#to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
 ```
 
-I also provide an experimental punch that tries to download the required gem if it doesn't exist on your computer. The
+## Tactical punches
+
+Sometimes you don't want to punch all the ducks. That's why you can punch only certain methods onto a class:
+
+```ruby
+>> DuckPuncher.punch! :Numeric, only: [:to_currency, :to_duration]
+INFO: Already punched Numeric
+=> nil
+>> 100.to_currency '$'
+=> "$100.00"
+>> 100.to_duration
+=> "1 min"
+>> 100.to_time_ago
+NoMethodError: undefined method `to_duration' for 100:Fixnum
+```
+
+There is also an experimental punch that tries to download the required gem if it doesn't exist on your computer. The
 method is called `require!` and works like this:
 
 Downloads and activates a gem for the current and subsequent consoles. For example:
