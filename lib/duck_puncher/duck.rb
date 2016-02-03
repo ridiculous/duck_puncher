@@ -19,9 +19,8 @@ module DuckPuncher
       end
       options[:before].call if options[:before]
       target = opts.fetch(:target, klass)
-      target.extend Usable unless target < Usable
+      target.extend Usable
       target.usable DuckPuncher::Ducks.const_get(name), opts
-      options[:after].call if options[:after]
       @punched = true
     end
 
