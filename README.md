@@ -58,7 +58,7 @@ Ducks need to be _loaded_ before they can be punched! Maybe put this in an initi
 # config/initializers/duck_puncher.rb
 DuckPuncher.punch_all!                   #=> punches all the ducks forever
 DuckPuncher.punch! :Hash, :Object        #=> only punches the Hash and Object ducks
-DuckPuncher.punch! :Object, only: :punch #=> only opens a can of whoop ass! Define just one method to rule them all
+DuckPuncher.punch! :Object, only: :punch #=> only opens a can of whoop ass! Define one method to rule them all
 ```
 
 Create a new class of your favorite duck pre-punched:
