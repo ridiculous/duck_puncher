@@ -12,13 +12,15 @@ module DuckPuncher
       "duck_puncher/ducks/#{name.to_s.gsub(/\B([A-Z])/, '_\1').downcase}"
     end
 
-    def punch(target = nil)
+    def punch(opts = {})
       if options[:if] && !options[:if].call
         DuckPuncher.log.warn %Q(Failed to punch #{name}!)
         return nil
       end
       options[:before].call if options[:before]
-      (target || klass).send :include, DuckPuncher::Ducks.const_get(name)
+      target = opts.fetch(:target, klass)
+      target.extend Usable unless target < Usable
+      target.usable DuckPuncher::Ducks.const_get(name), opts
       options[:after].call if options[:after]
       @punched = true
     end
@@ -32,11 +34,11 @@ module DuckPuncher
     end
 
     def delegated
-      DelegateClass(klass).tap &method(:punch)
+      DelegateClass(klass).tap { |k| punch target: k }
     end
 
     def classify
-      Class.new(klass).tap &method(:punch)
+      Class.new(klass).tap { |k| punch target: k }
     end
   end
 end

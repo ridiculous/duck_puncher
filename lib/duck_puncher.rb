@@ -2,6 +2,7 @@ require 'pathname'
 require 'fileutils'
 require 'delegate'
 require 'logger'
+require 'usable'
 require 'duck_puncher/version'
 
 module DuckPuncher
@@ -27,13 +28,14 @@ module DuckPuncher
     end
 
     def punch!(*names)
+      options = names.last.is_a?(Hash) ? names.pop : {}
       names.each do |name|
         duck = Ducks[name]
         if duck.punched?
           log.info %Q(Already punched #{name})
         else
           log.warn %Q(Punching #{name} ducky)
-          unless duck.punch
+          unless duck.punch(options)
             log.error %Q(Failed to punch #{name}!)
           end
         end
