@@ -56,8 +56,9 @@ Ducks need to be _loaded_ before they can be punched! Maybe put this in an initi
 
 ```ruby
 # config/initializers/duck_puncher.rb
-DuckPuncher.punch_all!                  #=> punches all the ducks forever
-DuckPuncher.punch! :Hash, :Object       #=> only punches the Hash and Object ducks
+DuckPuncher.punch_all!                   #=> punches all the ducks forever
+DuckPuncher.punch! :Hash, :Object        #=> only punches the Hash and Object ducks
+DuckPuncher.punch! :Object, only: :punch #=> only opens a can of whoop ass! Define just one method to rule them all
 ```
 
 Create a new class of your favorite duck pre-punched:
@@ -72,7 +73,7 @@ If you punch `Object` then you can use `punch` on any object to get a new decora
 functionality mixed in:
 
 ```ruby
-DuckPuncher.punch! :Object
+# Assuming you've already done `DuckPuncher.punch! :Object, only: :punch`
 %w[yes no 1].punch.m(:punch).punch.m(:to_boolean) #=> [true, false, true]
 ```
 
