@@ -5,22 +5,24 @@ tough love. You know, lil love punches! :punch: :heart:
 
 These are the ducks I love the most:
 
-    Array#m             => `[].m(:to_s)` => `[].map(&:to_s)` 
-    Array#mm            => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
-    Array#get           => `[].methods.get('ty?')` => [:empty?] 
-    Hash#dig            => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Part of standard lib in Ruby >= 2.3)
-    Numeric#to_currency => `25.245.to_currency` => 25.25 
-    Numeric#to_duration => `10_000.to_duration` => '2 h 46 min'
-    Numeric#to_time_ago => `10_000.to_time_ago` => '2 hours ago'
-    Numeric#to_rad      => `10.15.to_rad` => 0.17715091907742445
-    String#pluralize    => `'hour'.pluralize(2)` => "hours"
-    String#underscore   => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
-    Object#clone!       => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
-    Object#punch        => `'duck'.punch` => a copy of 'duck' with the mixed String punches
-    Object#track        => `'duck'.punch.track` => downloads the [ObjectTracker](https://github.com/ridiculous/object_tracker) gem if it's not available and starts tracking this object
-    Method#to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
-    Method#to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
-    
+```ruby
+Array#m             => `[].m(:to_s)` => `[].map(&:to_s)` 
+Array#mm            => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
+Array#get           => `[].methods.get('ty?')` => [:empty?] 
+Hash#dig            => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Part of standard lib in Ruby >= 2.3)
+Numeric#to_currency => `25.245.to_currency` => 25.25 
+Numeric#to_duration => `10_000.to_duration` => '2 h 46 min'
+Numeric#to_time_ago => `10_000.to_time_ago` => '2 hours ago'
+Numeric#to_rad      => `10.15.to_rad` => 0.17715091907742445
+String#pluralize    => `'hour'.pluralize(2)` => "hours"
+String#underscore   => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
+Object#clone!       => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
+Object#punch        => `'duck'.punch` => a copy of 'duck' with the mixed String punches
+Object#track        => `'duck'.punch.track` => downloads the [ObjectTracker](https://github.com/ridiculous/object_tracker) gem if it's not available and starts tracking this object
+Method#to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
+Method#to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
+```
+
 I also provide an experimental punch that tries to download the required gem if it doesn't exist on your computer. The
 method is called `require!` and works like this:
 
