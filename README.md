@@ -93,6 +93,8 @@ functionality mixed in:
 %w[yes no 1].punch.m(:punch).punch.m(:to_boolean) #=> [true, false, true]
 ```
 
+Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous/usable) gem, you can configure only the punches you want! 
+
 ## Contributing
 
 * Fork it
