@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = DuckPuncher::VERSION
   spec.authors       = ["Ryan Buckley"]
   spec.email         = ["arebuckley@gmail.com"]
-  spec.description   = %q{Duck punches Ruby with some of my favorite class extensions}
-  spec.summary       = %q{Duck punches Ruby}
+  spec.description   = %q{Administer precision punches}
+  spec.summary       = %q{Administer precision punches to your favorite Ruby classes}
   spec.homepage      = "https://github.com/ridiculous/duck_puncher"
   spec.license       = "MIT"
 
