@@ -29,6 +29,6 @@ class DuckPuncher::GemInstaller
     end
     installer.installed_gems.any?
   rescue => e
-    puts "Failed to install #{args.first}. #{e.inspect}"
+    DuckPuncher.log.error "Failed to install #{args.first}. #{e.inspect}"
   end
 end
