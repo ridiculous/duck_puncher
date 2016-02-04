@@ -16,10 +16,11 @@ module DuckPuncher
         DuckPuncher.log.warn %Q(Failed to punch #{name}!)
         return nil
       end
-      options[:before].call if options[:before]
       target = opts.delete(:target) || klass
+      options[:before].call(target) if options[:before]
       target.extend Usable
       target.usable DuckPuncher::Ducks.const_get(name), opts
+      options[:after].call(target) if options[:after]
       target
     end
 
