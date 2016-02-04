@@ -8,7 +8,7 @@ module DuckPuncher
           Duck.new(:Numeric),
           Duck.new(:Hash),
           Duck.new(:Object),
-          Duck.new(:Method, before: -> { DuckPuncher::GemInstaller.initialize! }),
+          Duck.new(:Method, before: ->(*) { DuckPuncher::GemInstaller.initialize! }),
           Duck.new(:ActiveRecord, class: 'ActiveRecord::Base', if: -> { defined? ::ActiveRecord })
         ]
       end
