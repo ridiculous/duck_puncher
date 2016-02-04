@@ -5,7 +5,6 @@ module DuckPuncher
     def initialize(name, options = {})
       @name = name
       @options = options
-      @punched = []
     end
 
     def load_path
@@ -21,20 +20,11 @@ module DuckPuncher
       target = opts.delete(:target) || klass
       target.extend Usable
       target.usable DuckPuncher::Ducks.const_get(name), opts
-      @punched.concat Array(opts[:only] || target.usable_config.available_methods.keys)
+      target
     end
 
     def klass
       @klass ||= (options[:class] || name).to_s.split('::').inject(Kernel) { |k, part| k.const_get part }
-    end
-
-    def punched?(method_names = [])
-      method_names = Array(method_names)
-      if method_names.any?
-        method_names.all? { |method_name| @punched.include?(method_name) }
-      else
-        @punched.any?
-      end
     end
 
     def delegated
