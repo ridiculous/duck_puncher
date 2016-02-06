@@ -31,7 +31,7 @@ module DuckPuncher
       options = names.last.is_a?(Hash) ? names.pop : {}
       names.each do |name|
         duck = Ducks[name]
-        log.warn %Q(Punching#{" #{options[:only]} onto"} #{name})
+        log.warn %Q(Punching#{" #{options[:only]} onto" if Array(options[:only]).any?} #{name})
         unless duck.punch(options)
           log.error %Q(Failed to punch #{name}!)
         end

@@ -1,4 +1,4 @@
-Copyright (c) 2014 Ryan Buckley
+Copyright (c) 2016 Ryan Buckley
 
 MIT License
 
