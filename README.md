@@ -29,7 +29,7 @@ Sometimes you don't want to punch all the ducks. That's why you can punch only c
 
 ```ruby
 >> DuckPuncher.punch! :Numeric, only: [:to_currency, :to_duration]
-INFO: Already punched Numeric
+WARN: Punching [:to_currency, :to_duration] onto Numeric
 => nil
 >> 100.to_currency '$'
 => "$100.00"
