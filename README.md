@@ -1,4 +1,4 @@
-# DuckPuncher
+# DuckPuncher [![Gem Version](https://badge.fury.io/rb/duck_puncher.svg)](http://badge.fury.io/rb/duck_puncher)
 
 Since Ruby objects walk and talk like ducks, they must therefore _be_ ducks. But ducks don't always behave, and some times they need
 tough love. You know, lil love punches! :punch: :heart:
