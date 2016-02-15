@@ -14,17 +14,31 @@ module DuckPuncher
   class << self
     attr_accessor :log
 
-    def delegate_class(name)
+    def delegations
       @delegations ||= {}
-      @delegations[name] ||= Ducks[name].dup.delegated
+    end
+
+    def classes
+      @classes ||= {}
+    end
+
+    def delegate_class(name)
+      delegations[name] ||= const_set "#{name}DuckDelegated", Ducks[name].dup.delegated
+    end
+
+    def duck_class(name)
+      classes[name] ||= const_set "#{name}Duck", Ducks[name].dup.classify
     end
 
     # @description Extends functionality to a copy of the specified class
     def punch(*names)
       singular = names.size == 1
-      punched_ducks = names.map { |name| Ducks[name].dup.classify }.compact
-      punched_ducks = punched_ducks.first if singular
-      punched_ducks
+      punched_ducks = names.map(&method(:duck_class)).compact
+      if singular
+        punched_ducks.first
+      else
+        punched_ducks
+      end
     end
 
     def punch!(*names)

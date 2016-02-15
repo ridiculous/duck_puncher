@@ -7,10 +7,6 @@ module DuckPuncher
       @options = options
     end
 
-    def load_path
-      "duck_puncher/ducks/#{name.to_s.gsub(/\B([A-Z])/, '_\1').downcase}"
-    end
-
     def punch(opts = {})
       if options[:if] && !options[:if].call
         DuckPuncher.log.warn %Q(Failed to punch #{name}!)

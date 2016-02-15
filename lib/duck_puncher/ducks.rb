@@ -17,6 +17,10 @@ module DuckPuncher
         list.find { |duck| duck.name == name.to_sym } ||
           DuckPuncher.log.info(%Q(Couldn't find "#{name}" in my list of Ducks! I know about: #{list.map(&:name).map(&:to_s)}))
       end
+
+      def load_path_for(duck)
+        "duck_puncher/ducks/#{duck.name.to_s.gsub(/\B([A-Z])/, '_\1').downcase}"
+      end
     end
 
     #
@@ -24,7 +28,7 @@ module DuckPuncher
     #
 
     list.each do |duck|
-      autoload duck.name, duck.load_path
+      autoload duck.name, load_path_for(duck)
     end
   end
 end
