@@ -50,6 +50,9 @@ LoadError: cannot load such file -- pry
  from (irb):1:in `require'
  from (irb):1
  from bin/console:10:in `<main>'
+>> DuckPuncher.punch! :Object, only: :require!
+WARN: Punching require! onto Object
+=> nil
 >> require! 'pry'
 Fetching: method_source-0.8.2.gem (100%)
 Fetching: slop-3.6.0.gem (100%)
@@ -72,17 +75,21 @@ Ducks need to be _loaded_ before they can be punched! Maybe put this in an initi
 
 ```ruby
 # config/initializers/duck_puncher.rb
-DuckPuncher.punch_all!                   #=> punches all the ducks forever
-DuckPuncher.punch! :Hash, :Object        #=> only punches the Hash and Object ducks
-DuckPuncher.punch! :Object, only: :punch #=> only opens a can of whoop ass! Define one method to rule them all
+DuckPuncher.punch_all!                   # => punches all the ducks forever
+DuckPuncher.punch! :Hash, :Object        # => only punches the Hash and Object ducks
+DuckPuncher.punch! :Object, only: :punch # => only opens a can of whoop ass! Define one method to rule them all
 ```
 
-Create a new class of your favorite duck pre-punched:
+The `.punch` method creates and caches a new punched class that inherits from the original. This avoids altering built-in
+classes. For example:
 
 ```ruby
-DuckPuncher.punch :String               #=> returns an anonymous punched duck that inherits from String
-DuckString = DuckPuncher.punch :String  #=> give the anonymous duck a name, so that you can use it!
-DuckString.new.respond_to? :underscore  #=> true
+>> DuckPuncher.punch :String
+=> DuckPuncher::StringDuck
+>> DuckPuncher::StringDuck.new('Yes').to_boolean
+=> true
+>> String.new('Yes').respond_to? :to_boolean
+=> false
 ```
 
 If you punch `Object` then you can use `punch` on any object to get a new decorated copy of the class with the desired
@@ -90,7 +97,7 @@ functionality mixed in:
 
 ```ruby
 DuckPuncher.punch! :Object, only: :punch
-%w[yes no 1].punch.m(:punch).punch.m(:to_boolean) #=> [true, false, true]
+%w[yes no 1].punch.m(:punch).punch.m(:to_boolean) # => [true, false, true]
 ```
 
 Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous/usable) gem, you can configure only the punches you want! 
