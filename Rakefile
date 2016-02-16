@@ -7,7 +7,7 @@ Rake::TestTask.new(:soft_punch_test) do |t|
 end
 
 Rake::TestTask.new(:hard_punch_test) do |t|
-  t.pattern = 'test/duck_puncher/*_test.rb'
+  t.pattern = 'test/lib/**/*_test.rb'
 end
 
 task default: [:soft_punch_test, :hard_punch_test]
