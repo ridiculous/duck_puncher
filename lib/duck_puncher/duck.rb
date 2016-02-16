@@ -4,10 +4,10 @@ module DuckPuncher
 
     # @param [Symbol] name of the duck
     # @param [Hash] options to modify the duck #punch method behavior
-    # @option options [Class,String] :class (name of the current object) to punch
-    # @option options [Proc] :if Stops the punch if it returns false
-    # @option options [Proc] :before A hook that is called with the target @klass before the punch
-    # @option options [Proc] :after A hook that is called with the target @klass after the punch
+    # @option options [String] :class (name) to punch
+    # @option options [Proc] :if Stops +punch+ if it returns false
+    # @option options [Proc] :before A hook that is called with the target @klass before +punch+
+    # @option options [Proc] :after A hook that is called with the target @klass after +punch+
     def initialize(name, options = {})
       @name = name
       @options = options

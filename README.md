@@ -120,10 +120,9 @@ DuckPuncher.register :CustomPunch, class: 'Array', if: -> { !defined?(::Rails) |
 ```
 
 The register method takes the same options as [Duck#initialize](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11)
-and will be used to configure punches. If you intend to use it for "soft punches" with `punch`, then the `:class` option can be omitted. 
-Otherwise, the class name of the target will be inferred from the name of the module when you call `punch!`
+and will be used to configure punches.
 
-To use your custom punches:
+Activate a custom punch:
 
 ```ruby
 DuckPuncher.punch! :CustomPunch
