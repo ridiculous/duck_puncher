@@ -39,10 +39,13 @@ WARN: Punching [:to_currency, :to_duration] onto Numeric
 NoMethodError: undefined method `to_time_ago' for 100:Fixnum
 ```
 
-There is also an experimental punch that tries to download the required gem if it doesn't exist on your computer. The
-method is called `require!` and works like this:
+There is also an experimental punch that tries to require or then _download_ a gem. 
 
-Downloads and activates a gem for the current and subsequent consoles. For example:
+```ruby
+Object  #require! => Downloads and activates a gem for the current and subsequent consoles
+```
+
+For example:
 
 ```bash
 >> `require 'pry'` 
@@ -63,7 +66,7 @@ Fetching: pry-0.10.3.gem (100%)
 [1] pry(main)>
 ```
 
-Pretty cool, right? Although, it doesn't work well with bigger gems or those with native extensions.
+Perfect! Mostly ... although, it doesn't work well with bigger gems or those with native extensions ¯\\\_(ツ)_/¯
 
 ## Install
 
