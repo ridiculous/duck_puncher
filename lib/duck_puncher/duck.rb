@@ -2,11 +2,20 @@ module DuckPuncher
   class Duck
     attr_accessor :name, :options
 
+    # @param [Symbol] name of the duck
+    # @param [Hash] options to modify the duck #punch method behavior
+    # @option options [Class,String] :class (name of the current object) to punch
+    # @option options [Proc] :if Stops the punch if it returns false
+    # @option options [Proc] :before A hook that is called with the target @klass before the punch
+    # @option options [Proc] :after A hook that is called with the target @klass after the punch
     def initialize(name, options = {})
       @name = name
       @options = options
     end
 
+    # @param [Hash] opts to modify punch
+    # @option options [Class] :target Overrides the @klass to be punched
+    # @option options [Array,Symbol] :only Specifies the methods to extend onto the current object
     def punch(opts = {})
       if options[:if] && !options[:if].call
         DuckPuncher.log.warn %Q(Failed to punch #{name}!)
@@ -24,8 +33,10 @@ module DuckPuncher
       @klass ||= (options[:class] || name).to_s.split('::').inject(Kernel) { |k, part| k.const_get part }
     end
 
-    def delegated
-      DelegateClass(klass).tap { |k| punch target: k }
+    # @param [Class] obj The object being punched
+    def delegated(obj = nil)
+      obj_class = obj ? obj.class : klass
+      DelegateClass(obj_class).tap { |k| punch target: k }
     end
 
     def classify

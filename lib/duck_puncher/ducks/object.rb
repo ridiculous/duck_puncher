@@ -11,9 +11,8 @@ module DuckPuncher
         end
       end
 
-      def punch(klass_name = nil)
-        klass_name ||= self.class.name
-        DuckPuncher.delegate_class(klass_name.to_sym).new(self)
+      def punch(duck_name = self.class.name)
+        DuckPuncher.delegate_class(duck_name.to_sym, self).new(self)
       end
 
       def track

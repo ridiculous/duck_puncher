@@ -22,8 +22,10 @@ module DuckPuncher
       @classes ||= {}
     end
 
-    def delegate_class(name)
-      delegations[name] ||= const_set "#{name}DuckDelegated", Ducks[name].dup.delegated
+    # @param [Symbol] duck_name
+    # @param [Class] obj The object being punched
+    def delegate_class(duck_name, obj = nil)
+      delegations[duck_name] ||= const_set "#{duck_name}DuckDelegated", Ducks[duck_name].dup.delegated(obj)
     end
 
     def duck_class(name)
@@ -56,6 +58,10 @@ module DuckPuncher
     def punch_all!
       log.warn 'Punching all ducks! Watch out!'
       Ducks.list.each &:punch
+    end
+
+    def register(*args)
+      Ducks.list << Duck.new(*args)
     end
   end
 
