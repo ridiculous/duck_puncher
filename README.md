@@ -83,14 +83,14 @@ DuckPuncher allows you to utilize the `punch` interface to decorate any kind of 
 `.register` with the name of your module:
 
 ```ruby
-module CustomPunch
+module Donald
   def tap_tap
     p self
     self
   end
 end
 
-DuckPuncher.register :CustomPunch, class: 'Array', if: -> { !defined?(::Rails) || Rails.env.development? } 
+DuckPuncher.register :Donald, class: 'Array', if: -> { !defined?(::Rails) || Rails.env.development? } 
 ```
 
 The register method takes the same options as [Duck#initialize](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11)
@@ -99,11 +99,11 @@ and will be used to configure punches.
 Activate a custom punch:
 
 ```ruby
-DuckPuncher.punch! :CustomPunch
+DuckPuncher.punch! :Donald
 [].tap_tap
 # or
 DuckPuncher.punch! :Object, only: :punch
-[].punch(:CustomPunch).tap_tap
+[].punch(:Donald).tap_tap
 ```
 
 ## Experimental

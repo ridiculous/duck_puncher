@@ -1,3 +1,3 @@
 module DuckPuncher
-  VERSION = '2.9.3'.freeze
+  VERSION = '2.10.0'.freeze
 end
