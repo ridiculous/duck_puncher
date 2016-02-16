@@ -39,35 +39,6 @@ WARN: Punching [:to_currency, :to_duration] onto Numeric
 NoMethodError: undefined method `to_time_ago' for 100:Fixnum
 ```
 
-There is also an experimental punch that tries to require or then _download_ a gem. 
-
-```ruby
-Object  #require! => Downloads and activates a gem for the current and subsequent consoles
-```
-
-For example:
-
-```bash
->> `require 'pry'` 
-LoadError: cannot load such file -- pry
- from (irb):1:in `require'
- from (irb):1
- from bin/console:10:in `<main>'
->> DuckPuncher.punch! :Object, only: :require!
-WARN: Punching require! onto Object
-=> nil
->> require! 'pry'
-Fetching: method_source-0.8.2.gem (100%)
-Fetching: slop-3.6.0.gem (100%)
-Fetching: coderay-1.1.0.gem (100%)
-Fetching: pry-0.10.3.gem (100%)
-=> true
->> Pry.start
-[1] pry(main)>
-```
-
-Perfect! Mostly ... although, it doesn't work well with bigger gems or those with native extensions ¯\\\_(ツ)_/¯
-
 ## Install
 
     gem 'duck_puncher'
@@ -134,6 +105,35 @@ DuckPuncher.punch! :CustomPunch
 DuckPuncher.punch! :Object, only: :punch
 [].punch(:CustomPunch).tap_tap
 ```
+
+## Experimental
+
+__Object#require__ will try to require a gem or, if it's not found, then _download_ it! It will also keep track of any
+downloaded gems (saved to `.duck_puncher`) and load them for subsequent IRB/rails console sessions. Gems are _not_ 
+saved to the Gemfile.
+
+In the wild:
+
+```bash
+>> `require 'pry'` 
+LoadError: cannot load such file -- pry
+ from (irb):1:in `require'
+ from (irb):1
+ from bin/console:10:in `<main>'
+>> DuckPuncher.punch! :Object, only: :require!
+WARN: Punching require! onto Object
+=> nil
+>> require! 'pry'
+Fetching: method_source-0.8.2.gem (100%)
+Fetching: slop-3.6.0.gem (100%)
+Fetching: coderay-1.1.0.gem (100%)
+Fetching: pry-0.10.3.gem (100%)
+=> true
+>> Pry.start
+[1] pry(main)>
+```
+
+Perfect! Mostly ... although, it doesn't work well with bigger gems or those with native extensions ¯\\\_(ツ)_/¯
 
 ## Contributing
 
