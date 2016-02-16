@@ -18,7 +18,6 @@ String  #pluralize    => `'hour'.pluralize(2)` => "hours"
         #underscore   => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
 Object  #clone!       => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
         #punch        => `'duck'.punch` => a copy of 'duck' with the mixed String punches
-        #track        => `'duck'.punch.track` => downloads the [ObjectTracker](https://github.com/ridiculous/object_tracker) gem if it's not available and starts tracking this object
 Method  #to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
         #to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
 ```
@@ -134,6 +133,18 @@ Fetching: pry-0.10.3.gem (100%)
 ```
 
 Perfect! Mostly ... although, it doesn't work well with bigger gems or those with native extensions ¯\\\_(ツ)_/¯
+
+__Object#track__ builds upon `require!` to download the [ObjectTracker](https://github.com/ridiculous/object_tracker) gem,
+if it's not available in the current load path, and starts tracking the current object!
+
+```ruby
+>> class Duck; def to_s() "here i am" end; end
+>> DuckPuncher.punch!(:Object, only: :track)
+>> Duck.track
+WARN: Punching require! onto Object
+   * called "#inspect"
+=> Duck
+```
 
 ## Contributing
 

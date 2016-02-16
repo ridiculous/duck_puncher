@@ -16,6 +16,7 @@ module DuckPuncher
       end
 
       def track
+        DuckPuncher.punch! :Object, only: :require! unless respond_to? :require!
         require! 'object_tracker'
         extend ::ObjectTracker
         track_all!
