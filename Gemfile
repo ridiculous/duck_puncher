@@ -5,4 +5,5 @@ gemspec
 
 if RUBY_VERSION >= '2.0'
   gem 'byebug'
+  # gem 'object_tracker'
 end

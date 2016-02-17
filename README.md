@@ -138,12 +138,42 @@ __Object#track__ builds upon `require!` to download the [ObjectTracker](https://
 if it's not available in the current load path, and starts tracking the current object!
 
 ```ruby
->> class Duck; def to_s() "here i am" end; end
->> DuckPuncher.punch!(:Object, only: :track)
->> Duck.track
-WARN: Punching require! onto Object
-   * called "#inspect"
-=> Duck
+Duck = Class.new
+Donald = Module.new { def tap_tap() self end }
+DuckPuncher.punch!(:Object, only: :track)
+Donald.track
+Duck.track
+>> Duck.usable Donald, only: :tap_tap
+  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00002)
+  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00001)
+  * called "Donald.respond_to?" with to_ary, true [RUBY CORE] (0.00001)
+  * called "Donald.to_s" [RUBY CORE] (0.00001)
+  * called "Duck.usable_config" [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:10] (0.00002)
+  * called "Duck.usable_config" [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:10] (0.00001)
+  * called "Donald.const_defined?" with UsableSpec [RUBY CORE] (0.00001)
+  * called "Donald.dup" [RUBY CORE] (0.00002)
+  * called "Donald.name" [RUBY CORE] (0.00000)
+  * called "Donald.instance_methods" [RUBY CORE] (0.00001)
+  * called "Duck.const_defined?" with DonaldUsed [RUBY CORE] (0.00001)
+  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00001)
+  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00000)
+  * called "Donald.respond_to?" with to_ary, true [RUBY CORE] (0.00000)
+  * called "Donald.to_s" [RUBY CORE] (0.00035)
+  * called "Duck.const_set" with DonaldUsed, #<Module:0x007fe23a261618> [RUBY CORE] (0.00002)
+  * called "Duck.usable_config" [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:10] (0.00000)
+  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00000)
+  * called "Donald.respond_to?" with to_ary, true [RUBY CORE] (0.00001)
+  * called "Donald.to_s" [RUBY CORE] (0.00019)
+  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00001)
+  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00000)
+  * called "Donald.respond_to?" with to_ary, true [RUBY CORE] (0.00000)
+  * called "Donald.to_s" [RUBY CORE] (0.00000)
+  * called "Duck.include" with Duck::DonaldUsed [RUBY CORE] (0.00001)
+  * called "Duck#send" with include, Duck::DonaldUsed [RUBY CORE] (0.00024)
+  * called "Duck.usable!" with #<Usable::ModExtender:0x007fe23a261ca8> [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:41] (0.00143)
+  * called "Donald.const_defined?" with UsableSpec [RUBY CORE] (0.00001)
+  * called "Duck.usable" with Donald, {:only=>:tap_tap} [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:30] (0.00189)
+  # ... You get the idea.
 ```
 
 ## Contributing
