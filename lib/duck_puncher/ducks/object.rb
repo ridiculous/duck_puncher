@@ -16,8 +16,12 @@ module DuckPuncher
       end
 
       def track
-        DuckPuncher.punch! :Object, only: :require! unless respond_to? :require!
-        require! 'object_tracker'
+        begin
+          require 'object_tracker'
+        rescue LoadError
+          DuckPuncher.punch! :Object, only: :require! unless respond_to? :require!
+          require!('object_tracker')
+        end
         extend ::ObjectTracker
         track_all!
       end
