@@ -107,7 +107,7 @@ DuckPuncher.punch! :Object, only: :punch
 
 ## Experimental
 
-__Object#require__ will try to require a gem, or, if it's not found, then _download_ it! It will also keep track of any
+__Object#require!__ will try to require a gem, or, if it's not found, then _download_ it! It will also keep track of any
 downloaded gems and load them for subsequent IRB/rails console sessions. Gems are _not_ 
 saved to the Gemfile.
 
