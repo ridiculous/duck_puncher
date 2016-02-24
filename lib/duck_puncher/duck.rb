@@ -25,7 +25,6 @@ module DuckPuncher
       options[:before].call(target) if options[:before]
       target.extend Usable
       target.usable DuckPuncher::Ducks.const_get(name), opts
-      options[:after].call(target) if options[:after]
       target
     end
 
@@ -36,7 +35,10 @@ module DuckPuncher
     # @param [Class] obj The object being punched
     def delegated(obj = nil)
       obj_class = obj ? obj.class : klass
-      DelegateClass(obj_class).tap { |k| punch target: k }
+      klass = DelegateClass(obj_class)
+      punch target: klass
+      klass.usable DuckPuncher::Ducks::Object, only: :punch, method: :prepend
+      klass
     end
 
     def classify

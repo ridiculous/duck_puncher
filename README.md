@@ -89,7 +89,14 @@ module Donald
   end
 end
 
-DuckPuncher.register :Donald, class: 'Array', if: -> { !defined?(::Rails) || Rails.env.development? } 
+module Daisy
+  def quack
+    "Hi, I'm Daisy"
+  end
+end
+
+DuckPuncher.register :Donald, class: 'Array', if: -> { 'some condition' }
+DuckPuncher.register :Daisy, class: 'Array'
 ```
 
 The register method takes the same options as [Duck#initialize](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11)
@@ -103,6 +110,15 @@ DuckPuncher.punch! :Donald
 # or
 DuckPuncher.punch! :Object, only: :punch
 [].punch(:Donald).tap_tap
+```
+
+Punches can also be stacked together:
+
+```ruby
+DuckPuncher.punch! :Object, only: :punch
+ducks = [].punch(:Donald).punch(:Daisy)
+ducks.tap_tap
+ducks.quack
 ```
 
 ## Experimental
