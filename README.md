@@ -79,9 +79,10 @@ Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous
 ## Registering custom punches
 
 DuckPuncher allows you to utilize the `punch` interface to decorate any kind of object with your own punches. Simply call 
-`.register` with the name of your module and a new delegated class will be created with that module mixed in. For example:
+`.register` with the name of your module.
 
 ```ruby
+# Example punches
 module Donald
   def tap_tap
     p self
@@ -96,7 +97,7 @@ module Daisy
 end
 ```
 
-If you intend to punch a class, you need to specify which class will receive the punches:
+When punching a class, the `:class` option is required when registering:
 
 ```ruby
 DuckPuncher.register :Donald, class: 'Array'
@@ -104,8 +105,7 @@ DuckPuncher.punch! :Donald
 [].tap_tap
 ```
 
-Or if you want to apply punches to individual objects, you can ommit the `:class` option and just specify the name of 
-the punch when you use it:
+When punching instances, the `:class` option can be omitted, but the name of the punch is required:
 
 ```ruby
 DuckPuncher.punch! :Object, only: :punch
