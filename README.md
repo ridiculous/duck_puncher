@@ -227,3 +227,7 @@ Duck.track
 * Start an IRB console that already has all your ducks in a row: `bin/console`
 * Start an IRB console without punching ducks: `PUNCH=no bin/console`
 * Make changes and submit a PR to [https://github.com/ridiculous/duck_puncher](https://github.com/ridiculous/duck_puncher)
+
+## License
+
+MIT
