@@ -17,14 +17,14 @@ Numeric #to_currency  => `25.245.to_currency` => 25.25
 String  #pluralize    => `'hour'.pluralize(2)` => "hours"
         #underscore   => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
 Object  #clone!       => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
-        #punch        => `'duck'.punch` => a copy of 'duck' with the mixed String punches
+        #punch        => `'duck'.punch` => a copy of 'duck' with String punches mixed in
 Method  #to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
         #to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
 ```
 
 ## Tactical punches
 
-Sometimes you don't want to punch all the ducks. That's why you can punch only certain methods onto a class:
+Punch only certain methods onto a duck:
 
 ```ruby
 >> DuckPuncher.punch! :Numeric, only: [:to_currency, :to_duration]
@@ -44,11 +44,8 @@ NoMethodError: undefined method `to_time_ago' for 100:Fixnum
 
 ## Usage
 
-Ducks need to be _loaded_ before they can be punched! Maybe put this in an initializer:
-
 ```ruby
-# config/initializers/duck_puncher.rb
-DuckPuncher.punch_all!                   # => punches all the ducks forever
+DuckPuncher.punch_all!                   # => punches all registered ducks
 DuckPuncher.punch! :Hash, :Object        # => only punches the Hash and Object ducks
 DuckPuncher.punch! :Object, only: :punch # => only opens a can of whoop ass! Define one method to rule them all
 ```
