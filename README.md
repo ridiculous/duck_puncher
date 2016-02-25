@@ -81,6 +81,36 @@ Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous
 DuckPuncher allows you to utilize the `punch` interface to decorate any kind of object with your own punches. Simply call 
 `.register` with the name of your module.
 
+### Punching your own duck
+```ruby
+class User < Struct.new(:name)
+end
+
+module Billable
+  def perform(amt)
+    puts "Attempting to bill #{name} for $#{amt}"
+    fail Errno::ENOENT
+  end
+end
+
+module Retryable
+  def perform_with_retry(*args, retries: 3)
+    perform *args
+  rescue Errno::ENOENT
+    puts 'retrying'
+    retry if (retries -= 1) > 0
+  end
+end
+
+DuckPuncher.register :Billable
+DuckPuncher.register :Retryable
+DuckPuncher.punch! :Object, only: :punch
+
+user = User.new('Ryan').punch(:Billable).punch(:Retryable)
+user.perform_with_retry(19.99)
+```
+
+### Punching core ducks
 ```ruby
 # Example punches
 module Donald
