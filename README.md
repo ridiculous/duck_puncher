@@ -83,15 +83,15 @@ class User < Struct.new(:name)
 end
 
 module Billable
-  def perform(amt)
+  def call(amt)
     puts "Attempting to bill #{name} for $#{amt}"
     fail Errno::ENOENT
   end
 end
 
 module Retryable
-  def perform_with_retry(*args, retries: 3)
-    perform *args
+  def call_with_retry(*args, retries: 3)
+    call *args
   rescue Errno::ENOENT
     puts 'retrying'
     retry if (retries -= 1) > 0
@@ -103,7 +103,7 @@ DuckPuncher.register :Retryable
 DuckPuncher.punch! :Object, only: :punch
 
 user = User.new('Ryan').punch(:Billable).punch(:Retryable)
-user.perform_with_retry(19.99)
+user.call_with_retry(19.99)
 ```
 
 ### Punching core ducks
