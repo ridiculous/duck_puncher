@@ -28,7 +28,6 @@ Punch only certain methods onto a duck:
 
 ```ruby
 >> DuckPuncher.punch! :Numeric, only: [:to_currency, :to_duration]
-WARN: Punching [:to_currency, :to_duration] onto Numeric
 => nil
 >> 100.to_currency '$'
 => "$100.00"
@@ -161,7 +160,6 @@ LoadError: cannot load such file -- pry
  from (irb):1
  from bin/console:10:in `<main>'
 >> DuckPuncher.punch! :Object, only: :require!
-WARN: Punching require! onto Object
 => nil
 >> require! 'pry'
 Fetching: method_source-0.8.2.gem (100%)

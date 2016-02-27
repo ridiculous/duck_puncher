@@ -56,7 +56,7 @@ module DuckPuncher
     end
 
     def punch_all!
-      log.warn 'Punching all ducks! Watch out!'
+      log.warn 'Punching all ducks!'
       Ducks.list.each &:punch
     end
 
@@ -65,13 +65,10 @@ module DuckPuncher
     end
   end
 
-  # @description Default logger
-  # @example Silence logging
-  #
-  #   `DuckPuncher.log.level = Logger::ERROR`
-  #
   self.log = Logger.new(STDOUT).tap do |config|
     config.level = Logger::INFO
     config.formatter = proc { |*args| "#{args.first}: #{args.last.to_s}\n" }
   end
+
+  log.level = Logger::ERROR
 end

@@ -11,7 +11,7 @@ class DuckPuncher::GemInstaller
       begin
         require spec[:require_with]
       rescue LoadError => e
-        DuckPuncher.log.warn "Failed to load #{spec[:require_with]} from .duck_puncher/ #{e.inspect}"
+        DuckPuncher.log.error "Failed to load #{spec[:require_with]} from .duck_puncher/ #{e.inspect}"
       end
     end
   end

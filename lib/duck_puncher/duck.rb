@@ -18,7 +18,7 @@ module DuckPuncher
     # @option options [Array,Symbol] :only Specifies the methods to extend onto the current object
     def punch(opts = {})
       if options[:if] && !options[:if].call
-        DuckPuncher.log.warn %Q(Failed to punch #{name}!)
+        DuckPuncher.log.info %Q(Skipping the punch for #{name}!)
         return nil
       end
       target = opts.delete(:target) || klass
