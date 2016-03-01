@@ -78,8 +78,8 @@ Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous
 ### Registering custom punches
 
 DuckPuncher allows you to utilize the `punch` interface to __decorate__ any kind of object with your own punches. Simply 
-call `.register` with the name of your module (or an array of names) and any options to modify the punch (same as
-[Duck#initialize](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11)).
+call `.register` with the name of your module (or an array of names) and any of
+[these options](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11)).
 
 
 ```ruby
