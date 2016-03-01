@@ -41,8 +41,7 @@ Punch only certain methods onto a duck:
 DuckPuncher.punch! :Numeric, only: [:to_currency, :to_duration]
 ```
 
-The `.punch` method creates and caches a new punched class that inherits from the original. This avoids altering built-in
-classes. For example:
+The `.punch` method creates and caches a new punched class that __inherits__ from the original:
 
 ```ruby
 >> DuckPuncher.punch :String
@@ -53,7 +52,7 @@ classes. For example:
 => false
 ```
 
-If you punch `Object` then you can use `punch` on any object to get a new decorated copy of the object with the desired
+If you punch `Object` then you can use `punch` on any object to get a new __decorated__ copy of the object with the desired
 functionality mixed in:
 
 ```ruby
@@ -66,8 +65,8 @@ Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous
 
 ### Registering custom punches
 
-DuckPuncher allows you to utilize the `punch` interface to decorate any kind of object with your own punches. Simply call 
-`.register` with the name of your module.
+DuckPuncher allows you to utilize the `punch` interface to __decorate__ any kind of object with your own punches. Simply 
+call `.register` with the name of your module.
 
 ### Punching your own duck
 ```ruby
