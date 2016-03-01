@@ -78,7 +78,9 @@ Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous
 ### Registering custom punches
 
 DuckPuncher allows you to utilize the `punch` interface to __decorate__ any kind of object with your own punches. Simply 
-call `.register` with the name of your module.
+call `.register` with the name of your module (or an array of names) and any options to modify the punch (same as
+[Duck#initialize](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11)).
+
 
 ```ruby
 # Define some extensions
@@ -113,43 +115,12 @@ user = User.new('Ryan').punch(:Billable).punch(:Retryable)
 user.call_with_retry(19.99)
 ```
 
-### Punching core ducks
-```ruby
-# Example punches
-module Donald
-  def tap_tap
-    p self
-    self
-  end
-end
-
-module Daisy
-  def quack
-    "Hi, I'm Daisy"
-  end
-end
-```
-
-When punching a class, the `:class` option is required when registering:
+When punching at a class level, the `:class` option is required:
 
 ```ruby
-DuckPuncher.register :Donald, class: 'Array'
-DuckPuncher.punch! :Donald
-[].tap_tap
+DuckPuncher.register :Billable, class: 'User'
+DuckPuncher.punch! :Billable
 ```
-
-When punching instances, the `:class` option can be omitted, but the name of the punch is required:
-
-```ruby
-DuckPuncher.punch! :Object, only: :punch, target: Array
-DuckPuncher.register [:Donald, :Daisy]
-ducks = [].punch(:Donald).punch(:Daisy)
-ducks.tap_tap
-ducks.quack
-```
-
-The `register` method takes the same options as [Duck#initialize](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11)
-and will be used to configure punches.
 
 ## Install
 
