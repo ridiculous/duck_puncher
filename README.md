@@ -2,7 +2,7 @@
 
 DuckPuncher provides an interface for administering __duck punches__ (a.k.a "monkey patches"). Punches can be administered in several ways: 
 
-* as an extension to the class
+* as an extension
 * as a subclass
 * as a decorator
 
