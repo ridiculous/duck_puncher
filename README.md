@@ -70,9 +70,7 @@ call `.register` with the name of your module.
 
 ### Punching your own duck
 ```ruby
-class User < Struct.new(:name)
-end
-
+# Define some extensions
 module Billable
   def call(amt)
     puts "Attempting to bill #{name} for $#{amt}"
@@ -89,10 +87,17 @@ module Retryable
   end
 end
 
-DuckPuncher.register :Billable
-DuckPuncher.register :Retryable
-DuckPuncher.punch! :Object, only: :punch
+# Register the extensions
+DuckPuncher.register [:Billable, :Retryable]
 
+# Our duck
+class User < Struct.new(:name)
+end
+
+# Add the #punch method to User instances
+DuckPuncher.punch! :Object, only: :punch, target: User
+
+# Usage
 user = User.new('Ryan').punch(:Billable).punch(:Retryable)
 user.call_with_retry(19.99)
 ```
