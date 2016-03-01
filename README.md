@@ -1,9 +1,8 @@
 # DuckPuncher [![Gem Version](https://badge.fury.io/rb/duck_puncher.svg)](http://badge.fury.io/rb/duck_puncher)  [![Build Status](https://travis-ci.org/ridiculous/duck_puncher.svg)](https://travis-ci.org/ridiculous/duck_puncher) [![Code Climate](https://codeclimate.com/github/ridiculous/duck_puncher/badges/gpa.svg)](https://codeclimate.com/github/ridiculous/duck_puncher)
 
-Since Ruby objects walk and talk like ducks, they must therefore _be_ ducks. But ducks don't always behave, and some times they need
-tough love! :punch: :heart:
+DuckPuncher provides an interface for managing __duck punches__ (a.k.a "monkey patches"), which can be used to extend or decorate objects.
 
-These are the ducks I love the most:
+Default extensions:
 
 ```ruby
 Array   #m            => `[].m(:to_s)` => `[].map(&:to_s)` 
