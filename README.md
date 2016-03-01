@@ -25,31 +25,20 @@ Method  #to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ru
         #to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
 ```
 
-## Tactical punches
-
-Punch only certain methods onto a duck:
-
-```ruby
->> DuckPuncher.punch! :Numeric, only: [:to_currency, :to_duration]
-=> nil
->> 100.to_currency '$'
-=> "$100.00"
->> 100.to_duration
-=> "1 min"
->> 100.to_time_ago
-NoMethodError: undefined method `to_time_ago' for 100:Fixnum
-```
-
-## Install
-
-    gem 'duck_puncher'
-
 ## Usage
 
 ```ruby
 DuckPuncher.punch_all!                   # => punches all registered ducks
 DuckPuncher.punch! :Hash, :Object        # => only punches the Hash and Object ducks
 DuckPuncher.punch! :Object, only: :punch # => only opens a can of whoop ass! Define one method to rule them all
+```
+
+### Tactical punches
+
+Punch only certain methods onto a duck:
+
+```ruby
+DuckPuncher.punch! :Numeric, only: [:to_currency, :to_duration]
 ```
 
 The `.punch` method creates and caches a new punched class that inherits from the original. This avoids altering built-in
@@ -64,7 +53,7 @@ classes. For example:
 => false
 ```
 
-If you punch `Object` then you can use `punch` on any object to get a new decorated copy of the class with the desired
+If you punch `Object` then you can use `punch` on any object to get a new decorated copy of the object with the desired
 functionality mixed in:
 
 ```ruby
@@ -75,7 +64,7 @@ functionality mixed in:
 
 Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous/usable) gem, you can configure only the punches you want! 
 
-## Registering custom punches
+### Registering custom punches
 
 DuckPuncher allows you to utilize the `punch` interface to decorate any kind of object with your own punches. Simply call 
 `.register` with the name of your module.
@@ -147,6 +136,11 @@ ducks.quack
 
 The `register` method takes the same options as [Duck#initialize](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11)
 and will be used to configure punches.
+
+## Install
+
+    gem 'duck_puncher'
+
 
 ## Experimental
 
