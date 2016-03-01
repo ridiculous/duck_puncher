@@ -1,6 +1,6 @@
 # DuckPuncher [![Gem Version](https://badge.fury.io/rb/duck_puncher.svg)](http://badge.fury.io/rb/duck_puncher)  [![Build Status](https://travis-ci.org/ridiculous/duck_puncher.svg)](https://travis-ci.org/ridiculous/duck_puncher) [![Code Climate](https://codeclimate.com/github/ridiculous/duck_puncher/badges/gpa.svg)](https://codeclimate.com/github/ridiculous/duck_puncher)
 
-DuckPuncher provides an interface for administering __duck punches__ (a.k.a "monkey patches"). Punches can administered: 
+DuckPuncher provides an interface for administering __duck punches__ (a.k.a "monkey patches"). Punches can be administered: 
 
 * as an extension to the class
 * as a subclass
