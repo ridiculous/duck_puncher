@@ -27,10 +27,22 @@ Method  #to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ru
 
 ## Usage
 
+Punch all registered ducks:
+
 ```ruby
-DuckPuncher.punch_all!                   # => punches all registered ducks
-DuckPuncher.punch! :Hash, :Object        # => only punches the Hash and Object ducks
-DuckPuncher.punch! :Object, only: :punch # => only opens a can of whoop ass! Define one method to rule them all
+DuckPuncher.punch_all!
+```
+
+Punch individual ducks by name:
+
+```ruby
+DuckPuncher.punch! :Hash, :Object
+```
+
+One method to rule them all:
+
+```ruby
+DuckPuncher.punch! :Object, only: :punch 
 ```
 
 ### Tactical punches
@@ -129,7 +141,7 @@ DuckPuncher.punch! :Donald
 When punching instances, the `:class` option can be omitted, but the name of the punch is required:
 
 ```ruby
-DuckPuncher.punch! :Object, only: :punch
+DuckPuncher.punch! :Object, only: :punch, target: Array
 DuckPuncher.register [:Donald, :Daisy]
 ducks = [].punch(:Donald).punch(:Daisy)
 ducks.tap_tap
