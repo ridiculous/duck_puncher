@@ -130,8 +130,7 @@ When punching instances, the `:class` option can be omitted, but the name of the
 
 ```ruby
 DuckPuncher.punch! :Object, only: :punch
-DuckPuncher.register :Donald
-DuckPuncher.register :Daisy
+DuckPuncher.register [:Donald, :Daisy]
 ducks = [].punch(:Donald).punch(:Daisy)
 ducks.tap_tap
 ducks.quack
