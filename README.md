@@ -68,7 +68,6 @@ Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous
 DuckPuncher allows you to utilize the `punch` interface to __decorate__ any kind of object with your own punches. Simply 
 call `.register` with the name of your module.
 
-### Punching your own duck
 ```ruby
 # Define some extensions
 module Billable
