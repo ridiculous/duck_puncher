@@ -25,4 +25,10 @@ class ArrayTest < MiniTest::Test
     assert_equal [].methods.punch.get(/ty\?/), [:empty?]
     assert_equal [].methods.punch.get('ty?'), [:empty?]
   end
+
+  def test_except
+    assert_equal subject.except('a'), %w[b c d e f g h i j k l m]
+    assert_equal subject.except('a', 'b', 'c'), %w[d e f g h i j k l m]
+    assert_equal subject.except, subject
+  end
 end

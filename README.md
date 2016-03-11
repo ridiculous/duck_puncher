@@ -12,6 +12,7 @@ Default extensions:
 Array   #m            => `[].m(:to_s)` => `[].map(&:to_s)` 
         #mm           => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
         #get          => `[].methods.get('ty?')` => [:empty?] 
+        #except       => `[].except('foo', 'bar')` => `[] - ['foo', 'bar']`
 Hash    #dig          => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Part of standard lib in Ruby >= 2.3)
 Numeric #to_currency  => `25.245.to_currency` => 25.25 
         #to_duration  => `10_000.to_duration` => '2 h 46 min'
