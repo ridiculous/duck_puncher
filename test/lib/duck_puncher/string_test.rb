@@ -17,4 +17,18 @@ class StringTest < MiniTest::Test
     assert_equal 'mini_test.rb', 'mini_test.rb'.underscore
     assert_equal 'duck_puncher/json_storage', 'DuckPuncher::JSONStorage'.underscore
   end
+
+  def test_to_boolean
+    assert 'true'.to_boolean
+    assert '1'.to_boolean
+    assert 'y'.to_boolean
+    assert 'on'.to_boolean
+    assert 'yes'.to_boolean
+    refute 'false'.to_boolean
+    refute '0'.to_boolean
+    refute 'no'.to_boolean
+    refute 'off'.to_boolean
+    refute ''.to_boolean
+    refute 'asd'.to_boolean
+  end
 end
