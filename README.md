@@ -20,7 +20,7 @@ Numeric #to_currency  => `25.245.to_currency` => 25.25
         #to_rad       => `10.15.to_rad` => 0.17715091907742445
 String  #pluralize    => `'hour'.pluralize(2)` => "hours"
         #underscore   => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
-        #to_boolean   => `'1'`.to_boolean => true
+        #to_boolean   => `'1'.to_boolean` => true
 Object  #clone!       => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
         #punch        => `'duck'.punch` => a copy of 'duck' with String punches mixed in
 Method  #to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
