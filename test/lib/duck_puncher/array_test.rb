@@ -21,11 +21,6 @@ class ArrayTest < MiniTest::Test
     assert_equal subject.map { |x| x.sub(/[aeiou]/, '*') }, subject.mm(:sub, /[aeiou]/, '*')
   end
 
-  def test_get
-    assert_equal [].methods.punch.get(/ty\?/), [:empty?]
-    assert_equal [].methods.punch.get('ty?'), [:empty?]
-  end
-
   def test_except
     assert_equal subject.except('a'), %w[b c d e f g h i j k l m]
     assert_equal subject.except('a', 'b', 'c'), %w[d e f g h i j k l m]
