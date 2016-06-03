@@ -25,6 +25,10 @@ module DuckPuncher
         extend ::ObjectTracker
         track_all!
       end
+
+      def let(name)
+        define_method(name) { instance_variable_get("@#{name}") || instance_variable_set("@#{name}", yield) }
+      end
     end
   end
 end
