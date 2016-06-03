@@ -15,7 +15,7 @@ module DuckPuncher
 
       def [](name)
         list.find { |duck| duck.name == name.to_sym } ||
-          DuckPuncher.log.warn(%Q(Couldn't find "#{name}" in my list of Ducks! I know about: #{list.map(&:name).map(&:to_s)}))
+          fail(ArgumentError, %Q(Couldn't find "#{name}" in my list of Ducks! I know about: #{list.map(&:name).map(&:to_s)}))
       end
 
       def load_path_for(duck)

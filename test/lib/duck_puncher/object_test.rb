@@ -2,10 +2,46 @@ require_relative '../../test_helper'
 DuckPuncher.punch! :Object
 
 class ObjectTest < MiniTest::Test
+
+  def setup
+    Object.const_set :User, Class.new
+    @subject = Object.new
+    @user = User.new
+  end
+
+  def teardown
+    DuckPuncher::Ducks.list.delete_if { |duck| [:admin, :super_admin, :User].include?(duck.name) }
+    Object.send :remove_const, :User
+  end
+
   def test_clone!
-    obj = Object.new
-    cloned = obj.clone!
-    assert_equal cloned.class, obj.class
-    refute_equal cloned, obj
+    cloned = @subject.clone!
+    assert_equal cloned.class, @subject.class
+    refute_equal cloned, @subject
+  end
+
+  def test_punch_on_a_core_duck
+    refute [].respond_to?(:m)
+    assert [].respond_to?(:punch)
+    assert [].punch.respond_to?(:m)
+  end
+
+  def test_punch_with_a_core_duck
+    assert [].punch(:Array).respond_to?(:m)
+  end
+
+  def test_punch_on_a_custom_duck
+    DuckPuncher.register :User, mod: 'CustomPunch2'
+    assert @user.punch.respond_to?(:quack)
+  end
+
+  def test_punch_with_a_custom_duck
+    refute @user.respond_to?(:quack)
+    DuckPuncher.register :admin, mod: 'CustomPunch2'
+    assert @user.punch(:admin).respond_to?(:quack)
+
+    refute @user.respond_to?(:wobble)
+    DuckPuncher.register :super_admin, mod: 'CustomPunch3'
+    assert @user.punch(:super_admin).respond_to?(:wobble)
   end
 end
