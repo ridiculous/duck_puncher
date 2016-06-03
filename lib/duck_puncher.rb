@@ -25,7 +25,14 @@ module DuckPuncher
     # @param [Symbol] duck_name
     # @param [Class] obj The object being punched
     def delegate_class(duck_name, obj = nil)
-      delegations[duck_name] ||= const_set "#{duck_name}DuckDelegated", Ducks[duck_name].dup.delegated(obj)
+      delegations[duck_name] ||= begin
+        if duck_name['_']
+          duck_const = duck_name.split('_').map(&:capitalize).join
+        else
+          duck_const = duck_name
+        end
+        const_set "#{duck_const}DuckDelegated", Ducks[duck_name.to_sym].dup.delegated(obj)
+      end
     end
 
     def duck_class(name)

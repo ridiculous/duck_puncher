@@ -100,7 +100,9 @@ module Retryable
     retry if (retries -= 1) > 0
   end
 end
+```
 
+```ruby
 # Register the extensions
 DuckPuncher.register [:Billable, :Retryable]
 
@@ -114,6 +116,13 @@ DuckPuncher.punch! :Object, only: :punch, target: User
 # Usage
 user = User.new('Ryan').punch(:Billable).punch(:Retryable)
 user.call_with_retry(19.99)
+```
+
+Ducks can be registered under any name you want, as long as the `:mod` option specifies a module:
+
+```ruby
+DuckPuncher.register :bills, mod: 'Admin::Billable'
+User.new.punch(:bills)
 ```
 
 When punching at a class level, the `:class` option is required:
