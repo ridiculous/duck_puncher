@@ -14,6 +14,10 @@ module DuckPuncher
       def to_boolean
         !!BOOLEAN_MAP[downcase]
       end unless method_defined?(:to_boolean)
+
+      def constantize
+        split('::').inject(Object) { |o, name| o.const_get name }
+      end unless method_defined?(:constantize)
     end
   end
 end

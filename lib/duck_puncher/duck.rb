@@ -46,7 +46,11 @@ module DuckPuncher
 
     def lookup_constant(const)
       return const if Module === const
-      const.to_s.split('::').inject(Kernel) { |k, part| k.const_get(part) }
+      if const.to_s.respond_to?(:constantize)
+        const.to_s.constantize
+      else
+        const.to_s.split('::').inject(Object) { |k, part| k.const_get(part) }
+      end
     end
 
     # @param [Class] obj The object being punched

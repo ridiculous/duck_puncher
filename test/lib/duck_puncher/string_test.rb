@@ -31,4 +31,9 @@ class StringTest < MiniTest::Test
     refute ''.to_boolean
     refute 'asd'.to_boolean
   end
+
+  def test_constantize
+    assert_equal MiniTest, 'MiniTest'.constantize
+    assert_equal MiniTest::Test, 'MiniTest::Test'.constantize
+  end
 end
