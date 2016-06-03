@@ -26,10 +26,9 @@ module DuckPuncher
     # @param [Class] obj The object being punched
     def delegate_class(duck_name, obj = nil)
       delegations["#{obj.class}#{duck_name}"] ||= begin
-        if duck_name['_']
-          duck_const = duck_name.split('_').map(&:capitalize).join
-        else
-          duck_const = duck_name
+        duck_const = duck_name.to_s
+        if duck_const[/^[A-Z]/].nil?
+          duck_const = duck_const.split('_').map(&:capitalize).join
         end
         const_set "#{duck_const}DuckDelegated", Ducks[duck_name.to_sym].dup.delegated(obj)
       end

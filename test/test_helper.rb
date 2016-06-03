@@ -5,6 +5,8 @@ require 'duck_puncher'
 
 Minitest::Reporters.use!
 
+DuckPuncher.log.level = Logger::INFO
+
 module CustomPunch
   def tap_tap
     p self

@@ -12,7 +12,7 @@ module DuckPuncher
       end
 
       def punch(duck_name = self.class.name)
-        DuckPuncher.delegate_class(duck_name.to_s, self).new(self)
+        DuckPuncher.delegate_class(duck_name, self).new(self)
       end
 
       def track
