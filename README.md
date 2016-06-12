@@ -4,7 +4,6 @@ DuckPuncher provides an interface for administering __duck punches__ (a.k.a "mon
 
 * as an extension
 * as a subclass
-* as a decorator
 
 Default extensions:
 

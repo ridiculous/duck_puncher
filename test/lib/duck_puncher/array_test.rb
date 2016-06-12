@@ -11,6 +11,9 @@ class ArrayTest < MiniTest::Test
 
   def test_m
     assert_equal subject.map(&:upcase), subject.m(:upcase)
+    refute_equal subject.object_id, subject.m(:upcase).object_id
+    assert_equal subject.map!(&:upcase), subject.m!(:upcase)
+    assert_equal subject.object_id, subject.m!(:upcase).object_id
   end
 
   def test_mm_with_two_args

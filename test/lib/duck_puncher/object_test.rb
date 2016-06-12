@@ -44,4 +44,14 @@ class ObjectTest < MiniTest::Test
     DuckPuncher.register :super_admin, mod: 'CustomPunch3'
     assert @user.punch(:super_admin).respond_to?(:wobble)
   end
+
+  def test_punch_call_stack
+    User.send(:define_method, :foo) { quack }
+    User.send(:define_method, :quack) { 'foo' }
+    assert_equal 'foo', @user.foo
+    DuckPuncher.register :User, mod: 'CustomPunch2'
+    assert_equal 'quack', @user.punch.foo
+    User.send(:remove_method, :foo)
+    User.send(:remove_method, :quack)
+  end
 end

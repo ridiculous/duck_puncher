@@ -16,6 +16,7 @@ end
 
 module CustomPunch2
   def quack
+    'quack'
   end
 end
 

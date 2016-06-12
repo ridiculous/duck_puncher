@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ryan Buckley"]
   spec.email         = ["arebuckley@gmail.com"]
   spec.description   = %q{Administer precision punches}
-  spec.summary       = %q{Administer precision punches to your favorite Ruby classes}
+  spec.summary       = %q{Administer precision extensions (a.k.a "punches") to your favorite Ruby classes}
   spec.homepage      = "https://github.com/ridiculous/duck_puncher"
   spec.license       = "MIT"
 

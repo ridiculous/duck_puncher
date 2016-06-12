@@ -24,11 +24,6 @@ module DuckPuncher
         DuckPuncher.log.info %Q(Skipping the punch for #{name}!)
         return nil
       end
-      if options[:mod]
-        mod = lookup_constant(options[:mod])
-      else
-        mod = DuckPuncher::Ducks.const_get(name)
-      end
       target = opts.delete(:target) || lookup_class
       Array(target).each do |klass|
         options[:before].call(klass) if options[:before]
@@ -37,6 +32,14 @@ module DuckPuncher
         options[:after].call(klass) if options[:after]
       end
       target
+    end
+
+    def mod
+      if options[:mod]
+        lookup_constant(options[:mod])
+      else
+        DuckPuncher::Ducks.const_get(name)
+      end
     end
 
     # @return [Class] The class that is given to initialize as the option :class or the name of the current duck (module extension)
@@ -51,15 +54,6 @@ module DuckPuncher
       else
         const.to_s.split('::').inject(Object) { |k, part| k.const_get(part) }
       end
-    end
-
-    # @param [Class] obj The object being punched
-    def delegated(obj = nil)
-      obj_class = obj ? obj.class : lookup_class
-      klass = DelegateClass(obj_class)
-      punch target: klass, method: :prepend
-      klass.usable DuckPuncher::Ducks::Object, only: :punch, method: :prepend
-      klass
     end
 
     def classify

@@ -11,8 +11,9 @@ module DuckPuncher
         end
       end
 
+      # @description Adds the duck punches to the curren object (meant to be used on instances)
       def punch(duck_name = self.class.name)
-        DuckPuncher.delegate_class(duck_name, self).new(self)
+        extend Ducks[duck_name.to_sym].mod
       end
 
       def track

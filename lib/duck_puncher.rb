@@ -1,6 +1,5 @@
 require 'pathname'
 require 'fileutils'
-require 'delegate'
 require 'logger'
 require 'usable'
 require 'duck_puncher/version'
@@ -14,24 +13,8 @@ module DuckPuncher
   class << self
     attr_accessor :log
 
-    def delegations
-      @delegations ||= {}
-    end
-
     def classes
       @classes ||= {}
-    end
-
-    # @param [Symbol] duck_name
-    # @param [Class] obj The object being punched
-    def delegate_class(duck_name, obj = nil)
-      delegations["#{obj.class}#{duck_name}"] ||= begin
-        duck_const = duck_name.to_s
-        if duck_const[/^[A-Z]/].nil?
-          duck_const = duck_const.split('_').map(&:capitalize).join
-        end
-        const_set "#{duck_const}DuckDelegated", Ducks[duck_name.to_sym].dup.delegated(obj)
-      end
     end
 
     def duck_class(name)
