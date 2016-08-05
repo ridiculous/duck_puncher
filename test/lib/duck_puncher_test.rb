@@ -8,6 +8,10 @@ class DuckPuncherTest < MiniTest::Test
     assert_respond_to [], :tap_tap
     DuckPuncher.punch! :Object, only: :punch
     assert_respond_to [].punch(:CustomPunch), :tap_tap
+    # does not re-register duck with same name
+    duck_list_size = DuckPuncher::Ducks.list.size
+    DuckPuncher.register :CustomPunch, class: 'String'
+    assert_equal duck_list_size, DuckPuncher::Ducks.list.size
   end
 
   def test_register_with_array

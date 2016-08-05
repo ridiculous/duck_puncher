@@ -59,5 +59,17 @@ module DuckPuncher
     def classify
       Class.new(lookup_class).tap { |k| punch target: k }
     end
+
+    #
+    # Required to play nice in a Set
+    #
+
+    def eql?(other)
+      name == other.name
+    end
+
+    def hash
+      name.hash
+    end
   end
 end

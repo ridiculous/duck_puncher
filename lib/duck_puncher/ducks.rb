@@ -2,7 +2,7 @@ module DuckPuncher
   module Ducks
     class << self
       def list
-        @list ||= [
+        @list ||= Set.new [
           Duck.new(:String),
           Duck.new(:Array),
           Duck.new(:Numeric),
