@@ -50,13 +50,13 @@ DuckPuncher.punch! :Object, only: :punch
 
 ### Tactical punches
 
-Punch only certain methods onto a duck:
+`DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous/usable) gem, so you can configure only the punches you want! For instance:
 
 ```ruby
 DuckPuncher.punch! :Numeric, only: [:to_currency, :to_duration]
 ```
 
-The `.punch` method creates and caches a new punched class that __inherits__ from the original:
+Use `DuckPuncher.punch` to create a new class that __inherits__ from the original (automatically cached for future calls):
 
 ```ruby
 >> DuckPuncher.punch :String
@@ -67,21 +67,26 @@ The `.punch` method creates and caches a new punched class that __inherits__ fro
 => false
 ```
 
-If you punch `Object` then you can use `punch` on any object to get a new __decorated__ copy of the object with the desired
-functionality mixed in:
+If you punch `Object` then you can use `#punch` on any object to extend individual instances:
 
 ```ruby
 >> DuckPuncher.punch! :Object, only: :punch
->> %w[yes no 1].punch.m(:punch).punch.m(:to_boolean)
+>> %w[yes no 1].punch.m!(:punch).m(:to_boolean)
 => [true, false, true]
 ```
 
-Because `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous/usable) gem, you can configure only the punches you want! 
+The `#punch` method will lookup the extension by the object's class name. The above example works because `:Array` and `:String` are default extensions. If you want to punch a specific extension, then you can specify it as an argument:
+```ruby
+>> LovableDuck = Module.new { def inspect() "I love #{self.first}" end }
+>> DuckPuncher.register :with_love, mod: 'LovableDuck'
+>> %w[ducks].punch(:with_love)
+=> "I love ducks"
+```
 
 ### Registering custom punches
 
-DuckPuncher allows you to utilize the `punch` interface to __decorate__ any kind of object with your own punches. Simply 
-call `.register` with the name of your module (or an array of names) and any of
+DuckPuncher allows you to utilize the `punch` interface to __extend__ any kind of object with your own punches. Simply 
+call `DuckPuncher.register` with the name of your module (or an array of names) and any of
 [these options](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11).
 
 
@@ -120,7 +125,7 @@ user = User.new('Ryan').punch(:Billable).punch(:Retryable)
 user.call_with_retry(19.99)
 ```
 
-Ducks can be registered under any name you want, as long as the `:mod` option specifies a module:
+Ducks can be registered under any name, as long as the `:mod` option specifies a module:
 
 ```ruby
 DuckPuncher.register :bills, mod: 'Admin::Billable'
@@ -136,8 +141,19 @@ DuckPuncher.punch! :Billable
 
 ## Install
 
-    gem 'duck_puncher'
+```ruby
+gem 'duck_puncher'
+```
 
+## Logging
+
+Get notified of all punches/extensions by changing the logger level:
+
+```ruby
+DuckPuncher.log.level = Logger::INFO
+```
+
+The default log level is `DEBUG`
 
 ## Experimental
 
