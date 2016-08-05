@@ -18,6 +18,9 @@ class ArrayTest < MiniTest::Test
 
   def test_mm_with_two_args
     assert_equal subject.map { |x| x.prepend('btn-') }, subject.mm(:prepend, 'btn-')
+    refute_equal subject.object_id, subject.mm(:prepend, 'btn-')
+    assert_equal subject.map! { |x| x.prepend('btn-') }, subject.mm!(:prepend, 'btn-')
+    assert_equal subject.object_id, subject.mm!(:prepend, 'btn-').object_id
   end
 
   def test_mm_with_three_args
