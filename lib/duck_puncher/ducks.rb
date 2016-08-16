@@ -1,34 +1,30 @@
 module DuckPuncher
   module Ducks
+    autoload :String, 'duck_puncher/ducks/string'
+    autoload :Array, 'duck_puncher/ducks/array'
+    autoload :Numeric, 'duck_puncher/ducks/numeric'
+    autoload :Hash, 'duck_puncher/ducks/hash'
+    autoload :Object, 'duck_puncher/ducks/object'
+    autoload :Method, 'duck_puncher/ducks/method'
+    autoload :ActiveRecord, 'duck_puncher/ducks/active_record'
+    autoload :Module, 'duck_puncher/ducks/module'
+
     class << self
       def list
-        @list ||= Set.new [
-          Duck.new(:String),
-          Duck.new(:Array),
-          Duck.new(:Numeric),
-          Duck.new(:Hash),
-          Duck.new(:Object),
-          Duck.new(:Method, before: ->(*) { DuckPuncher::GemInstaller.initialize! }),
-          Duck.new(:ActiveRecord, class: 'ActiveRecord::Base', if: -> { defined? ::ActiveRecord })
-        ]
+        @list ||= DuckPuncher.ancestral_hash
       end
 
-      def [](name)
-        list.find { |duck| duck.name == name.to_sym } ||
-          fail(ArgumentError, %Q(Couldn't find "#{name}" in my list of Ducks! I know about: #{list.map(&:name).map(&:to_s)}))
+      def [](klass)
+        list[klass]
       end
 
-      def load_path_for(duck)
-        "duck_puncher/ducks/#{duck.name.to_s.gsub(/\B([A-Z])/, '_\1').downcase}"
+      def load_mods(klass, loaded_mods: [])
+        if klass.respond_to?(:superclass)
+          load_mods(klass.superclass, loaded_mods: list[klass].to_a.map(&:mod) + loaded_mods)
+        else
+          loaded_mods
+        end
       end
-    end
-
-    #
-    # Autoload our ducks
-    #
-
-    list.each do |duck|
-      autoload duck.name, load_path_for(duck)
     end
   end
 end

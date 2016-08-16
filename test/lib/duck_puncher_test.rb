@@ -1,27 +1,55 @@
 require_relative '../test_helper'
 
+DuckPuncher.punch! Object, only: :punch
+
 class DuckPuncherTest < MiniTest::Test
-  def test_register
-    refute_respond_to [], :tap_tap
-    DuckPuncher.register :CustomPunch, class: 'Array'
-    DuckPuncher.punch! :CustomPunch
-    assert_respond_to [], :tap_tap
-    DuckPuncher.punch! :Object, only: :punch
-    assert_respond_to [].punch(:CustomPunch), :tap_tap
-    # does not re-register duck with same name
-    duck_list_size = DuckPuncher::Ducks.list.size
-    DuckPuncher.register :CustomPunch, class: 'String'
-    assert_equal duck_list_size, DuckPuncher::Ducks.list.size
+  def setup
+    @subject = Animal.new
+    @kaia = Kaia.new
+    DuckPuncher.deregister Animal, Kaia, Dog
   end
 
-  def test_register_with_array
-    refute_respond_to [], :quack
-    refute_respond_to [], :wobble
-    DuckPuncher.register [:CustomPunch2, :CustomPunch3], class: 'Array'
-    DuckPuncher.punch! :CustomPunch2
-    assert_respond_to [], :quack
-    refute_respond_to [], :wobble
-    DuckPuncher.punch! :CustomPunch3
-    assert_respond_to [], :wobble
+  def teardown
+    DuckPuncher.deregister Animal, Kaia, Dog
+  end
+
+  def test_punch!
+    refute_respond_to @kaia, :talk
+    refute_respond_to @kaia.punch, :talk
+    DuckPuncher.register Kaia, CustomPunch
+    DuckPuncher.punch! Kaia, only: :talk
+    assert_respond_to @kaia, :talk
+    assert_respond_to @kaia.punch, :talk
+  end
+
+
+  def test_punch_all!
+    DuckPuncher.punch_all!
+    expected_methods = DuckPuncher::Ducks.list.values.m(:to_a).flatten.m(:mod).m(:local_methods).flatten
+    assert expected_methods.size > 1
+    good_ducks = DuckPuncher::Ducks.list.select { |_, ducks|
+      ducks.all? { |duck| (duck.mod.local_methods - duck.target.instance_methods(:false)).size.zero? }
+    }
+    assert good_ducks.size > 5
+  end
+
+  def test_register_with_multiple_mods
+    refute_respond_to @subject, :talk
+    refute_respond_to @subject, :wobble
+    refute_respond_to @subject.punch, :talk
+    refute_respond_to @subject.punch, :wobble
+    DuckPuncher.register Animal, CustomPunch, CustomPunch3
+    assert_respond_to @subject.punch, :talk
+    assert_respond_to @subject.punch, :wobble
+  end
+
+  def test_deregister
+    refute_respond_to @subject, :talk
+    refute_respond_to @subject.punch, :talk
+    DuckPuncher.register Animal, CustomPunch
+    assert_respond_to @subject.punch, :talk
+    refute_respond_to @subject, :talk
+    DuckPuncher.deregister Animal
+    refute_respond_to @subject.punch, :talk
   end
 end

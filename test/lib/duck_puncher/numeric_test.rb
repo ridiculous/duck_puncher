@@ -1,5 +1,5 @@
 require_relative '../../test_helper'
-DuckPuncher.punch! :Numeric
+DuckPuncher.punch! Numeric
 
 class NumericTest < MiniTest::Test
 
