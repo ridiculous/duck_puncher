@@ -17,6 +17,10 @@ module DuckPuncher
 
         sought_value
       end unless method_defined?(:dig)
+
+      def compact
+        delete_if { |_, v| v.nil? }
+      end
     end
   end
 end

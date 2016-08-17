@@ -3,29 +3,34 @@
 DuckPuncher provides an interface for administering __duck punches__ (a.k.a "monkey patches"). Punches can be administered in several ways: 
 
 * as an extension
-* as a subclass
+* as a decorator
 
 Default extensions:
 
 ```ruby
-Array   #m            => `[].m(:to_s)` => `[].map(&:to_s)`
-        #m!           => `[].m!(:upcase)` => `[].map!(&:upcase)`
-        #mm           => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
-        #mm!          => `[].mm!(:sub, /[aeiou]/, '*')` => `[].map! { |x| x.sub(/[aeiou]/, '*') }` 
-        #except       => `[].except('foo', 'bar')` => `[] - ['foo', 'bar']`
-Hash    #dig          => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Part of standard lib in Ruby >= 2.3)
-Numeric #to_currency  => `25.245.to_currency` => 25.25 
-        #to_duration  => `10_000.to_duration` => '2 h 46 min'
-        #to_time_ago  => `10_000.to_time_ago` => '2 hours ago'
-        #to_rad       => `10.15.to_rad` => 0.17715091907742445
-String  #pluralize    => `'hour'.pluralize(2)` => "hours"
-        #underscore   => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
-        #to_boolean   => `'1'.to_boolean` => true
-        #constantize  => `'MiniTest::Test'.constantize` => MiniTest::Test
-Object  #clone!       => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
-        #punch        => `'duck'.punch` => a copy of 'duck' with String punches mixed in
-Method  #to_instruct  => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
-        #to_source    => `Benchmark.method(:measure).to_source` returns the method definition as a string
+Array   #m                  => `[].m(:to_s)` => `[].map(&:to_s)`
+        #m!                 => `[].m!(:upcase)` => `[].map!(&:upcase)`
+        #mm                 => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
+        #mm!                => `[].mm!(:sub, /[aeiou]/, '*')` => `[].map! { |x| x.sub(/[aeiou]/, '*') }` 
+        #except             => `[].except('foo', 'bar')` => `[] - ['foo', 'bar']`
+Hash    #dig                => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Part of standard lib in Ruby >= 2.3)
+        #compact            => `{a: 1, b: nil}.compact` => {a: 1}
+Numeric #to_currency        => `25.245.to_currency` => 25.25 
+        #to_duration        => `10_000.to_duration` => '2 h 46 min'
+        #to_time_ago        => `10_000.to_time_ago` => '2 hours ago'
+        #to_rad             => `10.15.to_rad` => 0.17715091907742445
+String  #pluralize          => `'hour'.pluralize(2)` => "hours"
+        #underscore         => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
+        #to_boolean         => `'1'.to_boolean` => true
+        #constantize        => `'MiniTest::Test'.constantize` => MiniTest::Test
+Module  #local_methods      => `Kernel.local_methods` returns the methods defined directly in the class + nested constants w/ methods
+Object  #clone!             => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
+        #punch              => `'duck'.punch` => a copy of 'duck' with String punches mixed in
+        #punch!             => `'duck'.punch!` => destructive version applies extensions directly to the base object
+        #echo               => `'duck'.echo.upcase` => spits out the caller and value of the object and returns the object
+        #track              => `Object.new.track` => Traces methods calls to the object (requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download)
+Method  #to_instruct        => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
+        #to_source          => `Benchmark.method(:measure).to_source` returns the method definition as a string
 ```
 
 ## Usage
@@ -39,13 +44,13 @@ DuckPuncher.punch_all!
 Punch individual ducks by name:
 
 ```ruby
-DuckPuncher.punch! :Hash, :Object
+DuckPuncher.punch! Hash, Object
 ```
 
 One method to rule them all:
 
 ```ruby
-DuckPuncher.punch! :Object, only: :punch 
+DuckPuncher.punch! Object, only: :punch 
 ```
 
 ### Tactical punches
@@ -53,34 +58,55 @@ DuckPuncher.punch! :Object, only: :punch
 `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous/usable) gem, so you can configure only the punches you want! For instance:
 
 ```ruby
-DuckPuncher.punch! :Numeric, only: [:to_currency, :to_duration]
+DuckPuncher.punch! Numeric, only: [:to_currency, :to_duration]
 ```
 
-Use `DuckPuncher.punch` to create a new class that __inherits__ from the original (automatically cached for future calls):
+If you punch `Object` then you can use `#punch!` on any object to extend individual instances:
 
 ```ruby
->> DuckPuncher.punch :String
-=> DuckPuncher::StringDuck
->> DuckPuncher::StringDuck.new('Yes').to_boolean
-=> true
->> String.new('Yes').respond_to? :to_boolean
-=> false
-```
-
-If you punch `Object` then you can use `#punch` on any object to extend individual instances:
-
-```ruby
->> DuckPuncher.punch! :Object, only: :punch
->> %w[yes no 1].punch.m!(:punch).m(:to_boolean)
+>> DuckPuncher.punch! Object, only: :punch!
+>> %w[yes no 1].punch!.m!(:punch).m(:to_boolean)
 => [true, false, true]
 ```
 
-The `#punch` method will lookup the extension by the object's class name. The above example works because `:Array` and `:String` are default extensions. If you want to punch a specific extension, then you can specify it as an argument:
+Alternatively, there is also the `Object#punch` method which returns a decorated copy of an object with punches mixed in:
+```ruby
+>> DuckPuncher.punch! Object, only: :punch
+>> %w[1 2 3].punch.m(:to_i)
+=> [1, 2, 3]
+```
+
+The `#punch!` method will lookup the extension by the object's class name. The above example works because `Array` and `String` are default extensions. If you want to punch a specific extension, then you can specify it as an argument:
 ```ruby
 >> LovableDuck = Module.new { def inspect() "I love #{self.first}" end }
->> DuckPuncher.register :with_love, mod: 'LovableDuck'
->> %w[ducks].punch(:with_love)
+>> DuckPuncher.register Array, LovableDuck
+>> ducks = %w[ducks]
+>> soft_punch = ducks.punch
 => "I love ducks"
+>> soft_punch.class
+=> DuckPuncher::ArrayDelegator
+>> ducks.punch!.class
+=> Array
+```
+
+When there are no punches registered for a class, it'll search the ancestor list for a class with registered punches. For example, `Array` doesn't have
+a method defined `echo`, but when we punch `Object`, it means all subclasses have access to the same methods, even with soft punches.
+
+```ruby
+def soft_punch
+  ('a'..'z').punch.echo.to_a.map(&:upcase)
+end
+
+def hard_punch
+  ('a'..'z').to_a.punch!.m!(:upcase).mm!(:*, 3).echo
+end
+
+>> soft_punch
+"a..z -- (irb):8:in `soft_punch'"
+=> ["A", "B", "C", "D", ...]
+>> hard_punch
+"[\"AAA\", \"BBB\", \"CCC\", \"DDD\", ...] -- (irb):12:in `hard_punch'"
+=> ["AAA", "BBB", "CCC", "DDDD", ...]
 ```
 
 ### Registering custom punches
@@ -110,33 +136,19 @@ end
 ```
 
 ```ruby
-# Register the extensions
-DuckPuncher.register [:Billable, :Retryable]
-
 # Our duck
 class User < Struct.new(:name)
 end
 
+# Register the extensions
+DuckPuncher.register User, :Billable, :Retryable
+
 # Add the #punch method to User instances
-DuckPuncher.punch! :Object, only: :punch, target: User
+DuckPuncher.punch! Object, only: :punch
 
 # Usage
-user = User.new('Ryan').punch(:Billable).punch(:Retryable)
+user = User.new('Ryan').punch
 user.call_with_retry(19.99)
-```
-
-Ducks can be registered under any name, as long as the `:mod` option specifies a module:
-
-```ruby
-DuckPuncher.register :bills, mod: 'Admin::Billable'
-User.new.punch(:bills)
-```
-
-When punching at a class level, the `:class` option is required:
-
-```ruby
-DuckPuncher.register :Billable, class: 'User'
-DuckPuncher.punch! :Billable
 ```
 
 ## Install
@@ -150,7 +162,7 @@ gem 'duck_puncher'
 Get notified of all punches/extensions by changing the logger level:
 
 ```ruby
-DuckPuncher.log.level = Logger::INFO
+DuckPuncher.logger.level = Logger::INFO
 ```
 
 The default log level is `DEBUG`
@@ -169,7 +181,7 @@ LoadError: cannot load such file -- pry
  from (irb):1:in `require'
  from (irb):1
  from bin/console:10:in `<main>'
->> DuckPuncher.punch! :Object, only: :require!
+>> DuckPuncher.punch! Object, only: :require!
 => nil
 >> require! 'pry'
 Fetching: method_source-0.8.2.gem (100%)

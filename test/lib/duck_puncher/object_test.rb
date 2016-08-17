@@ -1,57 +1,60 @@
 require_relative '../../test_helper'
-DuckPuncher.punch! :Object
+DuckPuncher.punch! Object
 
 class ObjectTest < MiniTest::Test
-
   def setup
-    Object.const_set :User, Class.new
-    @subject = Object.new
-    @user = User.new
+    @animal = Animal.new
+    @dog = Dog.new
+    @kaia = Kaia.new
   end
 
   def teardown
-    DuckPuncher::Ducks.list.delete_if { |duck| [:admin, :super_admin, :User].include?(duck.name) }
-    Object.send :remove_const, :User
+    DuckPuncher.deregister Animal, Dog, Kaia
   end
 
   def test_clone!
-    cloned = @subject.clone!
-    assert_equal cloned.class, @subject.class
-    refute_equal cloned, @subject
-  end
-
-  def test_punch_on_a_core_duck
-    refute [].respond_to?(:m)
-    assert [].respond_to?(:punch)
-    assert [].punch.respond_to?(:m)
+    cloned = @dog.clone!
+    assert_equal cloned.class, @dog.class
+    refute_equal cloned, @dog
   end
 
   def test_punch_with_a_core_duck
-    assert [].punch(:Array).respond_to?(:m)
+    assert [].punch.respond_to?(:m)
   end
 
   def test_punch_on_a_custom_duck
-    DuckPuncher.register :User, mod: 'CustomPunch2'
-    assert @user.punch.respond_to?(:quack)
+    DuckPuncher.register Animal, CustomPunch2
+    assert @animal.punch.respond_to?(:quack)
   end
 
-  def test_punch_with_a_custom_duck
-    refute @user.respond_to?(:quack)
-    DuckPuncher.register :admin, mod: 'CustomPunch2'
-    assert @user.punch(:admin).respond_to?(:quack)
-
-    refute @user.respond_to?(:wobble)
-    DuckPuncher.register :super_admin, mod: 'CustomPunch3'
-    assert @user.punch(:super_admin).respond_to?(:wobble)
+  def test_punch_with_multiple_custom_duck
+    DuckPuncher.register Animal, CustomPunch2
+    DuckPuncher.register Animal, CustomPunch3
+    assert @animal.punch.respond_to?(:wobble)
   end
 
   def test_punch_call_stack
-    User.send(:define_method, :foo) { quack }
-    User.send(:define_method, :quack) { 'foo' }
-    assert_equal 'foo', @user.foo
-    DuckPuncher.register :User, mod: 'CustomPunch2'
-    assert_equal 'quack', @user.punch.foo
-    User.send(:remove_method, :foo)
-    User.send(:remove_method, :quack)
+    Animal.send(:define_method, :foo) { quack }
+    Animal.send(:define_method, :quack) { 'foo' }
+    assert_equal 'foo', @animal.foo
+    DuckPuncher.register Animal, CustomPunch2
+    @animal.punch!
+    assert_equal 'quack', @animal.foo
+  end
+
+  def test_punch_on_ancestor_only
+    DuckPuncher.register Dog, CustomPunch2
+    assert_respond_to @dog.punch, :quack
+  end
+
+  def test_punch_includes_all_ancestors
+    DuckPuncher.register Animal, CustomPunch2
+    DuckPuncher.register Dog, CustomPunch
+    DuckPuncher.register Kaia, CustomPunch3
+    @kaia = Kaia.new
+    @kaia.punch!
+    assert_respond_to @kaia, :wobble
+    assert_respond_to @kaia, :talk
+    assert_respond_to @kaia, :quack
   end
 end

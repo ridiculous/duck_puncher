@@ -1,10 +1,10 @@
 require_relative '../../test_helper'
 
-DuckPuncher.punch :Hash
+DuckPuncher.punch! Hash
 
 class HashTest < MiniTest::Test
   def setup
-    @subject = DuckPuncher::HashDuck.new.merge({ a: 1, b: { c: 2 } })
+    @subject = { a: 1, b: { c: 2 } }
   end
 
   def test_dig
@@ -12,5 +12,12 @@ class HashTest < MiniTest::Test
     assert_equal @subject.dig(:b, :a), nil
     assert_equal @subject.dig(:b, :c), 2
     assert_equal @subject.dig(:b), { c: 2 }
+  end
+
+  def test_compact
+    assert_equal @subject.compact, { a: 1, b: { c: 2 } }
+    @subject[:b] = nil
+    assert_equal @subject, { a: 1, b: nil }
+    assert_equal @subject.compact, { a: 1 }
   end
 end

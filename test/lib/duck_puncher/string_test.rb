@@ -1,6 +1,6 @@
 require_relative '../../test_helper'
 
-DuckPuncher.punch! :String
+DuckPuncher.punch! String
 
 class StringTest < MiniTest::Test
   def test_pluralize

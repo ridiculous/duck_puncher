@@ -1,6 +1,6 @@
 require_relative '../../test_helper'
 require_relative '../../fixtures/wut'
-DuckPuncher.punch! :Method
+DuckPuncher.punch! Method
 
 class MethodTest < MiniTest::Test
 
