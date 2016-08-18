@@ -38,7 +38,7 @@ Method  #to_instruct        => `Benchmark.method(:measure).to_instruct` returns 
 Punch all registered ducks:
 
 ```ruby
-DuckPuncher.punch_all!
+DuckPuncher.punch_all! # Or DuckPuncher.()
 ```
 
 Punch individual ducks by name:

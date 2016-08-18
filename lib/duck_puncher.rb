@@ -41,9 +41,12 @@ module DuckPuncher
       nil
     end
 
-    def punch_all!
+    def call
       punch! *Ducks.list.keys
     end
+
+    # backwards compat
+    alias punch_all! call
 
     def lookup_constant(const)
       return const if Module === const
