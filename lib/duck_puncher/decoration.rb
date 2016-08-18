@@ -13,13 +13,13 @@ module DuckPuncher
     end
 
     def decorate(context, target)
-      cached_decorators(target).inject(context) { |me, (_, decorator)| decorator.new(me) }
+      cached_decorators[target].inject(context) { |me, (_, decorator)| decorator.new(me) }
     end
 
-    def cached_decorators(target)
-      @cached_decorators ||= DuckPuncher.decorators
-                               .select { |klass, _| klass >= target }
-                               .sort { |a, b| b[0] <=> a[0] }
+    def cached_decorators
+      @cached_decorators ||= Hash.new do |me, target|
+        me[target] = DuckPuncher.decorators.select { |klass, _| klass >= target }.sort { |a, b| b[0] <=> a[0] }
+      end
     end
 
     def undecorate(obj)
