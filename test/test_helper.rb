@@ -25,6 +25,12 @@ module CustomPunch3
   end
 end
 
+module ModWithOverride
+  def talk
+    'talk is cheap'
+  end
+end
+
 module ModWithNestedMod
   def instance_method_1
   end
