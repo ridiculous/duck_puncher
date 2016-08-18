@@ -9,13 +9,13 @@ module DuckPuncher
         Ducks.list[target] << duck
         decorators[target] = build_decorator_class(duck, *Ducks[target])
       end
-      nil
+      @cached_decorators = nil
     end
 
     def deregister(*classes)
       classes.each &Ducks.list.method(:delete)
       classes.each &decorators.method(:delete)
-      nil
+      @cached_decorators = nil
     end
   end
 end
