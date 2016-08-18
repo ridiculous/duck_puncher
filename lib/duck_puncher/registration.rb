@@ -7,7 +7,7 @@ module DuckPuncher
       Array(mods).each do |mod|
         duck = Duck.new target, mod, options
         Ducks.list[target] << duck
-        decorators[target] = new_decorator(duck, *Ducks[target])
+        decorators[target] = build_decorator_class(duck, *Ducks[target])
       end
       nil
     end

@@ -57,4 +57,22 @@ class ObjectTest < MiniTest::Test
     assert_respond_to @kaia, :talk
     assert_respond_to @kaia, :quack
   end
+
+  def test_soft_punch_includes_all_ancestors
+    DuckPuncher.register Animal, CustomPunch2
+    DuckPuncher.register Dog, CustomPunch
+    DuckPuncher.register Kaia, CustomPunch3
+    @kaia = Kaia.new.punch
+    assert_respond_to @kaia, :wobble
+    assert_respond_to @kaia, :talk
+    assert_respond_to @kaia, :quack
+  end
+
+  def test_soft_punch_with_parent_override
+    DuckPuncher.register Animal, CustomPunch
+    DuckPuncher.register Kaia, ModWithOverride
+    @kaia = Kaia.new.punch
+    assert_respond_to @kaia, :talk
+    assert_equal @kaia.talk, 'talk is cheap'
+  end
 end

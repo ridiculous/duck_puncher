@@ -11,16 +11,17 @@ module DuckPuncher
         end
       end
 
-      # @description Returns a new decorated version of ourself with the punches mixed in
+      # @description Returns a new decorated version of ourself with the punches mixed in (adds ancestors decorators)
       # @return [<self.class>Delegator]
       def punch
-        DuckPuncher.decorators[DuckPuncher.undecorate(self).class].new(self)
+        DuckPuncher.decorate self, DuckPuncher.undecorate(self).class
       end
 
       # @description Adds the duck punches to the current object (meant to be used on instances, careful with nil and numbers!)
       # @return self
       def punch!
-        DuckPuncher::Ducks.load_mods(DuckPuncher.undecorate(self).class).each { |mod| self.extend mod }
+        target = DuckPuncher.undecorate(self).class
+        DuckPuncher::Ducks.load_mods(target).each { |mod| self.extend mod }
         self
       end
 
