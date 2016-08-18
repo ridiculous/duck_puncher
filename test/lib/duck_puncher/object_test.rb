@@ -71,7 +71,6 @@ class ObjectTest < MiniTest::Test
   def test_soft_punch_with_parent_override
     DuckPuncher.register Animal, CustomPunch
     DuckPuncher.register Kaia, ModWithOverride
-    refute_respond_to @kaia, :talk
     @kaia = Kaia.new.punch
     assert_respond_to @kaia, :talk
     assert_equal @kaia.talk, 'talk is cheap'

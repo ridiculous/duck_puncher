@@ -14,9 +14,7 @@ module DuckPuncher
       # @description Returns a new decorated version of ourself with the punches mixed in (adds ancestors decorators)
       # @return [<self.class>Delegator]
       def punch
-        target = DuckPuncher.undecorate(self).class
-        targets = DuckPuncher.decorators.select { |klass, _| klass >= target }.sort { |a, b| b[0] <=> a[0] }
-        targets.inject(self) { |context, (_, decorator)| decorator.new(context) }
+        DuckPuncher.decorate self, DuckPuncher.undecorate(self).class
       end
 
       # @description Adds the duck punches to the current object (meant to be used on instances, careful with nil and numbers!)
