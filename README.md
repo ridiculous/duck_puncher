@@ -13,6 +13,7 @@ Array   #m                  => `[].m(:to_s)` => `[].map(&:to_s)`
         #mm                 => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
         #mm!                => `[].mm!(:sub, /[aeiou]/, '*')` => `[].map! { |x| x.sub(/[aeiou]/, '*') }` 
         #except             => `[].except('foo', 'bar')` => `[] - ['foo', 'bar']`
+        #map_keys           => `[{id: 1, name: 'foo'}, {id: 2}].map_keys(:id)` => `[1, 2]`
 Hash    #dig                => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Part of standard lib in Ruby >= 2.3)
         #compact            => `{a: 1, b: nil}.compact` => {a: 1}
 Numeric #to_currency        => `25.245.to_currency` => 25.25 
