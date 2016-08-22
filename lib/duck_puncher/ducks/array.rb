@@ -17,6 +17,10 @@ module DuckPuncher
         map! { |x| x.public_send(method_name, *args) }
       end
 
+      def map_keys(key)
+        map { |x| x[key] }
+      end
+
       def except(*args)
         self - args
       end
