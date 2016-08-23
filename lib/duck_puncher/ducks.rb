@@ -1,7 +1,7 @@
 module DuckPuncher
   module Ducks
     autoload :String, 'duck_puncher/ducks/string'
-    autoload :Array, 'duck_puncher/ducks/array'
+    autoload :Enumerable, 'duck_puncher/ducks/enumerable'
     autoload :Numeric, 'duck_puncher/ducks/numeric'
     autoload :Hash, 'duck_puncher/ducks/hash'
     autoload :Object, 'duck_puncher/ducks/object'

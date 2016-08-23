@@ -1,4 +1,5 @@
 module DuckPuncher
+  # @note When updating this file please update comment regarding this module in duck_puncher.rb
   module Registration
     def register(target, *mods)
       options = mods.last.is_a?(Hash) ? mods.pop : {}
