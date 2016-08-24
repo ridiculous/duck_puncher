@@ -34,7 +34,7 @@ module DuckPuncher
         begin
           require 'object_tracker' || raise(LoadError)
         rescue LoadError
-          DuckPuncher.punch! Object, only: :require! unless respond_to? :require!
+          DuckPuncher.(Object, only: :require!) unless respond_to? :require!
           require! 'object_tracker'
         end
         extend ::ObjectTracker

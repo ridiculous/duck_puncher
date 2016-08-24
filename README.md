@@ -46,19 +46,19 @@ Method
 Punch all registered ducks:
 
 ```ruby
-DuckPuncher.punch_all!
+DuckPuncher.()
 ```
 
 Punch individual ducks by name:
 
 ```ruby
-DuckPuncher.punch! Hash, Object
+DuckPuncher.(Hash, Object)
 ```
 
 One method to rule them all:
 
 ```ruby
-DuckPuncher.punch! Object, only: :punch 
+DuckPuncher.(Object, only: :punch)
 ```
 
 ### Tactical punches

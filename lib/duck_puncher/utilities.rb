@@ -9,7 +9,7 @@ module DuckPuncher
         const.to_s.split('::').inject(::Object) { |k, part| k.const_get(part) }
       end
     rescue ::NameError => e
-      log.error "#{e.class}: #{e.message}"
+      logger.error "#{e.class}: #{e.message}"
       nil
     end
 

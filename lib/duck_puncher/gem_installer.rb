@@ -11,7 +11,7 @@ class DuckPuncher::GemInstaller
       begin
         require spec[:require_with]
       rescue LoadError => e
-        DuckPuncher.log.error "Failed to load #{spec[:require_with]} from .duck_puncher/ #{e.inspect}"
+        DuckPuncher.logger.error "Failed to load #{spec[:require_with]} from .duck_puncher/ #{e.inspect}"
       end
     end
   end
@@ -29,6 +29,6 @@ class DuckPuncher::GemInstaller
     end
     installer.installed_gems.any?
   rescue => e
-    DuckPuncher.log.error "Failed to install #{args.first}. #{e.inspect}"
+    DuckPuncher.logger.error "Failed to install #{args.first}. #{e.inspect}"
   end
 end

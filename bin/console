@@ -7,10 +7,10 @@ require 'irb'
 require 'byebug'
 require_relative '../test/fixtures/wut'
 
-DuckPuncher.log.level = Logger::DEBUG
+DuckPuncher.logger.level = Logger::DEBUG
 
 if ENV['PUNCH'] != 'no'
-  DuckPuncher.punch_all!
+  DuckPuncher.()
 end
 
 IRB.start

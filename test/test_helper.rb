@@ -5,7 +5,7 @@ require 'duck_puncher'
 
 Minitest::Reporters.use!
 
-DuckPuncher.log.level = Logger::INFO
+DuckPuncher.logger.level = Logger::INFO
 
 module CustomPunch
   def talk
