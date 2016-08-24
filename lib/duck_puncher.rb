@@ -34,8 +34,8 @@ module DuckPuncher
     alias_method :log, :logger
     alias_method :log=, :logger=
 
-    def call
-      punch! *Ducks.list.keys
+    def call(ducks = Ducks.list.keys)
+      punch! *ducks
     end
 
     # Backwards compatibility
