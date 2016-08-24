@@ -7,9 +7,11 @@ ducks = [
   [String, DuckPuncher::Ducks::String],
   [Enumerable, DuckPuncher::Ducks::Enumerable, {
     # Re-include Enumerable in these classes to pick up the new extensions
-    after: proc do
-      [Array, Set, Range, Enumerator].each { |k| DuckPuncher.logger.debug("Reloading #{k} with Enumerable") and k.include(Enumerable) }
-    end
+    after: proc {
+      [Array, Set, Range, Enumerator].each do |k|
+        DuckPuncher.logger.debug("Sending include to #{k} with Enumerable") and k.send(:include, Enumerable)
+      end
+    }
   }],
   [Numeric, DuckPuncher::Ducks::Numeric],
   [Hash, DuckPuncher::Ducks::Hash],

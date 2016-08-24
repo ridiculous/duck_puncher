@@ -17,6 +17,25 @@ class EnumerableTest < MiniTest::Test
     assert_equal subject.object_id, subject.m!(:upcase).object_id
   end
 
+  def test_m_with_range
+    @subject = ('a'..'f')
+    assert_equal %w[A B C D E F], @subject.punch.m(:upcase)
+    assert_equal %w[A B C D E F], @subject.punch!.m(:upcase)
+  end
+
+  def test_m_with_enum
+    @subject = ('A'..'F').to_enum
+    assert_equal %w[B C D E F G], @subject.punch.m(:next)
+    assert_equal %w[B C D E F G], @subject.punch!.m(:next)
+  end
+
+  def test_mm_with_set
+    @subject = Set.new %w[a b c d e f]
+    assert_equal %w[A B C D E F], @subject.punch.m(:upcase)
+    assert_equal %w[A B C D E F], @subject.punch!.m(:upcase)
+    assert_equal %w[B C D E F G], @subject.punch!.m!(:upcase).m(:next)
+  end
+
   def test_mm_with_two_args
     subject.punch!
     assert_equal subject.map { |x| x.prepend('btn-') }, subject.mm(:prepend, 'btn-')
