@@ -7,6 +7,7 @@ ducks = [
   [String, DuckPuncher::Ducks::String],
   [Enumerable, DuckPuncher::Ducks::Enumerable],
   [Array, DuckPuncher::Ducks::Enumerable],
+  [Range, DuckPuncher::Ducks::Enumerable],
   [Numeric, DuckPuncher::Ducks::Numeric],
   [Hash, DuckPuncher::Ducks::Hash],
   [Object, DuckPuncher::Ducks::Object],
