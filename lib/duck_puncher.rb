@@ -34,15 +34,9 @@ module DuckPuncher
     alias_method :log, :logger
     alias_method :log=, :logger=
 
-    def call(ducks = Ducks.list.keys)
-      punch! *ducks
-    end
-
-    # Backwards compatibility
-    alias punch_all! call
-
-    def punch!(*classes)
-      options = classes.last.is_a?(Hash) ? classes.pop : {}
+    def call(*args)
+      options = args.last.is_a?(Hash) ? args.pop : {}
+      classes = args.any? ? args : Ducks.list.keys
       classes.each do |klass|
         klass = lookup_constant(klass)
         Ducks[klass].sort.each do |duck|
@@ -56,6 +50,10 @@ module DuckPuncher
       end
       nil
     end
+
+    # Backwards compatibility
+    alias punch_all! call
+    alias punch! call
   end
 end
 
