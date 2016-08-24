@@ -66,20 +66,20 @@ DuckPuncher.(Object, only: :punch)
 `DuckPuncher` extends the amazing [Usable](https://github.com/ridiculous/usable) gem, so you can configure only the punches you want! For instance:
 
 ```ruby
-DuckPuncher.punch! Numeric, only: [:to_currency, :to_duration]
+DuckPuncher.(Numeric, only: [:to_currency, :to_duration])
 ```
 
 If you punch `Object` then you can use `#punch!` on any object to extend individual instances:
 
 ```ruby
->> DuckPuncher.punch! Object, only: :punch!
+>> DuckPuncher.(Object, only: :punch!)
 >> %w[yes no 1].punch!.m!(:punch).m(:to_boolean)
 => [true, false, true]
 ```
 
 Alternatively, there is also the `Object#punch` method which returns a decorated copy of an object with punches mixed in:
 ```ruby
->> DuckPuncher.punch! Object, only: :punch
+>> DuckPuncher.(Object, only: :punch)
 >> %w[1 2 3].punch.m(:to_i)
 => [1, 2, 3]
 ```
@@ -106,7 +106,7 @@ def soft_punch
 end
 
 def hard_punch
-  ('a'..'z').to_a.punch!.m!(:upcase).mm!(:*, 3).echo
+  ('a'..'z').punch!.m!(:upcase).mm!(:*, 3).echo
 end
 
 >> soft_punch
@@ -152,7 +152,7 @@ end
 DuckPuncher.register User, :Billable, :Retryable
 
 # Add the #punch method to User instances
-DuckPuncher.punch! Object, only: :punch
+DuckPuncher.(Object, only: :punch)
 
 # Usage
 user = User.new('Ryan').punch
@@ -189,7 +189,7 @@ LoadError: cannot load such file -- pry
  from (irb):1:in `require'
  from (irb):1
  from bin/console:10:in `<main>'
->> DuckPuncher.punch! Object, only: :require!
+>> DuckPuncher.(Object, only: :require!)
 => nil
 >> require! 'pry'
 Fetching: method_source-0.8.2.gem (100%)
@@ -209,7 +209,7 @@ if it's not available in the current load path, and starts tracking the current 
 ```ruby
 Duck = Class.new
 Donald = Module.new { def tap_tap() self end }
-DuckPuncher.punch!(:Object, only: :track)
+DuckPuncher.(:Object, only: :track)
 Donald.track
 Duck.track
 >> Duck.usable Donald, only: :tap_tap
