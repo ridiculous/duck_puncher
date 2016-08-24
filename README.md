@@ -159,6 +159,8 @@ user = User.new('Ryan').punch
 user.call_with_retry(19.99)
 ```
 
+To register _and_ punch in one swoop, use `DuckPuncher.register!`
+
 ## Install
 
 ```ruby

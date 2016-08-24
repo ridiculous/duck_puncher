@@ -1,5 +1,5 @@
 DuckPuncher.logger = Logger.new(STDOUT).tap do |config|
-  config.formatter = proc { |*args| "[#{args[1]}] #{args[0]}: #{args[-1]}\n" }
+  config.formatter = proc { |*args| "[DuckPuncher] #{args[0]}: #{args[-1]}\n" }
   config.level = Logger::ERROR
 end
 
@@ -7,7 +7,6 @@ ducks = [
   [String, DuckPuncher::Ducks::String],
   [Enumerable, DuckPuncher::Ducks::Enumerable],
   [Array, DuckPuncher::Ducks::Enumerable],
-  [Hash, DuckPuncher::Ducks::Enumerable],
   [Numeric, DuckPuncher::Ducks::Numeric],
   [Hash, DuckPuncher::Ducks::Hash],
   [Object, DuckPuncher::Ducks::Object],

@@ -13,6 +13,11 @@ module DuckPuncher
       @cached_decorators = nil
     end
 
+    def register!(*args)
+      register *args
+      call args.first
+    end
+
     def deregister(*classes)
       classes.each &Ducks.list.method(:delete)
       classes.each &decorators.method(:delete)
