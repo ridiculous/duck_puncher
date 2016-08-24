@@ -8,28 +8,36 @@ DuckPuncher provides an interface for administering __duck punches__ (a.k.a "mon
 Default extensions:
 
 ```ruby
-Array   #m                  => `[].m(:to_s)` => `[].map(&:to_s)`
+Enumerable
+        #m                  => `[].m(:to_s)` => `[].map(&:to_s)`
         #m!                 => `[].m!(:upcase)` => `[].map!(&:upcase)`
         #mm                 => `[].mm(:sub, /[aeiou]/, '*')` => `[].map { |x| x.sub(/[aeiou]/, '*') }` 
         #mm!                => `[].mm!(:sub, /[aeiou]/, '*')` => `[].map! { |x| x.sub(/[aeiou]/, '*') }` 
         #except             => `[].except('foo', 'bar')` => `[] - ['foo', 'bar']`
-Hash    #dig                => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Part of standard lib in Ruby >= 2.3)
+        #map_keys           => `[{id: 1, name: 'foo'}, {id: 2}].map_keys(:id)` => `[1, 2]`
+Hash
+        #dig                => `{a: 1, b: {c: 2}}.dig(:b, :c)` => 2 (Part of standard lib in Ruby >= 2.3)
         #compact            => `{a: 1, b: nil}.compact` => {a: 1}
-Numeric #to_currency        => `25.245.to_currency` => 25.25 
+Numeric
+        #to_currency        => `25.245.to_currency` => 25.25 
         #to_duration        => `10_000.to_duration` => '2 h 46 min'
         #to_time_ago        => `10_000.to_time_ago` => '2 hours ago'
         #to_rad             => `10.15.to_rad` => 0.17715091907742445
-String  #pluralize          => `'hour'.pluralize(2)` => "hours"
+String
+        #pluralize          => `'hour'.pluralize(2)` => "hours"
         #underscore         => `'DuckPuncher::JSONStorage'.underscore` => 'duck_puncher/json_storage'
         #to_boolean         => `'1'.to_boolean` => true
         #constantize        => `'MiniTest::Test'.constantize` => MiniTest::Test
-Module  #local_methods      => `Kernel.local_methods` returns the methods defined directly in the class + nested constants w/ methods
-Object  #clone!             => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
+Module
+        #local_methods      => `Kernel.local_methods` returns the methods defined directly in the class + nested constants w/ methods
+Object
+        #clone!             => `Object.new.clone!` => a deep clone of the object (using Marshal.dump)
         #punch              => `'duck'.punch` => a copy of 'duck' with String punches mixed in
         #punch!             => `'duck'.punch!` => destructive version applies extensions directly to the base object
         #echo               => `'duck'.echo.upcase` => spits out the caller and value of the object and returns the object
         #track              => `Object.new.track` => Traces methods calls to the object (requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download)
-Method  #to_instruct        => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
+Method
+        #to_instruct        => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
         #to_source          => `Benchmark.method(:measure).to_source` returns the method definition as a string
 ```
 
