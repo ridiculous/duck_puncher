@@ -20,6 +20,10 @@ module DuckPuncher
       def except(*args)
         self - args
       end
+
+      def map_keys(key)
+        map { |x| x[key] }
+      end
     end
   end
 end

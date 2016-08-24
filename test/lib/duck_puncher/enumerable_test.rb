@@ -2,7 +2,7 @@ require_relative '../../test_helper'
 
 DuckPuncher.punch! Object
 
-class ArrayTest < MiniTest::Test
+class EnumerableTest < MiniTest::Test
   attr_reader :subject
 
   def setup
@@ -35,5 +35,11 @@ class ArrayTest < MiniTest::Test
     assert_equal subject.except('a'), %w[b c d e f g h i j k l m]
     assert_equal subject.except('a', 'b', 'c'), %w[d e f g h i j k l m]
     assert_equal subject.except, subject
+  end
+
+  def test_map_keys
+    @subject = [{ id: 1, name: 'a' }, { id: 2, name: 'b' }, { name: 'c' }]
+    assert_respond_to @subject.punch, :map_keys
+    assert_equal %w[a b c], @subject.punch.map_keys(:name)
   end
 end
