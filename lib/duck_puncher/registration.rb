@@ -4,7 +4,7 @@ module DuckPuncher
     def register(target, *mods)
       options = mods.last.is_a?(Hash) ? mods.pop : {}
       target = DuckPuncher.lookup_constant target
-      Ducks.list[target] = [] unless Ducks.list.key?(target)
+      Ducks.list[target] = Set.new [] unless Ducks.list.key?(target)
       Array(mods).each do |mod|
         duck = Duck.new target, mod, options
         Ducks.list[target] << duck
