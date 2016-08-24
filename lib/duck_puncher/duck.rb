@@ -19,7 +19,8 @@ module DuckPuncher
     # @option options [Symbol,String] :method Specifies if the methods should be included or prepended (:include)
     # @return [Class] The class that was just punched
     def punch(opts = {})
-      targets = Array(opts.delete(:target) || self.target)
+      opts = options.merge opts
+      targets = Array(opts[:target] || self.target)
       targets.each do |target|
         options[:before].call(target) if options[:before]
         target.extend Usable

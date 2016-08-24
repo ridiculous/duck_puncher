@@ -40,7 +40,7 @@ module DuckPuncher
       classes.each do |klass|
         klass = lookup_constant(klass)
         Ducks[klass].sort.each do |duck|
-          punches = Array(options[:only] || Ducks::Module.instance_method(:local_methods).bind(duck.mod).call)
+          punches = Array(options[:only] || duck.options[:only] || Ducks::Module.instance_method(:local_methods).bind(duck.mod).call)
           options[:target] = klass
           logger.info %Q(#{klass}#{" <-- #{duck.mod.name}#{punches}" if punches.any?})
           unless duck.punch(options)
