@@ -1,6 +1,6 @@
 module DuckPuncher
   module Ducks
-    module Array
+    module Enumerable
       def m(method_name)
         map(&method_name)
       end

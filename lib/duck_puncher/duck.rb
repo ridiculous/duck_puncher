@@ -2,7 +2,6 @@ module DuckPuncher
   class Duck
     attr_accessor :target, :mod, :options
 
-    # @todo test punching a module
     # @param target [String,Class] Class or module to punch
     # @param mod [String,Module] The module that defines the extensions (@name is used by default)
     # @param [Hash] options to modify the duck #punch method behavior
@@ -20,14 +19,14 @@ module DuckPuncher
     # @option options [Symbol,String] :method Specifies if the methods should be included or prepended (:include)
     # @return [Class] The class that was just punched
     def punch(opts = {})
-      target = opts.delete(:target) || self.target
-      Array(target).each do |klass|
-        options[:before].call(klass) if options[:before]
-        klass.extend Usable
-        klass.usable mod, only: opts[:only], method: opts[:method]
-        options[:after].call(klass) if options[:after]
+      targets = Array(opts.delete(:target) || self.target)
+      targets.each do |target|
+        options[:before].call(target) if options[:before]
+        target.extend Usable
+        target.usable mod, only: opts[:only], method: opts[:method]
+        options[:after].call(target) if options[:after]
       end
-      target
+      targets
     end
 
     #

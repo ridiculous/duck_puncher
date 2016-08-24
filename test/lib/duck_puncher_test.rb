@@ -6,7 +6,6 @@ class DuckPuncherTest < MiniTest::Test
   def setup
     @subject = Animal.new
     @kaia = Kaia.new
-    DuckPuncher.deregister Animal, Kaia, Dog
   end
 
   def teardown
@@ -23,7 +22,7 @@ class DuckPuncherTest < MiniTest::Test
   end
 
   def test_punch_all!
-    DuckPuncher.punch_all!
+    DuckPuncher.()
     expected_methods = DuckPuncher::Ducks.list.values.m(:to_a).flatten.m(:mod).m(:local_methods).flatten
     assert expected_methods.size > 1
     good_ducks = DuckPuncher::Ducks.list.select { |_, ducks|
@@ -37,6 +36,7 @@ class DuckPuncherTest < MiniTest::Test
     expected_methods = DuckPuncher::Ducks.list.values.m(:to_a).flatten.m(:mod).m(:local_methods).flatten
     assert expected_methods.size > 1
     good_ducks = DuckPuncher::Ducks.list.select { |_, ducks|
+      # Assert that all methods were copied over
       ducks.all? { |duck| (duck.mod.local_methods - duck.target.instance_methods(:false)).size.zero? }
     }
     assert good_ducks.size > 5

@@ -1,4 +1,5 @@
 module DuckPuncher
+  # @note When updating this file please update comment regarding this module in duck_puncher.rb
   module Decoration
     def decorators
       @decorators ||= ancestral_hash
@@ -18,7 +19,7 @@ module DuckPuncher
 
     def cached_decorators
       @cached_decorators ||= Hash.new do |me, target|
-        me[target] = DuckPuncher.decorators.select { |klass, _| klass >= target }.sort { |a, b| b[0] <=> a[0] }
+        me[target] = DuckPuncher.decorators.select { |klass, _| klass >= target }
       end
     end
 
