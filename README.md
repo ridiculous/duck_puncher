@@ -14,7 +14,7 @@ Enumerable (including Array, Set, Range, and Enumerator)
         #mm                 # => `[].mm(:sub, /[aeiou]/, '*')` 
         #mm!                # => `[].mm!(:sub, /[aeiou]/, '*')` 
         #except             # => `[].except('foo', 'bar')`
-        #map_keys           # => `[{id: 1}, {id: 2}].map_keys(:id)`
+        #map_keys           # => `[].map_keys(:id)`
 Hash
         #dig                # => `{a: 1, b: {c: 2}}.dig(:b, :c)` (Standard in Ruby >= 2.3)
         #compact            # => `{a: 1, b: nil}.compact` # => {a: 1}
@@ -26,16 +26,16 @@ Numeric
 String
         #pluralize          # => `'hour'.pluralize(2)`          # => "hours"
         #underscore         # => `'DJ::JSONStorage'.underscore` # => 'dj/json_storage'
-        #to_boolean         # => `'1'.to_boolean`               # => true
+        #to_boolean         # => `'true'.to_boolean`               # => true
         #constantize        # => `'MiniTest::Test'.constantize` # => MiniTest::Test
 Module
         #local_methods      # => `Kernel.local_methods` # => returns the methods defined directly in the class + nested constants w/ methods
 Object
-        #clone!             # => `Object.new.clone!`  # => a deep clone of the object (using Marshal.dump)
-        #punch              # => `'duck'.punch`       # => a copy of 'duck' with String punches mixed in
-        #punch!             # => `'duck'.punch!`      # => destructive version applies extensions directly to the base object
-        #echo               # => `'duck'.echo.upcase` # => spits out the caller and value of the object and returns the object
-        #track              # => `Object.new.track`   # => Traces methods calls to the object (requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download)
+        #clone!             # => `Object.new.clone!`       # => a deep clone of the object (using Marshal.dump)
+        #punch              # => `Object.new.punch`        # => a copy of Object.new with String punches mixed in
+        #punch!             # => `Object.new.punch!`       # => destructive version applies extensions directly to the base object
+        #echo               # => `Object.new.echo.inspect` # => spits out the caller and value of the object and returns the object
+        #track              # => `Object.new.track`        # => Traces methods calls to the object (requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download)
 Method
         #to_instruct        # => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
         #to_source          # => `Benchmark.method(:measure).to_source` returns the method definition as a string
