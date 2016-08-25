@@ -35,7 +35,7 @@ Object
         #punch              # => `Object.new.punch`        # => a copy of Object.new with String punches mixed in
         #punch!             # => `Object.new.punch!`       # => destructive version applies extensions directly to the base object
         #echo               # => `Object.new.echo.inspect` # => spits out the caller and value of the object and returns the object
-        #track              # => `Object.new.track`        # => Traces methods calls to the object (requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download)
+        #track              # => `Object.new.track`        # => Trace methods calls to the object (requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download)
 Method
         #to_instruct        # => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
         #to_source          # => `Benchmark.method(:measure).to_source` returns the method definition as a string
