@@ -39,11 +39,13 @@ module DuckPuncher
       classes = args.any? ? args : Ducks.list.keys
       classes.each do |klass|
         klass = lookup_constant(klass)
-        Ducks[klass].sort.each do |duck|
+        (Ducks[klass] - punched_ducks).sort.each do |duck|
           punches = Array(options[:only] || duck.options[:only] || Ducks::Module.instance_method(:local_methods).bind(duck.mod).call)
           options[:target] = klass
           logger.info %Q(#{klass}#{" <-- #{duck.mod.name}#{punches}" if punches.any?})
-          unless duck.punch(options)
+          if duck.punch(options)
+            punched_ducks << duck
+          else
             logger.error %Q(Failed to punch #{name})
           end
         end
@@ -54,6 +56,10 @@ module DuckPuncher
     # Backwards compatibility
     alias punch_all! call
     alias punch! call
+
+    def punched_ducks
+      @punched_ducks ||= []
+    end
   end
 end
 
