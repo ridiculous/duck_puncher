@@ -41,6 +41,12 @@ Method
         #to_source          # => `Benchmark.method(:measure).to_source` returns the method definition as a string
 ```
 
+## Install
+
+```ruby
+gem 'duck_puncher', '~> 4.2'
+```
+
 ## Usage
 
 Punch all registered ducks:
@@ -119,9 +125,9 @@ end
 
 ### Registering custom punches
 
-DuckPuncher allows you to utilize the `punch` interface to __extend__ any kind of object with your own punches. Simply 
+DuckPuncher allows you to utilize the `punch` and `punch!` interface to __decorate__ or __extend__, respectively, any object with your own punches. Simply 
 call `DuckPuncher.register` with the name of your module (or an array of names) and any of
-[these options](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L11).
+[these options](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L10).
 
 
 ```ruby
@@ -159,13 +165,7 @@ user = User.new('Ryan').punch
 user.call_with_retry(19.99)
 ```
 
-To register _and_ punch in one swoop, use `DuckPuncher.register!`
-
-## Install
-
-```ruby
-gem 'duck_puncher'
-```
+To register the extension _and_ punch the class, use `DuckPuncher.register!`
 
 ## Logging
 

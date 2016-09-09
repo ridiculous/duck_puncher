@@ -3,7 +3,7 @@ module DuckPuncher
     attr_accessor :target, :mod, :options
 
     # @param target [String,Class] Class or module to punch
-    # @param mod [String,Module] The module that defines the extensions (@name is used by default)
+    # @param mod [String,Module] The module that defines the extensions
     # @param [Hash] options to modify the duck #punch method behavior
     # @option options :before [Proc] A hook that is called with the target class before +punch+
     # @option options :after [Proc] A hook that is called with the target class after +punch+
