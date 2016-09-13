@@ -1,7 +1,7 @@
 module DuckPuncher
   module Ducks
     module String
-      BOOLEAN_MAP = ::Hash[%w(true 1 yes y on).product([true]) + ['false', '0', 'no', 'n', 'off', ''].product([false])].freeze
+      BOOLEAN_MAP = ::Hash[%w(true 1 yes y on).product([true])].freeze
 
       def pluralize(count)
         "#{self}#{'s' if count != 1}"

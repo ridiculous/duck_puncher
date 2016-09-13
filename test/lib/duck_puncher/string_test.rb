@@ -1,6 +1,6 @@
 require_relative '../../test_helper'
 
-DuckPuncher.punch! String
+DuckPuncher.(String)
 
 class StringTest < MiniTest::Test
   def test_pluralize
@@ -29,7 +29,7 @@ class StringTest < MiniTest::Test
     refute 'no'.to_boolean
     refute 'off'.to_boolean
     refute ''.to_boolean
-    refute 'asd'.to_boolean
+    refute 'f'.to_boolean
   end
 
   def test_constantize
