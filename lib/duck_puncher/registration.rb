@@ -6,7 +6,7 @@ module DuckPuncher
       target = DuckPuncher.lookup_constant target
       Ducks.list[target] = Set.new [] unless Ducks.list.key?(target)
       Array(mods).each do |mod|
-        duck = Duck.new target, mod, options
+        duck = UniqueDuck.new Duck.new target, mod, options
         Ducks.list[target] << duck
         decorators[target] = build_decorator_class(duck, *Ducks[target])
       end

@@ -1,6 +1,6 @@
 module DuckPuncher
   class Duck
-    attr_accessor :target, :mod, :options, :last_punch_opts
+    attr_accessor :target, :mod, :options
 
     # @param target [String,Class] Class or module to punch
     # @param mod [String,Module] The module that defines the extensions
@@ -11,7 +11,6 @@ module DuckPuncher
       @options = options
       @target = DuckPuncher.lookup_constant(target)
       @mod = DuckPuncher.lookup_constant(mod)
-      @last_punch_opts = {}
     end
 
     # @param [Hash] opts to modify punch
@@ -20,7 +19,7 @@ module DuckPuncher
     # @option options [Symbol,String] :method Specifies if the methods should be included or prepended (:include)
     # @return [Class] The class that was just punched
     def punch(opts = {})
-      @last_punch_opts = opts = options.merge(opts)
+      opts = options.merge(opts)
       targets = Array(opts[:target] || self.target)
       targets.each do |target|
         options[:before].call(target) if options[:before]
@@ -29,26 +28,6 @@ module DuckPuncher
         options[:after].call(target) if options[:after]
       end
       targets
-    end
-
-    #
-    # Required to play nice in a Set
-    #
-
-    def eql?(other)
-      "#{target}-#{mod}" == "#{other.target}-#{other.mod}"
-    end
-
-    def hash
-      target.to_s.hash + mod.to_s.hash + @last_punch_opts.to_s.hash
-    end
-
-    #
-    # Required for sorting
-    #
-
-    def <=>(other)
-      target <=> other.target
     end
   end
 end

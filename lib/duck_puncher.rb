@@ -15,6 +15,7 @@ require 'duck_puncher/utilities'
 require 'duck_puncher/ancestral_hash'
 require 'duck_puncher/duck'
 require 'duck_puncher/ducks'
+require 'duck_puncher/unique_duck'
 
 module DuckPuncher
   autoload :GemInstaller, 'duck_puncher/gem_installer'
@@ -43,7 +44,7 @@ module DuckPuncher
           punches = Array(options[:only] || duck.options[:only] || Ducks::Module.instance_method(:local_methods).bind(duck.mod).call)
           options[:target] = klass
           logger.info %Q(#{klass}#{" <-- #{duck.mod.name}#{punches}" if punches.any?})
-          duck.last_punch_opts = options
+          duck.punch_options = options
           if !punched_ducks.include?(duck) && duck.punch(options)
             punched_ducks << duck
           else
