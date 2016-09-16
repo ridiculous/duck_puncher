@@ -35,11 +35,11 @@ class DuckPuncherTest < MiniTest::Test
     DuckPuncher.()
     expected_methods = DuckPuncher::Ducks.list.values.m(:to_a).flatten.m(:mod).m(:local_methods).flatten
     assert expected_methods.size > 1
+    # Find all ducks that have copied all their methods to the target class (e.g. String)
     good_ducks = DuckPuncher::Ducks.list.select { |_, ducks|
-      # Assert that all methods were copied over
       ducks.all? { |duck| (duck.mod.local_methods - duck.target.instance_methods(:false)).size.zero? }
     }
-    assert good_ducks.size > 5
+    assert good_ducks.size == 6, "Good ducks should be equal to 6 but are #{good_ducks.size}"
   end
 
   def test_register_with_multiple_mods
