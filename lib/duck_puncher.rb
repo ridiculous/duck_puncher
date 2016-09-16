@@ -23,11 +23,10 @@ module DuckPuncher
 
   class << self
     # @description Include additional functionality
-    #   Registration[:register, :deregister]
-    #   Decoration[:decorators, :build_decorator_class, :decorate, :cached_decorators, :undecorate]
-    #   Utilities[:lookup_constant, :redefine_constant]
-    #   AncestralHash[:ancestral_hash]
-    include Registration, Decoration, Utilities, AncestralHash
+    include Registration    # [:register, :deregister]
+    include Decoration      # [:decorators, :build_decorator_class, :decorate, :cached_decorators, :undecorate]
+    include Utilities       # [:lookup_constant, :redefine_constant]
+    include AncestralHash   # [:ancestral_hash]
 
     attr_accessor :logger
 
@@ -61,6 +60,17 @@ module DuckPuncher
 
     def punched_ducks
       @punched_ducks ||= Set.new
+    end
+
+    def register(*)
+      target, *_ = super
+      decorators[target] = build_decorator_class(*Ducks[target])
+      @cached_decorators = nil
+    end
+
+    def deregister(*)
+      super
+      @cached_decorators = nil
     end
   end
 end
