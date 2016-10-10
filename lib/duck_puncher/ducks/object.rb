@@ -26,7 +26,9 @@ module DuckPuncher
       end
 
       def echo
-        p "#{self} -- #{caller_locations[respond_to?(:__getobj__) ? 2 : 0]}"
+        puts 'ECHO ' + ('(' * 14)
+        p self
+        puts '', caller_locations.take(5).map { |l| l.to_s.prepend('  * ') }.join("\n"), 'END'
         self
       end
 
