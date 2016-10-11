@@ -23,7 +23,7 @@ module DuckPuncher
       targets = Array(opts[:target] || self.target)
       targets.each do |target|
         options[:before].call(target) if options[:before]
-        punches = Array(options[:only] || Ducks::Module.instance_method(:local_methods).bind(mod).call)
+        punches = Array(opts[:only] || Ducks::Module.instance_method(:local_methods).bind(mod).call)
         DuckPuncher.logger.info %Q(#{target}#{" <-- #{mod.name}#{punches}" if punches.any?})
         target.extend Usable
         target.usable mod, only: opts[:only], method: opts[:method]

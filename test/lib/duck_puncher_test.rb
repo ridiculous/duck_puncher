@@ -43,7 +43,9 @@ class DuckPuncherTest < MiniTest::Test
   end
 
   def test_call_with_target
-
+    refute_respond_to @subject, :clone!
+    DuckPuncher.(Object, target: @subject.class)
+    assert_respond_to @subject, :clone!
   end
 
   def test_register_with_multiple_mods
