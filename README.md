@@ -1,9 +1,8 @@
 # DuckPuncher [![Gem Version](https://badge.fury.io/rb/duck_puncher.svg)](http://badge.fury.io/rb/duck_puncher)  [![Build Status](https://travis-ci.org/ridiculous/duck_puncher.svg)](https://travis-ci.org/ridiculous/duck_puncher) [![Code Climate](https://codeclimate.com/github/ridiculous/duck_puncher/badges/gpa.svg)](https://codeclimate.com/github/ridiculous/duck_puncher)
 
-DuckPuncher provides an interface for administering __duck punches__ (a.k.a "monkey patches"). Punches can be administered in several ways: 
-
-* as an extension
-* as a decorator
+DuckPuncher provides an interface for administering __duck punches__ (a.k.a "monkey patches"). Punches can be applied permanently via an extension
+or temporarily as a decorator. Decorator classes are generated when an extension is registered and used via `Object#punch`. The object is wrapped
+in one decorator for each of the object's ancestors (with registered punches) and behaves much like it's extended cousin, `Object.punch!`.
 
 ## Default extensions
 
