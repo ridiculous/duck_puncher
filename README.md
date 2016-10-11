@@ -5,7 +5,7 @@ DuckPuncher provides an interface for administering __duck punches__ (a.k.a "mon
 * as an extension
 * as a decorator
 
-Default extensions:
+## Default extensions
 
 ### Enumerable (including Array, Set, Range, and Enumerator)
 ```ruby
@@ -47,7 +47,7 @@ Kernel.local_methods  # => methods defined directly in the class + nested consta
 ```
 
 ### Object
-```ruby"
+```ruby
 Object.new.clone!  # => a deep clone of the object (using Marshal.dump)
 Object.new.punch   # => a copy of Object.new with String punches mixed in
 Object.new.punch!  # => destructive version applies extensions directly to the base object
