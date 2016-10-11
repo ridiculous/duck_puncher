@@ -40,14 +40,14 @@ module DuckPuncher
       classes.each do |klass|
         klass = lookup_constant(klass)
         Ducks[klass].sort.each do |duck|
-          punches = Array(options[:only] || duck.options[:only] || Ducks::Module.instance_method(:local_methods).bind(duck.mod).call)
-          options[:target] = klass
-          logger.info %Q(#{klass}#{" <-- #{duck.mod.name}#{punches}" if punches.any?})
-          duck.punch_options = options
-          if !punched_ducks.include?(duck) && duck.punch(options)
+          duck.punch_options = Ducks::Object.instance_method(:clone!).bind(options).call
+          duck.punch_options[:target] ||= klass
+          if punched_ducks.include?(duck)
+            logger.warn %(Already punched #{duck.mod.name})
+          elsif duck.punch(duck.punch_options).any?
             punched_ducks << duck
           else
-            logger.error %Q(Failed to punch #{name})
+            logger.warn %(No punches were thrown)
           end
         end
       end

@@ -42,6 +42,10 @@ class DuckPuncherTest < MiniTest::Test
     assert good_ducks.size == 6, "Good ducks should be equal to 6 but are #{good_ducks.size}"
   end
 
+  def test_call_with_target
+
+  end
+
   def test_register_with_multiple_mods
     refute_respond_to @subject, :talk
     refute_respond_to @subject, :wobble

@@ -61,10 +61,16 @@ Punch individual ducks by name:
 DuckPuncher.(Hash, Object)
 ```
 
-One method to rule them all:
+Add `punch` as a proxy method to all punches:
 
 ```ruby
 DuckPuncher.(Object, only: :punch)
+```
+
+Redirect the punches registered for a class to another target:
+
+```ruby
+DuckPuncher.(Object, target: String)
 ```
 
 ### Tactical punches

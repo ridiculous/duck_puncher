@@ -25,10 +25,10 @@ module DuckPuncher
         self
       end
 
-      def echo
-        puts 'ECHO ' + ('(' * 14)
+      # @param [Integer] trace The number of lines from the stack trace to print (nil)
+      def echo(trace = nil)
         p self
-        puts '', caller_locations.take(5).map { |l| l.to_s.prepend('  * ') }.join("\n"), 'END'
+        puts caller_locations.take(trace).map { |l| l.to_s.prepend('* ') }.join("\n") if trace
         self
       end
 
