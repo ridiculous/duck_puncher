@@ -7,44 +7,68 @@ DuckPuncher provides an interface for administering __duck punches__ (a.k.a "mon
 
 Default extensions:
 
+### Enumerable (including Array, Set, Range, and Enumerator)
 ```ruby
-Enumerable (including Array, Set, Range, and Enumerator)
-        #m                  # => `[].m(:to_s)`
-        #m!                 # => `[].m!(:upcase)`
-        #mm                 # => `[].mm(:sub, /[aeiou]/, '*')` 
-        #mm!                # => `[].mm!(:sub, /[aeiou]/, '*')` 
-        #except             # => `[].except('foo', 'bar')`
-        #map_keys           # => `[].map_keys(:id)`
-Hash
-        #dig                # => `{a: 1, b: {c: 2}}.dig(:b, :c)` (Standard in Ruby >= 2.3)
-        #compact            # => `{a: 1, b: nil}.compact` # => {a: 1}
-Numeric
-        #to_currency        # => `25.245.to_currency` # => 25.25 
-        #to_duration        # => `10_000.to_duration` # => '2 h 46 min'
-        #to_time_ago        # => `10_000.to_time_ago` # => '2 hours ago'
-        #to_rad             # => `10.15.to_rad`       # => 0.17715091907742445
-String
-        #pluralize          # => `'hour'.pluralize(2)`          # => "hours"
-        #underscore         # => `'DJ::JSONStorage'.underscore` # => 'dj/json_storage'
-        #to_boolean         # => `'true'.to_boolean`               # => true
-        #constantize        # => `'MiniTest::Test'.constantize` # => MiniTest::Test
-Module
-        #local_methods      # => `Kernel.local_methods` # => returns the methods defined directly in the class + nested constants w/ methods
-Object
-        #clone!             # => `Object.new.clone!`       # => a deep clone of the object (using Marshal.dump)
-        #punch              # => `Object.new.punch`        # => a copy of Object.new with String punches mixed in
-        #punch!             # => `Object.new.punch!`       # => destructive version applies extensions directly to the base object
-        #echo               # => `Object.new.echo.inspect` # => spits out the caller and value of the object and returns the object
-        #track              # => `Object.new.track`        # => Trace methods calls to the object (requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download)
-Method
-        #to_instruct        # => `Benchmark.method(:measure).to_instruct` returns the Ruby VM instruction sequence for the method
-        #to_source          # => `Benchmark.method(:measure).to_source` returns the method definition as a string
+[].m(:to_s)
+[].m!(:upcase)
+[].mm(:sub, /[aeiou]/, '*')
+[].mm!(:sub, /[aeiou]/, '*')
+[].except(:foo, :bar, :baz)
+[].map_keys(:id)
+```
+
+### Hash
+```ruby
+{ a: 1, b: { c: 2 }}.dig(:b, :c)  # => 2
+                                  # ii Standard in Ruby >= 2.3
+{ a: 1, b: nil }.compact          # => {a: 1}
+                                  # !! destructive
+```
+
+### Numeric
+```ruby
+25.245.to_currency # => "25.25"
+10_000.to_duration # => "2 h 46 min"
+10_000.to_time_ago # => "2 hours ago"
+10.15.to_rad       # => "0.17715091907742445"
+```
+
+### String
+```ruby
+'hour'.pluralize(2)           # => "hours"
+'DJ::JSONStorage'.underscore  # => "dj/json_storage"
+'true'.to_boolean             # => "true"
+'MiniTest::Test'.constantize  # => MiniTest::Test
+```
+
+### Module
+```ruby
+Kernel.local_methods  # => methods defined directly in the class + nested constants w/ methods
+```
+
+### Object
+```ruby"
+Object.new.clone!  # => a deep clone of the object (using Marshal.dump)
+Object.new.punch   # => a copy of Object.new with String punches mixed in
+Object.new.punch!  # => destructive version applies extensions directly to the base object
+Object.new.echo    # => prints and returns itself. Accepts a number,
+                   #    indicating how many lines of the trace to display
+Object.new.track   # => Trace methods calls to the object
+                   # !! requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download
+```
+
+### Method
+```ruby
+require 'benchmark'
+
+Benchmark.method(:measure).to_instruct # => the Ruby VM instruction sequence for the method
+Benchmark.method(:measure).to_source   # => the method definition as a string
 ```
 
 ## Install
 
 ```ruby
-gem 'duck_puncher', '~> 4.2'
+gem 'duck_puncher', '~> 4.3'
 ```
 
 ## Usage
