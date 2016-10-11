@@ -4,66 +4,6 @@ DuckPuncher provides an interface for administering __duck punches__ (a.k.a "mon
 or temporarily as a decorator. Decorator classes are generated when an extension is registered and used via `Object#punch`. The object is wrapped
 in one decorator for each of the object's ancestors (with registered punches) and behaves much like it's extended cousin, `Object.punch!`.
 
-## Default extensions
-
-### Enumerable (including Array, Set, Range, and Enumerator)
-```ruby
-[].m(:to_s)
-[].m!(:upcase)
-[].mm(:sub, /[aeiou]/, '*')
-[].mm!(:sub, /[aeiou]/, '*')
-[].except(:foo, :bar, :baz)
-[].map_keys(:id)
-```
-
-### Hash
-```ruby
-{ a: 1, b: { c: 2 }}.dig(:b, :c)  # => 2
-                                  # ii Standard in Ruby >= 2.3
-{ a: 1, b: nil }.compact          # => {a: 1}
-                                  # !! destructive
-```
-
-### Numeric
-```ruby
-25.245.to_currency # => "25.25"
-10_000.to_duration # => "2 h 46 min"
-10_000.to_time_ago # => "2 hours ago"
-10.15.to_rad       # => "0.17715091907742445"
-```
-
-### String
-```ruby
-'hour'.pluralize(2)           # => "hours"
-'DJ::JSONStorage'.underscore  # => "dj/json_storage"
-'true'.to_boolean             # => "true"
-'MiniTest::Test'.constantize  # => MiniTest::Test
-```
-
-### Module
-```ruby
-Kernel.local_methods  # => methods defined directly in the class + nested constants w/ methods
-```
-
-### Object
-```ruby
-Object.new.clone!  # => a deep clone of the object (using Marshal.dump)
-Object.new.punch   # => a copy of Object.new with String punches mixed in
-Object.new.punch!  # => destructive version applies extensions directly to the base object
-Object.new.echo    # => prints and returns itself. Accepts a number,
-                   #    indicating how many lines of the trace to display
-Object.new.track   # => Trace methods calls to the object
-                   # !! requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download
-```
-
-### Method
-```ruby
-require 'benchmark'
-
-Benchmark.method(:measure).to_instruct # => the Ruby VM instruction sequence for the method
-Benchmark.method(:measure).to_source   # => the method definition as a string
-```
-
 ## Install
 
 ```ruby
@@ -136,23 +76,80 @@ When there are no punches registered for a class, it'll search the ancestor list
 a method defined `echo`, but when we punch `Object`, it means all subclasses have access to the same methods, even with soft punches.
 
 ```ruby
-def soft_punch
-  ('a'..'z').punch.echo.to_a.map(&:upcase)
-end
-
-def hard_punch
-  ('a'..'z').punch!.m!(:upcase).mm!(:*, 3).echo
-end
-
+>> DuckPuncher.(Object, only: [:punch, :punch!])
+>> def soft_punch() ('a'..'z').punch.echo(1).map(&:upcase) end
+>> def hard_punch() ('a'..'z').punch!.echo(1).mm(:*, 3) end
 >> soft_punch
-"a..z -- (irb):8:in `soft_punch'"
-=> ["A", "B", "C", "D", ...]
+"a".."z"
+* /.../delegate.rb:85:in `method_missing'
+=> ["A", "B", "C", "D", "E", "F", "G", "H", "I", ...]
 >> hard_punch
-"[\"AAA\", \"BBB\", \"CCC\", \"DDD\", ...] -- (irb):12:in `hard_punch'"
+"a".."z"
+* (irb):11:in `hard_punch'
 => ["AAA", "BBB", "CCC", "DDDD", ...]
 ```
 
-### Registering custom punches
+## Default extensions
+
+#### Enumerable (including Array, Set, Range, and Enumerator)
+```ruby
+[].m(:to_s)
+[].m!(:upcase)
+[].mm(:sub, /[aeiou]/, '*')
+[].mm!(:sub, /[aeiou]/, '*')
+[].except(:foo, :bar, :baz)
+[].map_keys(:id)
+```
+
+#### Hash
+```ruby
+{ a: 1, b: { c: 2 }}.dig(:b, :c)  # => 2
+                                  # ii Standard in Ruby >= 2.3
+{ a: 1, b: nil }.compact          # => {a: 1}
+                                  # !! destructive
+```
+
+#### Numeric
+```ruby
+25.245.to_currency # => "25.25"
+10_000.to_duration # => "2 h 46 min"
+10_000.to_time_ago # => "2 hours ago"
+10.15.to_rad       # => "0.17715091907742445"
+```
+
+#### String
+```ruby
+'hour'.pluralize(2)           # => "hours"
+'DJ::JSONStorage'.underscore  # => "dj/json_storage"
+'true'.to_boolean             # => "true"
+'MiniTest::Test'.constantize  # => MiniTest::Test
+```
+
+#### Module
+```ruby
+Kernel.local_methods  # => methods defined directly in the class + nested constants w/ methods
+```
+
+#### Object
+```ruby
+Object.new.clone!  # => a deep clone of the object (using Marshal.dump)
+Object.new.punch   # => a copy of Object.new with String punches mixed in
+Object.new.punch!  # => destructive version applies extensions directly to the base object
+Object.new.echo    # => prints and returns itself. Accepts a number,
+                   #    indicating how many lines of the trace to display
+Object.new.track   # => Trace methods calls to the object
+                   # !! requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download
+```
+
+#### Method
+```ruby
+require 'benchmark'
+
+Benchmark.method(:measure).to_instruct # => the Ruby VM instruction sequence for the method
+Benchmark.method(:measure).to_source   # => the method definition as a string
+```
+
+## Registering custom punches
 
 DuckPuncher allows you to utilize the `punch` and `punch!` interface to __decorate__ or __extend__, respectively, any object with your own punches. Simply 
 call `DuckPuncher.register` with the name of your module (or an array of names) and any of
@@ -244,36 +241,18 @@ DuckPuncher.(:Object, only: :track)
 Donald.track
 Duck.track
 >> Duck.usable Donald, only: :tap_tap
-  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00002)
-  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00001)
-  * called "Donald.respond_to?" with to_ary, true [RUBY CORE] (0.00001)
-  * called "Donald.to_s" [RUBY CORE] (0.00001)
-  * called "Duck.usable_config" [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:10] (0.00002)
-  * called "Duck.usable_config" [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:10] (0.00001)
-  * called "Donald.const_defined?" with UsableSpec [RUBY CORE] (0.00001)
-  * called "Donald.dup" [RUBY CORE] (0.00002)
-  * called "Donald.name" [RUBY CORE] (0.00000)
-  * called "Donald.instance_methods" [RUBY CORE] (0.00001)
-  * called "Duck.const_defined?" with DonaldUsed [RUBY CORE] (0.00001)
-  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00001)
-  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00000)
-  * called "Donald.respond_to?" with to_ary, true [RUBY CORE] (0.00000)
-  * called "Donald.to_s" [RUBY CORE] (0.00035)
-  * called "Duck.const_set" with DonaldUsed, #<Module:0x007fe23a261618> [RUBY CORE] (0.00002)
-  * called "Duck.usable_config" [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:10] (0.00000)
-  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00000)
-  * called "Donald.respond_to?" with to_ary, true [RUBY CORE] (0.00001)
-  * called "Donald.to_s" [RUBY CORE] (0.00019)
-  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00001)
-  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00000)
-  * called "Donald.respond_to?" with to_ary, true [RUBY CORE] (0.00000)
-  * called "Donald.to_s" [RUBY CORE] (0.00000)
-  * called "Duck.include" with Duck::DonaldUsed [RUBY CORE] (0.00001)
-  * called "Duck#send" with include, Duck::DonaldUsed [RUBY CORE] (0.00024)
-  * called "Duck.usable!" with #<Usable::ModExtender:0x007fe23a261ca8> [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:41] (0.00143)
-  * called "Donald.const_defined?" with UsableSpec [RUBY CORE] (0.00001)
-  * called "Duck.usable" with Donald, {:only=>:tap_tap} [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:30] (0.00189)
-  # ... You get the idea.
+# =>  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00002)
+# =>  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00001)
+# =>  * called "Donald.respond_to?" with to_ary, true [RUBY CORE] (0.00001)
+# =>  * called "Donald.to_s" [RUBY CORE] (0.00001)
+# =>  * called "Duck.usable_config" [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:10] (0.00002)
+# =>  * called "Duck.usable_config" [ruby-2.3.0@duck_puncher/gems/usable-1.2.0/lib/usable.rb:10] (0.00001)
+# =>  * called "Donald.const_defined?" with UsableSpec [RUBY CORE] (0.00001)
+# =>  * called "Donald.dup" [RUBY CORE] (0.00002)
+# =>  * called "Donald.name" [RUBY CORE] (0.00000)
+# =>  * called "Donald.instance_methods" [RUBY CORE] (0.00001)
+# =>  * called "Duck.const_defined?" with DonaldUsed [RUBY CORE] (0.00001)
+# =>  ...
 ```
 
 ## Contributing
