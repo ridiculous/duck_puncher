@@ -3,6 +3,7 @@ DuckPuncher.logger = Logger.new(STDOUT).tap do |config|
   config.level = Logger::ERROR
 end
 
+# [Target, Extensions]
 ducks = [
   [String, DuckPuncher::Ducks::String],
   [Enumerable, DuckPuncher::Ducks::Enumerable, {

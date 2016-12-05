@@ -1,3 +1,8 @@
+4.4.0 (12/4/2016)
+=================
+
+* Target objects are no longer extended with the [Usable](https://github.com/ridiculous/usable) module
+
 4.3.0 (10/10/2016)
 ==================
 

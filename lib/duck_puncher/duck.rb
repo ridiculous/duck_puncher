@@ -25,8 +25,9 @@ module DuckPuncher
         options[:before].call(target) if options[:before]
         punches = Array(opts[:only] || Ducks::Module.instance_method(:local_methods).bind(mod).call)
         DuckPuncher.logger.info %Q(#{target}#{" <-- #{mod.name}#{punches}" if punches.any?})
-        target.extend Usable
-        target.usable mod, only: opts[:only], method: opts[:method]
+        extender = Usable::ModExtender.new(mod, only: options.delete(:only), method: options.delete(:method))
+        extender.call target
+        extender = nil
         options[:after].call(target) if options[:after]
       end
       targets
