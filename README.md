@@ -155,7 +155,11 @@ DuckPuncher allows you to utilize the `punch` and `punch!` interface to __decora
 call `DuckPuncher.register` with the name of your module (or an array of names) and any of
 [these options](https://github.com/ridiculous/duck_puncher/blob/master/lib/duck_puncher/duck.rb#L10).
 
+```ruby
+DuckPuncher.register <class>, [<module>, ...]
+```
 
+A full example:
 ```ruby
 # Define some extensions
 module Billable
@@ -181,7 +185,7 @@ class User < Struct.new(:name)
 end
 
 # Register the extensions
-DuckPuncher.register User, :Billable, :Retryable
+DuckPuncher.register User, Billable, Retryable
 
 # Add the #punch method to User instances
 DuckPuncher.(Object, only: :punch)
