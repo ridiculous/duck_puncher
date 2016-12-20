@@ -1,3 +1,8 @@
+4.4.1 (12/19/2016)
+==================
+
+* Lazy load the rubygems/dependency_installer only when `require!` is called
+
 4.4.0 (12/4/2016)
 =================
 
