@@ -43,7 +43,7 @@ module DuckPuncher
        # shim for backwards compatibility with Rails 3
        def scoped
          where(nil)
-       end if Rails::VERSION::MAJOR != 3
+       end if ::Rails::VERSION::MAJOR > 3
      end
    end
  end

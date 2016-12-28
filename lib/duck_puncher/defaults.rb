@@ -22,7 +22,7 @@ ducks = [
   [Module, DuckPuncher::Ducks::Module],
   [Method, DuckPuncher::Ducks::Method, { before: ->(_target) { DuckPuncher::GemInstaller.initialize! } }],
 ]
-ducks << ['ActiveRecord::Base', DuckPuncher::Ducks::ActiveRecord] if defined? ::ActiveRecord
+ducks << [ActiveRecord::Base, DuckPuncher::Ducks::ActiveRecord] if defined?(Rails) && defined?(ActiveRecord) && defined?(ActiveRecord::Base)
 ducks.each do |duck|
   DuckPuncher.register *duck
 end

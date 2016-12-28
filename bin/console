@@ -2,9 +2,23 @@
 
 require 'bundler/setup'
 require 'pp'
-require 'duck_puncher'
 require 'irb'
 require 'byebug'
+
+# Stub out Rails
+module Rails
+  module VERSION
+    MAJOR = 4
+  end
+end
+
+# And AR
+module ActiveRecord
+  class Base
+  end
+end
+
+require 'duck_puncher'
 require_relative '../test/fixtures/wut'
 
 DuckPuncher.logger.level = Logger::DEBUG
