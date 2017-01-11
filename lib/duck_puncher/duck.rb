@@ -18,19 +18,23 @@ module DuckPuncher
     # @option options [Array,Symbol] :only Specifies the methods to extend onto the current object
     # @option options [Symbol,String] :method Specifies if the methods should be included or prepended (:include)
     # @return [Class] The class that was just punched
-    def punch(opts = {})
+    def call(opts = {})
       opts = options.merge(opts)
       targets = Array(opts[:target] || self.target)
       targets.each do |target|
-        options[:before].call(target) if options[:before]
+        opts[:before].call(target) if opts[:before]
         punches = Array(opts[:only] || Ducks::Module.instance_method(:local_methods).bind(mod).call)
+        unless target.is_a?(::Module)
+          fail ArgumentError, "Invalid target #{target}. Please pass a module as :target"
+        end
         DuckPuncher.logger.info %Q(#{target}#{" <-- #{mod.name}#{punches}" if punches.any?})
-        extender = Usable::ModExtender.new(mod, only: options.delete(:only), method: options.delete(:method))
+        extender = Usable::ModExtender.new(mod, only: opts.delete(:only), method: opts.delete(:method))
         extender.call target
-        extender = nil
-        options[:after].call(target) if options[:after]
+        opts[:after].call(target) if opts[:after]
       end
       targets
     end
+
+    alias punch call
   end
 end

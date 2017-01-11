@@ -1,3 +1,8 @@
+4.4.2 (01/10/2016)
+==================
+
+* Fix glaring bug in Duck class where the `:only` option is ignored (since 4.4.0)
+
 4.4.1 (12/19/2016)
 ==================
 
