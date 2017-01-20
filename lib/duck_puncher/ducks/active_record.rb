@@ -10,18 +10,18 @@ module DuckPuncher
       end
 
       def associations
+        results = []
         refls = send respond_to?(:reflections) ? :reflections : :_reflections
-        refls.keep_if { |key, reflection|
+        refls.each do |key, reflection|
           begin
-            if reflection.macro.to_s =~ /many/
-              public_send(key).exists?
-            else
-              public_send(key).present?
+            if reflection.macro.to_s =~ /many/ ? public_send(key).exists? : public_send(key).present?
+              results << key
             end
           rescue
             nil
           end
-        }.keys
+        end
+        results
       end
 
       module ClassMethods
