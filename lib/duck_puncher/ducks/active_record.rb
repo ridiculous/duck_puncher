@@ -10,12 +10,13 @@ module DuckPuncher
       end
 
       def associations
-        reflections.select { |key, reflection|
+        refls = send respond_to?(:reflections) ? :reflections : :_reflections
+        refls.keep_if { |key, reflection|
           begin
             if reflection.macro.to_s =~ /many/
-              send(key).exists?
+              public_send(key).exists?
             else
-              send(key).present?
+              public_send(key).present?
             end
           rescue
             nil
