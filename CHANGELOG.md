@@ -1,3 +1,9 @@
+4.4.3 (01/19/2016)
+==================
+
+* Fix `ActiveRecord#associations` to use LIMIT 1 for has_many associations
+* Remove `ActiveRecord.latest` because it's redundant
+
 4.4.2 (01/10/2016)
 ==================
 
