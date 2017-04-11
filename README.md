@@ -137,7 +137,7 @@ Object.new.punch   # => a copy of Object.new with String punches mixed in
 Object.new.punch!  # => destructive version applies extensions directly to the base object
 Object.new.echo    # => prints and returns itself. Accepts a number,
                    #    indicating how many lines of the trace to display
-Object.new.track   # => Trace methods calls to the object
+Object.new.track!  # => Trace methods calls to the object
                    # !! requires [object_tracker](https://github.com/ridiculous/object_tracker), which it'll try to download
 ```
 
@@ -241,9 +241,9 @@ if it's not available in the current load path, and starts tracking the current 
 ```ruby
 Duck = Class.new
 Donald = Module.new { def tap_tap() self end }
-DuckPuncher.(:Object, only: :track)
-Donald.track
-Duck.track
+DuckPuncher.(Object, only: :track!)
+Donald.track!
+Duck.track!
 >> Duck.usable Donald, only: :tap_tap
 # =>  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00002)
 # =>  * called "Donald.respond_to?" with to_str, true [RUBY CORE] (0.00001)

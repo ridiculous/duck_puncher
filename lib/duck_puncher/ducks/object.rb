@@ -5,10 +5,17 @@ module DuckPuncher
         Marshal.load Marshal.dump self
       end unless defined? clone!
 
-      def require!(file_or_gem, version = '')
+      def require!(file_or_gem, version = '', patience: 1)
         if DuckPuncher::GemInstaller.new.perform(file_or_gem, version)
-          require file_or_gem.tr('-', '/')
+          if require file_or_gem.tr('-', '/')
+            true
+          elsif patience > 0
+            sleep 0.005
+            require!(file_or_gem, version, patience: patience - 1)
+          end
         end
+      rescue ::LoadError
+        require!(file_or_gem, version, patience: patience - 1) unless patience.zero?
       end
 
       # @description Returns a new decorated version of ourself with the punches mixed in (adds ancestors decorators)
@@ -32,15 +39,17 @@ module DuckPuncher
         self
       end
 
-      def track
+      def track!(patience: 1)
         begin
-          require 'object_tracker' || raise(LoadError)
-        rescue LoadError
+          require 'object_tracker' || raise(::LoadError)
+        rescue ::LoadError
           DuckPuncher.(Object, only: :require!) unless respond_to? :require!
           require! 'object_tracker'
         end
-        extend ::ObjectTracker
-        track_all!
+        ::ObjectTracker.(self)
+      rescue ::Exception
+        sleep 0.005
+        track!(patience: patience - 1) unless patience.zero?
       end
     end
   end

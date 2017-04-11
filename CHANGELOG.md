@@ -1,3 +1,9 @@
+5.0.0 (unreleased)
+==================
+
+* Rename `Object#track` to `Object#track!`
+* Add retries to `Object` extensions, which help make `require!` work **more often**
+
 4.5.1 (01/19/2016)
 ==================
 
