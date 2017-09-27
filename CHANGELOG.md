@@ -1,4 +1,4 @@
-5.0.0 (unreleased)
+5.0.0 (9/27/2017)
 ==================
 
 * Rename `Object#track` to `Object#track!`
