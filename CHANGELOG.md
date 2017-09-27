@@ -3,6 +3,7 @@
 
 * Rename `Object#track` to `Object#track!`
 * Add retries to `Object` extensions, which help make `require!` work **more often**
+* Update `DuckPuncher.register` to accept a block that will be evaluated in the context of a new module, and registered as an extension
 
 4.5.1 (01/19/2016)
 ==================

@@ -62,6 +62,14 @@ module DuckPuncher
       @punched_ducks ||= Set.new
     end
 
+    # Register an extension with a target class
+    # When given a block, the block is used to create an anonymous module
+    # @param target [Class,Module,Object] constant or instance to extend
+    # @param mods [Array<Module>] modules to extend or mix into the target. The last argument can be a hash of options to customize the extension
+    # @option :only [Symbol, Array<Symbol>] list of methods to extend onto the target (the module must have these defined)
+    # @option :method [Symbol,String] the method used to apply the module, e.g. :extend (:include)
+    # @option :before [Proc] A hook that is called with the target class before #punch
+    # @option :after [Proc] A hook that is called with the target class after #punch
     def register(*)
       target, *_ = super
       decorators[target] = build_decorator_class(*Ducks[target])
