@@ -23,7 +23,7 @@ module DuckPuncher
 
   class << self
     # @description Include additional functionality
-    include Registration    # [:register, :deregister]
+    include Registration    # [:register, :register!, :deregister]
     include Decoration      # [:decorators, :build_decorator_class, :decorate, :cached_decorators, :undecorate]
     include Utilities       # [:lookup_constant, :redefine_constant]
     include AncestralHash   # [:ancestral_hash]
