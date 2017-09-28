@@ -71,6 +71,21 @@ class DuckPuncherTest < MiniTest::Test
     assert @subject.punch.talk, 'quack'
   end
 
+  def test_register_module_and_block
+    refute_respond_to @subject.punch, :talk
+    refute_respond_to @subject.punch, :wobble
+    DuckPuncher.register Animal, CustomPunch3 do
+      def talk
+        'quack'
+      end
+    end
+    refute_respond_to @subject, :talk
+    refute_respond_to @subject, :wobble
+    assert_respond_to @subject.punch, :talk
+    assert_respond_to @subject.punch, :wobble
+    assert @subject.punch.talk, 'quack'
+  end
+
   def test_immediate_register_with_block
     refute_respond_to @subject, :walk
     DuckPuncher.register!(Animal) do
