@@ -7,7 +7,7 @@ in one decorator for each of the object's ancestors (with registered punches) an
 ## Install
 
 ```ruby
-gem 'duck_puncher', '~> 4.3'
+gem 'duck_puncher', '~> 5.0'
 ```
 
 ## Usage
