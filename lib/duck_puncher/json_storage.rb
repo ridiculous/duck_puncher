@@ -7,7 +7,7 @@ module DuckPuncher
     end
 
     def self.write(file_name, key, load_path)
-      FileUtils.mkdir(dir_name) unless File.exists?(dir_name)
+      FileUtils.mkdir(dir_name) unless File.exist?(dir_name)
       data = read(file_name)
       key = key.to_sym
       data[key] ||= {}
@@ -18,7 +18,7 @@ module DuckPuncher
     end
 
     def self.read(file_name)
-      if File.exists?(dir_name.join file_name)
+      if File.exist?(dir_name.join file_name)
         JSON.parse File.read(dir_name.join file_name), symbolize_names: true
       else
         {}

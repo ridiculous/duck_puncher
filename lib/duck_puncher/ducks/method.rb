@@ -41,7 +41,7 @@ module DuckPuncher
 
         def to_s
           if lines.any?
-            lines.join.gsub /^\s{#{find_indent_size(lines.first)}}/, ''
+            lines.join.gsub(/^\s{#{find_indent_size(lines.first)}}/, '')
           else
             ''
           end

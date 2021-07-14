@@ -19,7 +19,7 @@ class DuckPuncher::GemInstaller
   def perform(*args)
     require 'rubygems/dependency_installer'
     installer = Gem::DependencyInstaller.new(install_dir: Bundler.bundle_path.to_s, bin_dir: RbConfig::CONFIG['bindir'])
-    installer.install *args.reject(&:empty?)
+    installer.install(*args.reject(&:empty?))
     installer.installed_gems.each do |gem|
       full_load_path = Bundler.bundle_path.join('gems', "#{gem.name}-#{gem.version}", "lib")
       next if $LOAD_PATH.include?(full_load_path.to_s)

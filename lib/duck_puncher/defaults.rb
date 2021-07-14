@@ -24,5 +24,5 @@ ducks = [
 ]
 ducks << [ActiveRecord::Base, DuckPuncher::Ducks::ActiveRecord] if defined?(Rails) && defined?(ActiveRecord) && defined?(ActiveRecord::Base)
 ducks.each do |duck|
-  DuckPuncher.register *duck
+  DuckPuncher.register(*duck)
 end

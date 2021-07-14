@@ -24,14 +24,14 @@ module DuckPuncher
     # Register an extension and then immediately activate it
     # See #register for accepted arguments
     def register!(*args, &block)
-      register *args, &block
-      call args.first
+      register(*args, &block)
+      call(args.first)
     end
 
     # Remove extensions for a given class or list of classes
     def deregister(*targets)
-      targets.each &Ducks.list.method(:delete)
-      targets.each &decorators.method(:delete)
+      targets.each(&Ducks.list.method(:delete))
+      targets.each(&decorators.method(:delete))
     end
   end
 end
