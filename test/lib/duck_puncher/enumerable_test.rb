@@ -20,7 +20,7 @@ class EnumerableTest < MiniTest::Test
   def test_m_with_range
     @subject = ('a'..'f')
     assert_equal %w[A B C D E F], @subject.punch.m(:upcase)
-    assert_equal %w[A B C D E F], @subject.punch!.m(:upcase)
+    assert_equal %w[A B C D E F], @subject.to_a.punch!.m(:upcase)
   end
 
   def test_m_with_enum
